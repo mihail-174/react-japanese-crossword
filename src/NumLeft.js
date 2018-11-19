@@ -22,7 +22,7 @@ export default class NumTop extends Component {
         return (
             <div className='num num_left'>
                 {
-                    state.pic1.numLeft.map(function(row, i) {
+                    state.images['img' + state.selected].numLeft.map(function(row, i) {
                         return (
                             <div className='num__col' key={i}>
                                 {

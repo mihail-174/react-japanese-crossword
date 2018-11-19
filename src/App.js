@@ -6,34 +6,62 @@ import NumLeft from './NumLeft';
 const Context = React.createContext()
 
 let initialState = {
+    selected: 0,
     paint: false,
     blank: false,
     delete: false,
     result: false,
-    pic1: {
-        row: 1,
-        cell: 5,
-        arr: [
-            [1,1,1,1,1],
-            [1,0,1,0,1],
-            [1,1,1,1,1],
-            [1,0,0,0,1],
-            [1,1,1,1,1]
-        ],
-        numTop: [
-            [5],
-            [1,1,1],
-            [5],
-            [1,1,1],
-            [5]
-        ],
-        numLeft: [
-            [5],
-            [1,1,1],
-            [5],
-            [1,1],
-            [5]
-        ]
+    images: {
+        img0: {
+            id: 0,
+            name: 'smile',
+            arr: [
+                [1,1,1,1,1],
+                [1,0,1,0,1],
+                [1,1,1,1,1],
+                [1,0,0,0,1],
+                [1,1,1,1,1]
+            ],
+            numTop: [
+                [5],
+                [1,1,1],
+                [5],
+                [1,1,1],
+                [5]
+            ],
+            numLeft: [
+                [5],
+                [1,1,1],
+                [5],
+                [1,1],
+                [5]
+            ]
+        },
+        img1: {
+            id: 1,
+            name: 'batman',
+            arr: [
+                [1,0,0,0,1],
+                [1,1,1,1,1],
+                [1,0,1,0,1],
+                [1,1,1,1,1],
+                [1,1,1,1,1]
+            ],
+            numTop: [
+                [5],
+                [1,2],
+                [4],
+                [1,2],
+                [5]
+            ],
+            numLeft: [
+                [1,1],
+                [5],
+                [1,1,1],
+                [5],
+                [5]
+            ]
+        }
     }
 }
 
@@ -49,9 +77,22 @@ class App extends Component {
         this.clickPaint = this.clickPaint.bind(this);
         this.clickBlank = this.clickBlank.bind(this);
         this.clickDelete = this.clickDelete.bind(this);
+        this.clickSelectCross = this.clickSelectCross.bind(this);
     }
     setAppState(newState) {
       this.setState(newState);
+    }
+    clickSelectCross(e) {
+        // console.log( e.currentTarget );
+        // console.log( e.currentTarget.getAttribute('value') );
+        this.setState({
+            selected: parseInt(e.currentTarget.getAttribute('value'),0)
+        })
+        document.querySelectorAll('.cross__cell').forEach(function(item){
+            item.classList.remove('paint');
+            item.classList.remove('blank');
+            item.removeAttribute('data-type');
+        })
     }
     clickPaint(e) {
         this.setState({
@@ -101,7 +142,7 @@ class App extends Component {
         outer: for (var i = 0; i < rows.length; i++) {
             var cells = rows[i].querySelectorAll('.cross__cell');
             for (var j = 0; j < cells.length; j++) {
-                if ( this.state.pic1.arr[i][j] === parseInt(cells[j].getAttribute('data-type'), 0) ) {
+                if ( this.state.images['img' + this.state.selected].arr[i][j] === parseInt(cells[j].getAttribute('data-type'), 0) ) {
                     // console.log( 'row ' + i + ' | cell ' + j + ' — ' + this.state.pic1.arr[i][j] + ' | ' + parseInt(cells[j].getAttribute('data-type'), 0) + ' = ура' );
                     this.setState({
                         result: true
@@ -119,7 +160,7 @@ class App extends Component {
         setTimeout(
             function() {
                 document.querySelector('.grid__result').classList.remove('active')
-            }, 1000
+            }, 2000
         );
     }
 
@@ -129,7 +170,27 @@ class App extends Component {
             <Context.Consumer>{context => (
 
                 <div className="App">
+
+                    <div className="list">
+                        <div className="list__name">Выбор:</div>
+                        <select className="list__select">
+                            {
+                                Object.values(this.state.images).map(function(item, i) {
+                                    let name = item.name;
+                                    var reg=/[a-zA-Z]/g;
+                                    name = name.replace(reg, "*");
+                                    return (
+                                        <option onClick={this.clickSelectCross} value={i} key={i}>
+                                        {name}
+                                        </option>
+                                    )
+                                }, this)
+                            }
+                        </select>
+                    </div>
+
                     <div className="grid">
+                        <div className='grid__name'>{this.state.images['img' + this.state.selected].name}</div>
                         <div className='grid__num-top'>
                             <NumTop context={context} />
                         </div>
@@ -139,7 +200,7 @@ class App extends Component {
                         <div className='grid__content'>
                             <div className='cross'>
                                 {
-                                    this.state.pic1.arr.map(function(row, i) {
+                                    this.state.images['img' + this.state.selected].arr.map(function(row, i) {
                                         return (
                                             <div className='cross__row' key={i} data-index={i}>
                                                 <div className='cross__row-inner'>
@@ -157,12 +218,20 @@ class App extends Component {
                                 }
                             </div>
                             <div className='btns'>
-                                <button className='btn btn_check' onClick={this.check}>CHECK</button>
-                                <button className='btn btn_paint' onClick={this.clickPaint}>Закрасить</button>
-                                <button className='btn btn_blank' onClick={this.clickBlank}>Крестик</button>
-                                <button className='btn btn_delete' onClick={this.clickDelete}>удалить</button>
+                                <button className='btn btn_check' title='Проверить решение' onClick={this.check}>CHECK</button>
+                                <button className='btn btn_paint' title='Закрасить ячейку' onClick={this.clickPaint}>Закрасить</button>
+                                <button className='btn btn_blank' title='Пометить ячейку как пустую' onClick={this.clickBlank}>Крестик</button>
+                                <button className='btn btn_delete' title='Очистить ячейку' onClick={this.clickDelete}>удалить</button>
                             </div>
-                            <div className='grid__result'>{this.state.result?'Отлично':'Вы дно!'}</div>
+                            <div className='grid__result'>
+                                {
+                                    this.state.result
+                                    ?
+                                    'Отлично'
+                                    :
+                                    'Вы дно!'
+                                }
+                            </div>
                         </div>
                     </div>
 
