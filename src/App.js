@@ -6,30 +6,33 @@ import NumLeft from './NumLeft';
 const Context = React.createContext()
 
 let initialState = {
+    paint: false,
+    blank: false,
+    delete: false,
+    result: false,
     pic1: {
-        // name: 'face',
         row: 1,
         cell: 5,
         arr: [
-            // [1,1,1,1,1],
+            [1,1,1,1,1],
             [1,0,1,0,1],
-            // [1,1,1,1,1],
-            // [1,0,0,0,1],
-            // [1,1,1,1,1]
+            [1,1,1,1,1],
+            [1,0,0,0,1],
+            [1,1,1,1,1]
         ],
         numTop: [
-        //     [5],
-        //     [1,1,1],
-        //     [5],
-        //     [1,1,1],
-        //     [5]
+            [5],
+            [1,1,1],
+            [5],
+            [1,1,1],
+            [5]
         ],
         numLeft: [
-        //     [5],
-        //     [1,1,1],
-        //     [5],
-        //     [1,1],
-        //     [5]
+            [5],
+            [1,1,1],
+            [5],
+            [1,1],
+            [5]
         ]
     }
 }
@@ -41,108 +44,86 @@ class App extends Component {
             ...initialState
         }
         this.setAppState = this.setAppState.bind(this);
-        this.click = this.click.bind(this);
+        this.check = this.check.bind(this);
         this.clickCell = this.clickCell.bind(this);
+        this.clickPaint = this.clickPaint.bind(this);
+        this.clickBlank = this.clickBlank.bind(this);
+        this.clickDelete = this.clickDelete.bind(this);
     }
     setAppState(newState) {
       this.setState(newState);
     }
-    click(e) {
-        var result = false;
-      // document.querySelectorAll('.cross__row').map(function(row, i) {
-      //     console.log( row );
-      // });
-      console.clear();
-      var rows = document.querySelectorAll('.cross__row');
-      var mycell = 222;
-
-      for (var i = 0; i < rows.length; i++) {
-          var cells = rows[i].querySelectorAll('.cross__cell');
-          for (var j = 0; j < cells.length; j++) {
-              cells[j].classList.remove('AAA');
-              cells[j].classList.remove('BBB');
-              // console.log( cells[j] );
-              // console.log( cells[j].classList.contains('active') );
-
-              // switch ( cells[j].getAttribute('data-type') ) {
-              //     case null:
-              //         cell = parseInt(0, 0);
-              //         break;
-              //     case 1:
-              //         cell = parseInt( cells[j].getAttribute('data-type'), 0 );
-              //         break;
-              //     default:
-              // }
-              switch ( cells[j].classList.contains('active') ) {
-                  case false:
-                      mycell = parseInt(0, 0);
-                      break;
-                  case true:
-                      mycell = parseInt( cells[j].getAttribute('data-type'), 0 );
-                      break;
-                  default:
-              }
-              // console.log( cell );
-
-              // if ( cells[j].getAttribute('data-type') === null ) {
-              //     cell = 0;
-              // } else {
-              //     cell = cells[j].getAttribute('data-type');
-              // }
-              // if ( this.state.pic1.arr[0][j] === cell ) {
-              //     console.log( this.state.pic1.arr[0][j] + ' | ' + cell + ' = вы днище' );
-              // } else {
-              //     console.log( this.state.pic1.arr[0][j] + ' | ' + cell + ' = ура' );
-              // }
-              if ( this.state.pic1.arr[i][j] === mycell ) {
-                  console.log( this.state.pic1.arr[i][j] + ' | ' + mycell + ' = ура' );
-                  result = true;
-                  // cells[j].classList.add('AAA');
-              } else {
-                  console.log( this.state.pic1.arr[i][j] + ' | ' + mycell + ' = вы днище' );
-                  result = false;
-                  // cells[j].classList.add('BBB');
-                  // cells[j].classList.add('AAA');
-              }
-              // console.log( this.state.pic1.arr[0][j] + ' | ' + cell );
-              // console.log( this.state.pic1.arr[0][j] + ' | ' + cells[j].classList.contains('active') );
-              // console.log( cells[j].getAttribute('data-type') );
-              // console.log( cells[j].getAttribute('data-type') );
-          }
-      }
-
-      // if ( result ) {
-      //     console.log('ура');
-      // } else {
-      //     console.log('вы днище');
-      // }
-
-      // console.log( rows[i] );
-      // console.log( rows[i].querySelectorAll('.cross__cell').length );
-      // console.log( rows[i].querySelectorAll('.cross__cell').getAttribute('data-type') );
-
+    clickPaint(e) {
+        this.setState({
+            paint: true,
+            blank: false,
+            delete: false,
+        });
+    }
+    clickBlank(e) {
+        this.setState({
+            paint: false,
+            blank: true,
+            delete: false,
+        });
+    }
+    clickDelete(e) {
+        this.setState({
+            paint: false,
+            blank: false,
+            delete: true,
+        });
     }
     clickCell(e) {
       // console.log( e.currentTarget );
+      if ( this.state.paint ) {
+          e.currentTarget.classList.add('paint');
+          e.currentTarget.classList.remove('blank');
+          e.currentTarget.setAttribute('data-type', 1);
+      }
+      if ( this.state.blank ) {
+          e.currentTarget.classList.add('blank');
+          e.currentTarget.classList.remove('paint');
+          e.currentTarget.setAttribute('data-type', 0);
+      }
+      if ( this.state.delete ) {
+          e.currentTarget.classList.remove('paint');
+          e.currentTarget.classList.remove('blank');
+          e.currentTarget.removeAttribute('data-type');
+      }
     }
+    check (e) {
+        console.clear();
+        var result = false;
+        // console.log( e.currentTarget );
+        var rows = document.querySelectorAll('.cross__row');
+        // console.log( rows );
+        outer: for (var i = 0; i < rows.length; i++) {
+            var cells = rows[i].querySelectorAll('.cross__cell');
+            for (var j = 0; j < cells.length; j++) {
+                if ( this.state.pic1.arr[i][j] === parseInt(cells[j].getAttribute('data-type'), 0) ) {
+                    // console.log( 'row ' + i + ' | cell ' + j + ' — ' + this.state.pic1.arr[i][j] + ' | ' + parseInt(cells[j].getAttribute('data-type'), 0) + ' = ура' );
+                    this.setState({
+                        result: true
+                    });
+                } else {
+                    // console.log( 'row ' + i + ' | cell ' + j + ' — ' + this.state.pic1.arr[i][j] + ' | ' + parseInt(cells[j].getAttribute('data-type'), 0) + ' = ура' );
+                    this.setState({
+                        result: false
+                    });
+                    break outer;
+                }
+            }
+        }
+        document.querySelector('.grid__result').classList.add('active')
+        setTimeout(
+            function() {
+                document.querySelector('.grid__result').classList.remove('active')
+            }, 1000
+        );
+    }
+
     render() {
-        // const width = this.state.pic1.width;
-        // const height = this.state.pic1.height;
-
-          const list = [];
-
-          for (let i = 0; i < 1; i++ ){
-              for (let j = 0; j < 5; j++ ){
-                  list.push(
-                      <div className="cross__row">
-                          <div className='cross__row-inner'>
-                              <div className='cross__cell'>{i}</div>
-                          </div>
-                      </div>
-                  );
-              }
-          }
-
         return (
             <Context.Provider value={{ state: this.state, methods: {setAppState: (value) => this.setState(value)}}}>
             <Context.Consumer>{context => (
@@ -157,35 +138,33 @@ class App extends Component {
                         </div>
                         <div className='grid__content'>
                             <div className='cross'>
-
-                            {list}
-
-
-
-
                                 {
                                     this.state.pic1.arr.map(function(row, i) {
                                         return (
                                             <div className='cross__row' key={i} data-index={i}>
-                                                <Cell value={row} context={context} />
+                                                <div className='cross__row-inner'>
+                                                    {
+                                                        row.map(function(cell, j) {
+                                                            return (
+                                                                <div onClick={this.clickCell} className='cross__cell' data-type='0' data-index={j} key={j}></div>
+                                                            );
+                                                        }, this)
+                                                    }
+                                                </div>
                                             </div>
                                         );
-                                    })
+                                    }, this)
                                 }
                             </div>
-                        </div>
-                        {/*
-                        <div className='t'>
-                            <div className='t__num-top'>t__num-top</div>
-                            <div className='t__c'>
-
-
-
+                            <div className='btns'>
+                                <button className='btn btn_check' onClick={this.check}>CHECK</button>
+                                <button className='btn btn_paint' onClick={this.clickPaint}>Закрасить</button>
+                                <button className='btn btn_blank' onClick={this.clickBlank}>Крестик</button>
+                                <button className='btn btn_delete' onClick={this.clickDelete}>удалить</button>
                             </div>
+                            <div className='grid__result'>{this.state.result?'Отлично':'Вы дно!'}</div>
                         </div>
-                        */}
                     </div>
-                    <button onClick={this.click}>CHECK</button>
 
                 {
                     <pre>
@@ -202,22 +181,10 @@ class App extends Component {
     }
     componentDidMount() {
         this.setState({
-            ...initialState,
-            result: []
+            ...initialState
             // data: this.props.data
         });
     }
 }
 
 export default App;
-
-
-
-
-    // {this.state.pic1.arr.map(function(row, i){
-    //     return (
-    //         <div className='row' key={i}>
-    //             <Cell value={row} context={context} />
-    //         </div>
-    //     );
-    // })}

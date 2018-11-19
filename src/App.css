@@ -34,7 +34,6 @@ body {
 div {
     position: relative;
 }
-
 .AAA {
     background-color: green !important;
 }
@@ -42,7 +41,70 @@ div {
     background-color: red !important;
 }
 
-
+.paint {
+	background-color: black;
+}
+.blank {
+	background: url(/blank.png) 0 0 no-repeat;
+}
+.grid__result {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.8);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.25s ease-in-out;
+}
+.grid__result.active {
+    opacity: 1;
+    visibility: visible;
+}
+.btns {
+	position: absolute;
+	top: 0;
+	right: -72px;
+}
+.btn {
+    display: inline-block;
+    padding: 5px;
+    margin-bottom: 10px;
+    text-indent: -999999px;
+    border: 1px solid gray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    transition: all 0.25s ease-in-out;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 5px;
+}
+.btn:hover {
+    background-color: rgba(0,0,0,0.1);
+}
+.btn_check {
+    background-image: url(/check.png);
+}
+.btn_paint {
+    background-image: url(/paint.png);
+}
+.btn_blank {
+    background-image: url(/blank.png);
+}
+.btn_delete {
+    background-image: url(/delete.png);
+}
 
 .grid {
     display: grid;
@@ -130,8 +192,8 @@ div {
     display: flex;
 }
 .cross__cell {
-    border-right: 1px solid;
-    border-bottom: 1px solid;
+    border-right: 1px solid grey;
+    border-bottom: 1px solid grey;
     width: 60px;
     height: 60px;
     display: flex;
