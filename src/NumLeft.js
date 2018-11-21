@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 
-export default class NumTop extends Component {
+export default class NumLeft extends Component {
     constructor(props) {
         super(props);
         this.click = this.click.bind(this);
+        this.state = {
+            data: 'JORDAN'
+        }
     }
     click(e) {
         const {context} = this.props,
@@ -57,7 +60,8 @@ export default class NumTop extends Component {
         // var str = '1010001';
         return (
             <div className='num num_left'>
-            {
+            {this.state.data}
+            {/*
                 state.images['img' + state.selected].arr.map(function(item, i) {
                     item.map(function(val, i) {
                         // console.log( val )
@@ -67,42 +71,102 @@ export default class NumTop extends Component {
                         }
                         // return a
                     })
-                    console.log( a )
+                    // console.log( a )
                     // console.log( item )
                     // return a
                     return a
                     // var res = item[i];
                 })
-            }
+            */}
             </div>
         )
     }
+    // componentDidMount() {
+    //     // setTimeout(() => {
+    //         // console.log('Our data is fetched');
+    //         this.setState({
+    //             data: 'HELLO'
+    //         })
+    //     // }, 1000)
+    // }
     /*
+    */
     componentDidMount() {
         const {context} = this.props,
                 state = context.state;
-        let a = 0;
-        const str = state.images['img' + state.selected].arr.map(function(item, i) {
-            item.map(function(val, i) {
-                // console.log( val )
-                if ( val ) {
-                    console.log( val );
-                    a = val;
-                }
-                return a
-            })
-            console.log( a )
-            return item
-            // var res = item[i];
+
+
+        let arrRow = [];
+        let arrCell = [];
+        const row = state.images['img' + state.selected].arr.map(function(rowVal, i) {
+            // console.log( rowVal );
+            // return rowVal
+
+            let cell = rowVal.map(function(cellVal, j) {
+                arrRow.push(rowVal);
+                console.log( arrRow );
+                // console.log( i );
+                // console.log( j );
+                // console.log( cellVal );
+                // a = cellVal;
+                // return cell
+            });
+            return row
         });
+        // console.log( row );
+
+        var newrow = [];
+        // for (let i=0; i < row.length; i++) {
+        //     // console.log( row[i] );
+        //     for (var j = 0; j < row[i].length; j++) {
+        //         // console.log( row[i][j] );
+        //         if ( row[i][j] ) {
+        //             console.log( row[i][j] );
+        //             newrow.push(row[i][j]);
+        //         }
+        //     }
+        // }
+
+        // const BBB = AAA[1].map(function(item, i) {
+        //     if ( item ) {
+        //         console.log( item );
+        //     }
+        //     return item
+        // });
+
+        this.setState({
+            data: row
+        })
     }
-    */
+
+
+
+        // let a = 0;
+        // console.log( a )
+        // item.map(function(val, i) {
+        //     // console.log( val )
+        //     if ( val ) {
+        //         console.log( val );
+        //         a = val;
+        //     } else {
+        //         a = 9;
+        //     }
+        //     // return a
+        // })
+
+
 }
 
 // {row.map(function(cell, j){
 //     return <td className={cell?'true':'false'} key={j}> {cell} </td>;
 // })}
 
+
+
+// context.methods.setAppState({
+//     'temp': 'sss'
+// });
+// }
 
     // {
     //     state.temp.map(function(item, i) {
