@@ -95,24 +95,61 @@ export default class NumLeft extends Component {
         const {context} = this.props,
                 state = context.state;
 
+        let arr = [
+            [0,1,0],
+            [1,0,1],
+            [0,1,0]
+        ];
+        let arr2 = [];
+        // for (let i=0; i < 3; i++) {
+        //     for (let j=0; j < 3; j++) {
+        //         arr[i][j].push( 'j' );
+        //     }
+        // }
+        var a = 0;
+        const my1 = arr.map(function(val1, i) {
+            console.log( arr[i].join() );
+            arr[i] = arr[i].join();
+            arr[i] = arr[i].replace(',', '');
+            // arr2.push( val1 );
+            // const my2 = arr[i].map(function(val2, j) {
+                // if ( val2 === 0 ) {
+                //     arr[i] = '*';
+                // }
+                // arr[0][0] = '*';
+            // });
+        });
+        console.log( arr );
+
+
 
         let arrRow = [];
         let arrCell = [];
-        const row = state.images['img' + state.selected].arr.map(function(rowVal, i) {
-            // console.log( rowVal );
-            // return rowVal
-
+        const AAA = state.images['img' + state.selected].arr.map(function(rowVal, i) {
+            // if ( rowVal ) {
+            //     console.log( rowVal );
+            // }
+            // arrRow.push( rowVal );
+            // console.log( arrRow );
+            // return <div>{rowVal}</div>
+            // rowVal[0] = '*';
+            // console.log( rowVal[1] );
+//
             let cell = rowVal.map(function(cellVal, j) {
-                arrRow.push(rowVal);
-                console.log( arrRow );
+                // arrRow.push(rowVal);
+                // arrRow.push( j );
+                // cellVal[0] = '*';
+                // console.log( rowVal );
                 // console.log( i );
                 // console.log( j );
                 // console.log( cellVal );
+                // arrRow.push( j );
                 // a = cellVal;
                 // return cell
             });
-            return row
+            // return row
         });
+        // console.log( arrRow );
         // console.log( row );
 
         var newrow = [];
@@ -135,7 +172,7 @@ export default class NumLeft extends Component {
         // });
 
         this.setState({
-            data: row
+            data: AAA
         })
     }
 
