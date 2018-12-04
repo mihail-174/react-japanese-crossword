@@ -129,8 +129,11 @@ export default class NumLeft extends Component {
         });
         // console.log( arr );
 
-        console.log( "1,1,0,1".match(new RegExp("1", "g")) );
-
+        // console.log( "1101".match(new RegExp("1[^0|,]*", "gim")) );
+        "1101".match(new RegExp("1[^0|,]*", "gim")).map(function(val, i) {
+            // console.log( i + ' ' + val );
+            console.log( val[i].match(new RegExp("1", "gim")) );
+        });
 
         let arrRow = [];
         let arrCell = [];
