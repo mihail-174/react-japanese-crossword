@@ -96,9 +96,11 @@ export default class NumLeft extends Component {
                 state = context.state;
 
         let arr = [
-            [0,1,0],
-            [1,0,1],
-            [0,1,0]
+            [1,1,1,1],
+            [1,0,1,0],
+            [1,1,0,0],
+            [1,1,1,0],
+            [0,1,0,1]
         ];
         let arr2 = [];
         // for (let i=0; i < 3; i++) {
@@ -108,9 +110,15 @@ export default class NumLeft extends Component {
         // }
         var a = 0;
         const my1 = arr.map(function(val1, i) {
-            console.log( arr[i].join() );
+            // console.log( arr[i].join() );
             arr[i] = arr[i].join();
-            arr[i] = arr[i].replace(',', '');
+            // arr[i] = arr[i].replace(/\,/g, '');
+            // console.log( arr[i] );
+            // console.log( i + ' ' + arr[i].split('0').join().replace(/\,/g, '') );
+
+
+            // arr[i] = arr[i].split('0').join().replace(/\,/g, '');
+            // console.log( arr[i].split('') );
             // arr2.push( val1 );
             // const my2 = arr[i].map(function(val2, j) {
                 // if ( val2 === 0 ) {
@@ -119,13 +127,22 @@ export default class NumLeft extends Component {
                 // arr[0][0] = '*';
             // });
         });
-        console.log( arr );
+        // console.log( arr );
 
+        console.log( "1,1,0,1".match(new RegExp("1", "g")) );
 
 
         let arrRow = [];
         let arrCell = [];
-        const AAA = state.images['img' + state.selected].arr.map(function(rowVal, i) {
+        const AAA = arr.map(function(rowVal, i) {
+            // console.log( rowVal );
+            return (
+                <div>
+                    {rowVal}
+                </div>
+            )
+        });
+        // const AAA = state.images['img' + state.selected].arr.map(function(rowVal, i) {
             // if ( rowVal ) {
             //     console.log( rowVal );
             // }
@@ -135,7 +152,7 @@ export default class NumLeft extends Component {
             // rowVal[0] = '*';
             // console.log( rowVal[1] );
 //
-            let cell = rowVal.map(function(cellVal, j) {
+            // let cell = rowVal.map(function(cellVal, j) {
                 // arrRow.push(rowVal);
                 // arrRow.push( j );
                 // cellVal[0] = '*';
@@ -146,9 +163,9 @@ export default class NumLeft extends Component {
                 // arrRow.push( j );
                 // a = cellVal;
                 // return cell
-            });
+            // });
             // return row
-        });
+        // });
         // console.log( arrRow );
         // console.log( row );
 
