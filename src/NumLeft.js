@@ -96,25 +96,35 @@ export default class NumLeft extends Component {
                 state = context.state;
 
         let arr = [
-            [1,1,1,1],
-            [1,0,1,0],
-            [1,1,0,0],
-            [1,1,1,0],
-            [0,1,0,1]
+            [1,1,1,1,1],
+            [1,0,1,0,1],
+            [1,1,1,1,1],
+            [1,0,0,0,1],
+            [1,1,1,1,1]
         ];
-        let arr2 = [];
+        // let arr2 = [];
         // for (let i=0; i < 3; i++) {
         //     for (let j=0; j < 3; j++) {
         //         arr[i][j].push( 'j' );
         //     }
         // }
         var a = 0;
-        const my1 = arr.map(function(val1, i) {
+        const my1 = arr.map((val1, i) => {
+            // console.log( arr[i] );
             // console.log( arr[i].join() );
-            arr[i] = arr[i].join();
+            // console.log( '#' + i + ' | ' + arr[i] );
+            // arr[i] = arr[i].join();
             // arr[i] = arr[i].replace(/\,/g, '');
             // console.log( arr[i] );
-            // console.log( i + ' ' + arr[i].split('0').join().replace(/\,/g, '') );
+            // console.log( '#' + i + ' | ' + arr[i] );
+            // console.log( '#' + i + ' | ' + arr[i].split('0') );
+            // console.log( '#' + i + ' | ' + arr[i].split('0').join() );
+            // console.log( '#' + i + ' | ' + arr[i].split('0').join().replace(/\,/g, ' ') );
+
+
+            arr[i].map((val2) => {
+                console.log( val2 );
+            });
 
 
             // arr[i] = arr[i].split('0').join().replace(/\,/g, '');
@@ -129,11 +139,13 @@ export default class NumLeft extends Component {
         });
         // console.log( arr );
 
+
+
         // console.log( "1101".match(new RegExp("1[^0|,]*", "gim")) );
-        "1101".match(new RegExp("1[^0|,]*", "gim")).map(function(val, i) {
-            // console.log( i + ' ' + val );
-            console.log( val[i].match(new RegExp("1", "gim")) );
-        });
+        // "1101".match(new RegExp("1[^0|,]*", "gim")).map(function(val, i) {
+        //     // console.log( i + ' ' + val );
+        //     console.log( val[i].match(new RegExp("1", "gim")) );
+        // });
 
         let arrRow = [];
         let arrCell = [];
