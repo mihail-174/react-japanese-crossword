@@ -35,6 +35,22 @@ let initialState = {
                 [1,1,1,1,1],
                 [1,1,1,1,1]
             ]
+        },
+        img2: {
+            id: 2,
+            name: 'Кораблик',
+            arr: [
+                [1,1,0,0,1,0,0,0,0,0],
+                [1,0,0,0,1,1,0,0,0,0],
+                [0,0,0,0,1,1,1,1,1,1],
+                [0,0,0,0,1,1,1,1,0,0],
+                [0,0,0,0,1,1,1,1,1,0],
+                [0,0,0,0,1,1,1,1,1,1],
+                [0,0,0,0,1,0,0,0,0,0],
+                [1,1,1,1,1,1,1,1,1,1],
+                [0,1,0,0,0,0,0,0,1,0],
+                [0,0,1,1,1,1,1,1,0,0]
+            ]
         }
     }
 }
@@ -277,8 +293,8 @@ class App extends Component {
                             {
                                 Object.values(this.state.images).map(function(item, i) {
                                     let name = item.name;
-                                    var reg=/[a-zA-Z]/g;
-                                    name = name.replace(reg, "*");
+                                    // var reg=/[a-zA-Z]/g;
+                                    // name = name.replace(reg, "*");
                                     return (
                                         <option onClick={this.clickSelectCross} value={i} key={i}>
                                         {name}
