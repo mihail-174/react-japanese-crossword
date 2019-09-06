@@ -2,13 +2,6 @@ import React, { Component } from 'react';
 
 export default class NumLeft extends Component {
     
-    constructor(props) {
-        super(props);
-        this.state = {
-            data: []
-        }
-    }
-
     render() {
         const {context} = this.props;
         const state = context.state;
