@@ -11,6 +11,8 @@ let initialState = {
     blank: false,
     delete: false,
     result: false,
+    numTop: [],
+    numLeft: [],
     images: {
         img0: {
             id: 0,
@@ -93,6 +95,71 @@ class App extends Component {
             item.classList.remove('blank');
             item.removeAttribute('data-type');
         })
+
+        // ВЫВОДИМ В ЛЕВУЮ КОЛОНКУ КОЛИЧЕСТВО ЗАКРАШИВАЕМЫХ КЛЕТОК
+        let newarrRow = []
+        let newarrValues = []
+        let a = 0;
+        // console.log('строк в массиве = ' + this.state.images['img' + this.state.selected].arr.length);
+        const my2 = this.state.images['img' + this.state.selected].arr.map((row, i) => {
+            // console.group('СТРОКА #' + i);
+            // console.log(row);
+            row.map((value, j) => {
+                // console.log('цикл #' + j);
+                if ( value !== 0 ) {
+                    // console.log(value + ' != 0');
+                    a += value;
+                    if ( j + 1 === row.length ) {
+                        // console.log('значений в массиве = ' + row.length);
+                        // console.log( '*** КОНЕЦ МАССИВА ***' );
+                        newarrValues.push(a);
+                        a = 0;
+                        // console.log('записали в новый массив количество единиц = ' + a);
+                    }
+                } else {
+                    // console.log(value + ' == 0');
+                    if ( a !== 0 ) {
+                        newarrValues.push(a);
+                        a = 0;
+                        // console.log('записали в новый массив количество единиц = ' + a);
+                    }
+                }
+                // newarrValues = [];
+            });
+            // console.log(newarrValues);
+            newarrRow.push(newarrValues);
+            newarrValues = [];
+            // console.groupEnd();
+        });
+        // console.log(newarrValues);
+        // console.log(newarrRow);
+        this.setState({
+            numLeft: newarrRow
+        })
+        // РАБОЧИЙ ПРИМЕР С ОДНОМЕРНЫМ МАССИВОМ
+        // let newarr = []
+        // let a = 0;
+        // console.log('длина массива = ' + arr.length);
+        // const my2 = arr.map((value, i) => {
+        //     console.log('цикл #' + i);
+        //     if ( arr[i] !== 0 ) {
+        //         console.log(arr[i] + ' != 0');
+        //         a += arr[i];
+        //         if ( i + 1 === arr.length ) {
+        //             console.log( 'конец массива' );
+        //             newarr.push(a);
+        //         }
+        //     } else {
+        //         console.log(arr[i] + ' == 0');
+        //         if ( a !== 0 ) {
+        //             newarr.push(a);
+        //         }
+        //         console.log('записали в новый массив количество единиц = ' + a);
+        //         a = 0;
+        //     }
+        // });
+        // console.log(newarr);
+        // КОНЕЦ
     }
     clickPaint(e) {
         this.setState({
