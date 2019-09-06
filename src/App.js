@@ -23,20 +23,6 @@ let initialState = {
                 [1,1,1,1,1],
                 [1,0,0,0,1],
                 [1,1,1,1,1]
-            ],
-            numTop: [
-                [5],
-                [1,1,1],
-                [5],
-                [1,1,1],
-                [5]
-            ],
-            numLeft: [
-                [5],
-                [1,1,1],
-                [5],
-                [1,1],
-                [5]
             ]
         },
         img1: {
@@ -48,20 +34,6 @@ let initialState = {
                 [1,0,1,0,1],
                 [1,1,1,1,1],
                 [1,1,1,1,1]
-            ],
-            numTop: [
-                [5],
-                [1,2],
-                [4],
-                [1,2],
-                [5]
-            ],
-            numLeft: [
-                [1,1],
-                [5],
-                [1,1,1],
-                [5],
-                [5]
             ]
         }
     }
@@ -87,6 +59,7 @@ class App extends Component {
     clickSelectCross(e) {
         // console.log( e.currentTarget );
         // console.log( e.currentTarget.getAttribute('value') );
+        let selectedImg = parseInt(e.currentTarget.getAttribute('value'),0);
         this.setState({
             selected: parseInt(e.currentTarget.getAttribute('value'),0)
         })
@@ -97,84 +70,12 @@ class App extends Component {
         })
 
         // ВЫВОДИМ В ЛЕВУЮ КОЛОНКУ КОЛИЧЕСТВО ЗАКРАШИВАЕМЫХ КЛЕТОК
-        let newarrRow = []
-        let newarrValues = []
-        let a = 0;
-        // console.log('строк в массиве = ' + this.state.images['img' + this.state.selected].arr.length);
-        this.state.images['img' + this.state.selected].arr.map((row, i) => {
-            // console.group('СТРОКА #' + i);
-            // console.log(row);
-            row.map((value, j) => {
-                // console.log('цикл #' + j);
-                if ( value !== 0 ) {
-                    // console.log(value + ' != 0');
-                    a += value;
-                    if ( j + 1 === row.length ) {
-                        // console.log('значений в массиве = ' + row.length);
-                        // console.log( '*** КОНЕЦ МАССИВА ***' );
-                        newarrValues.push(a);
-                        a = 0;
-                        // console.log('записали в новый массив количество единиц = ' + a);
-                    }
-                } else {
-                    // console.log(value + ' == 0');
-                    if ( a !== 0 ) {
-                        newarrValues.push(a);
-                        a = 0;
-                        // console.log('записали в новый массив количество единиц = ' + a);
-                    }
-                }
-                // newarrValues = [];
-            });
-            // console.log(newarrValues);
-            newarrRow.push(newarrValues);
-            newarrValues = [];
-            // console.groupEnd();
-        });
-        // console.log(newarrValues);
-        // console.log(newarrRow);
-        this.setState({
-            numLeft: newarrRow
-        })
-        // РАБОЧИЙ ПРИМЕР С ОДНОМЕРНЫМ МАССИВОМ
-        // let newarr = []
-        // let a = 0;
-        // console.log('длина массива = ' + arr.length);
-        // const my2 = arr.map((value, i) => {
-        //     console.log('цикл #' + i);
-        //     if ( arr[i] !== 0 ) {
-        //         console.log(arr[i] + ' != 0');
-        //         a += arr[i];
-        //         if ( i + 1 === arr.length ) {
-        //             console.log( 'конец массива' );
-        //             newarr.push(a);
-        //         }
-        //     } else {
-        //         console.log(arr[i] + ' == 0');
-        //         if ( a !== 0 ) {
-        //             newarr.push(a);
-        //         }
-        //         console.log('записали в новый массив количество единиц = ' + a);
-        //         a = 0;
-        //     }
-        // });
-        // console.log(newarr);
-        // КОНЕЦ
-
-
-
-
-
-
-
-
-        // ВЫВОДИМ В ЛЕВУЮ КОЛОНКУ КОЛИЧЕСТВО ЗАКРАШИВАЕМЫХ КЛЕТОК
-        function numTop(this2) {
-            let newArrRow = []
-            let newArrValues = []
+        function printNumLeft(this2) {
+            let newarrRow = []
+            let newarrValues = []
             let a = 0;
-            // console.log('строк в массиве = ' + this2.state.images['img' + this2.state.selected].arr.length);
-            this2.state.images['img' + this2.state.selected].arr.map((row, i) => {
+            // console.log('строк в массиве = ' + this.state.images['img' + this.state.selected].arr.length);
+            this2.state.images['img' + selectedImg].arr.map((row, i) => {
                 // console.group('СТРОКА #' + i);
                 // console.log(row);
                 row.map((value, j) => {
@@ -185,59 +86,114 @@ class App extends Component {
                         if ( j + 1 === row.length ) {
                             // console.log('значений в массиве = ' + row.length);
                             // console.log( '*** КОНЕЦ МАССИВА ***' );
-                            newArrValues.push(a);
+                            newarrValues.push(a);
                             a = 0;
                             // console.log('записали в новый массив количество единиц = ' + a);
                         }
                     } else {
                         // console.log(value + ' == 0');
                         if ( a !== 0 ) {
+                            newarrValues.push(a);
+                            a = 0;
+                            // console.log('записали в новый массив количество единиц = ' + a);
+                        }
+                    }
+                    // newarrValues = [];
+                });
+                // console.log(newarrValues);
+                newarrRow.push(newarrValues);
+                newarrValues = [];
+                // console.groupEnd();
+            });
+            // console.log(newarrValues);
+            // console.log(newarrRow);
+            this2.setState({
+                numLeft: newarrRow
+            })
+            // РАБОЧИЙ ПРИМЕР С ОДНОМЕРНЫМ МАССИВОМ
+            // let newarr = []
+            // let a = 0;
+            // console.log('длина массива = ' + arr.length);
+            // const my2 = arr.map((value, i) => {
+            //     console.log('цикл #' + i);
+            //     if ( arr[i] !== 0 ) {
+            //         console.log(arr[i] + ' != 0');
+            //         a += arr[i];
+            //         if ( i + 1 === arr.length ) {
+            //             console.log( 'конец массива' );
+            //             newarr.push(a);
+            //         }
+            //     } else {
+            //         console.log(arr[i] + ' == 0');
+            //         if ( a !== 0 ) {
+            //             newarr.push(a);
+            //         }
+            //         console.log('записали в новый массив количество единиц = ' + a);
+            //         a = 0;
+            //     }
+            // });
+            // console.log(newarr);
+        }
+        printNumLeft(this);
+        // КОНЕЦ
+
+
+
+
+
+
+
+
+        // ВЫВОДИМ В ВЕРХНЮЮ КОЛОНКУ КОЛИЧЕСТВО ЗАКРАШИВАЕМЫХ КЛЕТОК
+        function printNumTop(this2) {
+            let newArrRow = []
+            let newArrValues = []
+            let a = 0;
+            // let j = 1;
+            // console.log('строк в массиве = ' + arr.length);
+            let arr = this2.state.images['img' + selectedImg].arr;
+            for (var i = 0; i < arr[0].length; i++) {
+                // console.group('************* GROUP *************');
+                // console.log( arr );
+                for (var key in arr) {
+                    // console.group('ЦИКЛ #' + key);
+                    if ( arr[key][i] !== 0 ) {
+                        // console.log(arr[key][i] + ' != 0');
+                        a += arr[key][i];
+                        // console.log( key );
+                        // console.log( parseInt(key) + 1 );
+                        // console.log( arr.length );
+                        if ( parseInt(key) + 1 === arr.length ) {
+                            // console.log('+');
+                            newArrValues.push(a);
+                            a = 0;
+                            // console.log(newArrValues);
+                        }
+                    } else {
+                        // console.log(arr[key][i] + ' == 0');
+                        if ( a !== 0 ) {
                             newArrValues.push(a);
                             a = 0;
                             // console.log('записали в новый массив количество единиц = ' + a);
                         }
                     }
-                    // newArrValues = [];
-                });
+                    // console.groupEnd();
+                }
+                // console.log('записали в новый массив количество единиц = ' + a);
+                // a = 0;
                 // console.log(newArrValues);
                 newArrRow.push(newArrValues);
                 newArrValues = [];
                 // console.groupEnd();
-            });
-            // console.log(newArrValues);
+            }
             // console.log(newArrRow);
             this2.setState({
-                numLeft: newArrRow
+                numTop: newArrRow
             })
         }
-        numTop(this);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        printNumTop(this);
     }
+
     clickPaint(e) {
         this.setState({
             paint: true,
