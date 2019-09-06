@@ -101,7 +101,7 @@ class App extends Component {
         let newarrValues = []
         let a = 0;
         // console.log('строк в массиве = ' + this.state.images['img' + this.state.selected].arr.length);
-        const my2 = this.state.images['img' + this.state.selected].arr.map((row, i) => {
+        this.state.images['img' + this.state.selected].arr.map((row, i) => {
             // console.group('СТРОКА #' + i);
             // console.log(row);
             row.map((value, j) => {
@@ -160,6 +160,83 @@ class App extends Component {
         // });
         // console.log(newarr);
         // КОНЕЦ
+
+
+
+
+
+
+
+
+        // ВЫВОДИМ В ЛЕВУЮ КОЛОНКУ КОЛИЧЕСТВО ЗАКРАШИВАЕМЫХ КЛЕТОК
+        function numTop(this2) {
+            let newArrRow = []
+            let newArrValues = []
+            let a = 0;
+            // console.log('строк в массиве = ' + this2.state.images['img' + this2.state.selected].arr.length);
+            this2.state.images['img' + this2.state.selected].arr.map((row, i) => {
+                // console.group('СТРОКА #' + i);
+                // console.log(row);
+                row.map((value, j) => {
+                    // console.log('цикл #' + j);
+                    if ( value !== 0 ) {
+                        // console.log(value + ' != 0');
+                        a += value;
+                        if ( j + 1 === row.length ) {
+                            // console.log('значений в массиве = ' + row.length);
+                            // console.log( '*** КОНЕЦ МАССИВА ***' );
+                            newArrValues.push(a);
+                            a = 0;
+                            // console.log('записали в новый массив количество единиц = ' + a);
+                        }
+                    } else {
+                        // console.log(value + ' == 0');
+                        if ( a !== 0 ) {
+                            newArrValues.push(a);
+                            a = 0;
+                            // console.log('записали в новый массив количество единиц = ' + a);
+                        }
+                    }
+                    // newArrValues = [];
+                });
+                // console.log(newArrValues);
+                newArrRow.push(newArrValues);
+                newArrValues = [];
+                // console.groupEnd();
+            });
+            // console.log(newArrValues);
+            // console.log(newArrRow);
+            this2.setState({
+                numLeft: newArrRow
+            })
+        }
+        numTop(this);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
     clickPaint(e) {
         this.setState({
