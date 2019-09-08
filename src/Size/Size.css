@@ -1,0 +1,15 @@
+/* Размерность */
+.size {
+    display: flex;
+    margin-bottom: 30px;
+}
+.size__item {
+    margin-right: 10px;
+    cursor: pointer;
+}
+.size__item:hover {
+    text-decoration: underline;
+}
+.size__item.active {
+    text-decoration: underline;
+}

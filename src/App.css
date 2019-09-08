@@ -1,15 +1,34 @@
 body {
     background-color: #f1f1f1;
+    line-height: 1.2;
+    font-family: arial;
 }
 * {
     box-sizing: border-box;
 }
 .App {
     padding: 15px;
-    display: flex;
-    align-items: flex-start;
+    /* display: flex; */
+    /* align-items: flex-start; */
 }
-.list {
+h1 {
+    margin: 0 0 30px;
+    font-family: cursive;
+}
+
+
+/* ссылка вернуться назад к списку */
+.return-back-list {
+    margin-bottom: 30px;
+}
+.return-back-list:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+
+
+/* .list {
 	width: 200px;
     display: flex;
     align-items: center;
@@ -20,7 +39,7 @@ body {
 }
 .list__select {
     padding: 10px;
-}
+} */
 .App-link {
   color: #61dafb;
 }
@@ -120,7 +139,6 @@ div {
 }
 .grid__name {
     grid-area: cross-name;
-    text-align: center;
     font-size: 24px;
     font-weight: 700;
     font-style: italic;
