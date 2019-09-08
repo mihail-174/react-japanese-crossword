@@ -121,7 +121,8 @@ export default class Cross extends Component {
                 <div className='grid__content'>
                     <div className='cross'>
                         {
-                            state.selectedCross.arr.map(function(row, i) {
+                            // state.selectedCross.arr.map(function(row, i) {
+                            state[state.selectedSize][state.selectedCross].arr.map(function(row, i) {
                                 return (
                                     <div className='cross__row' key={i} data-index={i}>
                                         <div className='cross__row-inner'>

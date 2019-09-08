@@ -11,16 +11,33 @@ export default class List extends Component {
         const {context} = this.props;
         const state = context.state;
         const setAppState = context.methods.setAppState;
+
+        // let clearArrData = state[state.selectedSize][e.currentTarget.getAttribute('data-id')];
+        // state[state.selectedSize][e.currentTarget.getAttribute('data-id')].arr.map((row, index)=> {
+        //     row.map((value, j) => {
+        //         // console.log(value);
+        //         if ( value === 1 ) {
+        //             value = 0;
+        //         }
+        //         console.log(value);
+        //     });
+        //     console.log(row);
+        // });
+        // console.log(clearArrData);
         setAppState({
-            selectedCross: state[state.selectedSize][e.currentTarget.getAttribute('data-index')]
+            selectedCross: e.currentTarget.getAttribute('data-id'),
+            selectedCrossData: state[state.selectedSize][e.currentTarget.getAttribute('data-id')]
+            // selectedCross: state[state.selectedSize][e.currentTarget.getAttribute('data-id')]
         });
+        localStorage.setItem('cross_' + state.selectedSize + '_id-' + e.currentTarget.getAttribute('data-id'), JSON.stringify( state[state.selectedSize][e.currentTarget.getAttribute('data-id')] ) );
+
         // ВЫВОДИМ В ЛЕВУЮ КОЛОНКУ КОЛИЧЕСТВО ЗАКРАШИВАЕМЫХ КЛЕТОК
         function printNumLeft() {
             let newarrRow = []
             let newarrValues = []
             let a = 0;
             // console.log('строк в массиве = ' + this.state.images['img' + this.state.selected].arr.length);
-            state[state.selectedSize][e.currentTarget.getAttribute('data-index')].arr.map((row, i) => {
+            state[state.selectedSize][e.currentTarget.getAttribute('data-id')].arr.map((row, i) => {
                 // console.group('СТРОКА #' + i);
                 // console.log(row);
                 row.map((value, j) => {
@@ -89,7 +106,7 @@ export default class List extends Component {
             let a = 0;
             // let j = 1;
             // console.log('строк в массиве = ' + arr.length);
-            let arr = state[state.selectedSize][e.currentTarget.getAttribute('data-index')].arr;
+            let arr = state[state.selectedSize][e.currentTarget.getAttribute('data-id')].arr;
             for (var i = 0; i < arr[0].length; i++) {
                 // console.group('************* GROUP *************');
                 // console.log( arr );
@@ -138,7 +155,7 @@ export default class List extends Component {
         const newthis = this;
         const list = state[state.selectedSize].map(function(item, i) {
             return (
-                <div key={i} data-index={i} className='list__item' onClick={newthis.click}>
+                <div key={i} data-id={i} className='list__item' onClick={newthis.click}>
                     <div className='list__img'></div>
                     <div className='list__info'>
                         <div className='list__name'>{item.name}</div>

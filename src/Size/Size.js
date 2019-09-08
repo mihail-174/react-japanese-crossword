@@ -30,7 +30,14 @@ export default class Size extends Component {
         const newthis = this;
         const list = state.size.map(function(item, i) {
             return (
-                <div key={i} data-name={item.systemName} className='size__item' onClick={newthis.click}>
+                <div
+                    key={i}
+                    data-name={item.systemName}
+                    className={
+                        state.selectedSize === item.systemName ? 'size__item active' : 'size__item'
+                    }
+                    onClick={newthis.click}
+                >
                     {item.name}
                 </div>
             )
@@ -40,10 +47,6 @@ export default class Size extends Component {
                 {list}
             </div>
         )
-    }
-
-    componentDidMount() {
-        document.querySelectorAll('.size__item')[0].classList.add('active');
     }
 
 }

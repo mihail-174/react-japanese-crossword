@@ -7,9 +7,10 @@ import Cross from './Cross/Cross';
 const Context = React.createContext()
 
 let initialState = {
-    selected: 0,
+    // selected: 0,
     selectedSize: 'small',
     selectedCross: null,
+    selectedCrossData: null,
     paint: false,
     blank: false,
     delete: false,
@@ -32,10 +33,10 @@ let initialState = {
     ],
     small: [
         {
+            id: 0,
             name: 'smile',
             width: 5,
             height: 5,
-            size: 'small',
             arr: [
                 [1,1,1,1,1],
                 [1,0,1,0,1],
@@ -45,10 +46,10 @@ let initialState = {
             ]
         },
         {
+            id: 1,
             name: 'раз',
             width: 10,
             height: 5,
-            size: 'small',
             arr: [
                 [1,1,1,1,1],
                 [1,0,1,0,1],
@@ -58,10 +59,10 @@ let initialState = {
             ]
         },
         {
+            id: 2,
             name: 'два',
             width: 10,
             height: 5,
-            size: 'small',
             arr: [
                 [1,1,1,1,1],
                 [1,0,1,0,1],
@@ -73,10 +74,10 @@ let initialState = {
     ],
     medium: [
         {
+            id: 0,
             name: 'batman',
             width: 5,
             height: 5,
-            size: 'medium',
             arr: [
                 [1,0,0,0,1],
                 [1,1,1,1,1],
@@ -88,10 +89,10 @@ let initialState = {
     ],
     big: [
         {
+            id: 0,
             name: 'Кораблик',
             width: 10,
             height: 10,
-            size: 'big',
             arr: [
                 [1,1,0,0,1,0,0,0,0,0],
                 [1,0,0,0,1,1,0,0,0,0],
@@ -201,9 +202,9 @@ class App extends Component {
                     }
 
                     {
-                        // <pre>
-                        // {JSON.stringify(this.state, "", 4)}
-                        // </pre>
+                        <pre>
+                        {JSON.stringify(this.state, "", 4)}
+                        </pre>
                     }
 
                 </div>
