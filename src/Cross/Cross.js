@@ -8,7 +8,7 @@ export default class Cross extends Component {
 
     constructor(props) {
         super(props);
-        this.check = this.check.bind(this);
+        // this.check = this.check.bind(this);
         this.clickCell = this.clickCell.bind(this);
         this.clickPaint = this.clickPaint.bind(this);
         this.clickBlank = this.clickBlank.bind(this);
@@ -19,6 +19,10 @@ export default class Cross extends Component {
     clickPaint(e) {
         const {context} = this.props;
         const setAppState = context.methods.setAppState;
+        document.querySelectorAll('.btns .btn').forEach(item => {
+            item.classList.remove('active');
+        })
+        e.currentTarget.classList.add('active');
         setAppState({
             paint: true,
             blank: false,
@@ -34,6 +38,10 @@ export default class Cross extends Component {
             blank: true,
             delete: false,
         });
+        document.querySelectorAll('.btns .btn').forEach(item => {
+            item.classList.remove('active');
+        })
+        e.currentTarget.classList.add('active');
     }
 
     clickDelete(e) {
@@ -44,6 +52,10 @@ export default class Cross extends Component {
             blank: false,
             delete: true,
         });
+        document.querySelectorAll('.btns .btn').forEach(item => {
+            item.classList.remove('active');
+        })
+        e.currentTarget.classList.add('active');
     }
 
     clickSave() {
@@ -146,42 +158,41 @@ export default class Cross extends Component {
 
     }
 
-    check (e) {
-        const {context} = this.props;
-        const state = context.state;
-        const setAppState = context.methods.setAppState;
-
-        console.clear();
-        // console.log( e.currentTarget );
-        var rows = document.querySelectorAll('.cross__row');
-        // console.log( rows );
-        outer: for (var i = 0; i < rows.length; i++) {
-            var cells = rows[i].querySelectorAll('.cross__cell');
-            for (var j = 0; j < cells.length; j++) {
-                    // console.log( cells[j] );
-                    if ( parseInt(cells[j].getAttribute('data-type'), 0) === state.selectedCrossData[i][j] ) {
-                        if ( cells[j].classList.contains('paint') ) {
-                            // console.log( 'row ' + i + ' | cell ' + j + ' — ' + this.state.pic1.arr[i][j] + ' | ' + parseInt(cells[j].getAttribute('data-type'), 0) + ' = ура' );
-                            setAppState({
-                                result: true
-                            });
-                        }
-                    } else {
-                        // console.log( 'row ' + i + ' | cell ' + j + ' — ' + this.state.pic1.arr[i][j] + ' | ' + parseInt(cells[j].getAttribute('data-type'), 0) + ' = ура' );
-                        setAppState({
-                            result: false
-                        });
-                        break outer;
-                    }
-            }
-        }
-        document.querySelector('.grid__result').classList.add('active')
-        setTimeout(
-            function() {
-                document.querySelector('.grid__result').classList.remove('active')
-            }, 2000
-        );
-    }
+    // check (e) {
+    //     const {context} = this.props;
+    //     const state = context.state;
+    //     const setAppState = context.methods.setAppState;
+    //     console.clear();
+    //     // console.log( e.currentTarget );
+    //     var rows = document.querySelectorAll('.cross__row');
+    //     // console.log( rows );
+    //     outer: for (var i = 0; i < rows.length; i++) {
+    //         var cells = rows[i].querySelectorAll('.cross__cell');
+    //         for (var j = 0; j < cells.length; j++) {
+    //                 // console.log( cells[j] );
+    //                 if ( parseInt(cells[j].getAttribute('data-type'), 0) === state.selectedCrossData[i][j] ) {
+    //                     if ( cells[j].classList.contains('paint') ) {
+    //                         // console.log( 'row ' + i + ' | cell ' + j + ' — ' + this.state.pic1.arr[i][j] + ' | ' + parseInt(cells[j].getAttribute('data-type'), 0) + ' = ура' );
+    //                         setAppState({
+    //                             result: true
+    //                         });
+    //                     }
+    //                 } else {
+    //                     // console.log( 'row ' + i + ' | cell ' + j + ' — ' + this.state.pic1.arr[i][j] + ' | ' + parseInt(cells[j].getAttribute('data-type'), 0) + ' = ура' );
+    //                     setAppState({
+    //                         result: false
+    //                     });
+    //                     break outer;
+    //                 }
+    //         }
+    //     }
+    //     document.querySelector('.grid__result').classList.add('active')
+    //     setTimeout(
+    //         function() {
+    //             document.querySelector('.grid__result').classList.remove('active')
+    //         }, 2000
+    //     );
+    // }
 
     render() {
         const {context} = this.props;
@@ -226,17 +237,6 @@ export default class Cross extends Component {
                     <div className='cross'>
                         {crossList}
                     </div>
-                    {
-                        !localStorage.getItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done' )
-                        &&
-                            <div className='btns'>
-                                <button className='btn btn_check' title='Проверить решение' onClick={this.check}>CHECK</button>
-                                <button className='btn btn_save' title='Сохранить изменения' onClick={this.clickSave}>Сохранить изменения</button>
-                                <button className='btn btn_paint' title='Закрасить ячейку' onClick={this.clickPaint}>Закрасить</button>
-                                <button className='btn btn_blank' title='Пометить ячейку как пустую' onClick={this.clickBlank}>Крестик</button>
-                                <button className='btn btn_delete' title='Очистить ячейку' onClick={this.clickDelete}>удалить</button>
-                            </div>
-                    }
                     <div className='grid__result'>
                         {
                             state.result
@@ -247,8 +247,37 @@ export default class Cross extends Component {
                         }
                     </div>
                 </div>
+                <div className='grid__btns-control'>
+                    {
+                        !localStorage.getItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done' )
+                        &&
+                            <div className='btns'>
+                                {/*<button className='btn btn_check' title='Проверить решение' onClick={this.check}>CHECK</button>*/}
+                                <button className='btn btn_save' title='Сохранить изменения' onClick={this.clickSave}>Сохранить изменения</button>
+                                <button className='btn btn_paint' title='Закрасить ячейку' onClick={this.clickPaint}>Закрасить</button>
+                                <button className='btn btn_blank' title='Пометить ячейку как пустую' onClick={this.clickBlank}>Крестик</button>
+                                <button className='btn btn_delete' title='Очистить ячейку' onClick={this.clickDelete}>удалить</button>
+                            </div>
+                    }
+                </div>
+
             </div>
         )
+    }
+
+    componentDidMount() {
+
+        document.querySelectorAll('.cross__cell').forEach(item=>{
+            item.addEventListener('mouseenter', () => {
+                let row = item.parentNode.parentNode.getAttribute('data-index');
+                let col = item.getAttribute('data-index');
+                console.log(row + ' | ' + col);
+                item.classList.add('hover');
+            });
+        })
+
+        // document.querySelectorAll('.cross__cell')[0].addEventListener("click", handler);
+
     }
 
 }

@@ -17,15 +17,18 @@ h1 {
     margin: 0 0 30px;
     font-family: cursive;
 }
-
+a {
+    text-decoration: underline;
+}
 
 /* ссылка вернуться назад к списку */
 .return-back-list {
+    text-decoration: underline;
     margin-bottom: 30px;
+    cursor: pointer;
 }
 .return-back-list:hover {
-    text-decoration: underline;
-    cursor: pointer;
+    text-decoration: none;
 }
 
 /* статус */
@@ -94,29 +97,33 @@ div {
     opacity: 1;
     visibility: visible;
 }
-.btns {
+/* .btns {
 	position: absolute;
 	top: 0;
 	right: -72px;
-}
+} */
 .btn {
     display: inline-block;
-    padding: 5px;
-    margin-bottom: 10px;
+    padding: 0;
+    margin-bottom: 5px;
     text-indent: -999999px;
     border: 1px solid gray;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 60px;
-    height: 60px;
+    width: 48px;
+    height: 48px;
     cursor: pointer;
     transition: all 0.25s ease-in-out;
     background-position: center;
     background-repeat: no-repeat;
+    background-size: 32px;
     border-radius: 5px;
 }
 .btn:hover {
+    background-color: rgba(0,0,0,0.1);
+}
+.btn.active {
     background-color: rgba(0,0,0,0.1);
 }
 .btn_check {
@@ -129,7 +136,7 @@ div {
     background-image: url(/blank.png);
 }
 .btn_delete {
-    background-image: url(/delete.png);
+    background-image: url(/eraser.png);
 }
 .btn_save {
     background-image: url(/save.png);
@@ -137,12 +144,17 @@ div {
 
 .grid {
     display: grid;
-    grid-template-columns: auto auto 100%;
+    /* grid-template-columns: auto auto 100%; */
+    grid-template-columns: 0fr 0fr 0fr;
     grid-template-rows: auto;
-    grid-template-areas: 'cross-name cross-name'
+    /* grid-template-areas: 'cross-name cross-name'
                         ". cross-num-top"
-                        "cross-num-left cross-content";
+                        "cross-num-left cross-content"; */
+    grid-template-areas: "cross-name cross-name cross-name"
+                         ". cross-num-top ."
+                         " cross-num-left cross-content cross-btns-control";
     grid-gap: 0;
+    align-items: flex-start;
 }
 .grid__name {
     grid-area: cross-name;
@@ -171,6 +183,10 @@ div {
     border-width: 2px;
     border-color: #000;
     border-style: solid;
+}
+.grid__btns-control {
+    margin-left: 15px;
+    grid-area: cross-btns-control;
 }
 
 
