@@ -5,7 +5,6 @@ export default class NumLeft extends Component {
     render() {
         const {context} = this.props;
         const state = context.state;
-        const setAppState = context.methods.setAppState;
 
         const list = state.numLeft.map(function(row, i) {
             return (

@@ -9,15 +9,15 @@ export default class Size extends Component {
 
     click(e){
         const {context} = this.props;
-        const state = context.state;
         const setAppState = context.methods.setAppState;
         setAppState({
             selectedSize: e.currentTarget.getAttribute('data-name'),
             selectedCross: null,
+            selectedCrossName: null,
+            selectedCrossData: null,
             numTop: null,
             numLeft: null
         });
-
         document.querySelectorAll('.size__item').forEach(function(item, i) {
             item.classList.remove('active')
         });

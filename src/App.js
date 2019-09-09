@@ -7,9 +7,9 @@ import Cross from './Cross/Cross';
 const Context = React.createContext()
 
 let initialState = {
-    // selected: 0,
     selectedSize: 'small',
     selectedCross: null,
+    selectedCrossName: null,
     selectedCrossData: null,
     paint: false,
     blank: false,
@@ -167,6 +167,8 @@ class App extends Component {
     returnBackList() {
         this.setState({
             selectedCross: null,
+            selectedCrossName: null,
+            selectedCrossData: null,
             numTop: null,
             numLeft: null
         })

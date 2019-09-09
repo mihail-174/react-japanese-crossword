@@ -1,0 +1,47 @@
+.cross {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.cross__row {
+    width: 100%;
+}
+.cross__row-inner {
+    display: flex;
+}
+.cross__cell {
+    border-right: 1px solid grey;
+    border-bottom: 1px solid grey;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: grey;
+    flex: 0 0 auto;
+}
+.cross__cell:nth-child(5n) {
+    border-right-width: 2px;
+    /* border-color: #000; */
+}
+.cross__row:nth-child(5n) .cross__cell {
+    border-bottom-width: 2px;
+    /* border-color: #000; */
+}
+.cross__cell:last-child {
+    border-right: none;
+}
+.cross__row:last-child .cross__cell {
+    border-bottom: none;
+}
+.cross__cell.active {
+    background-color: gray;
+    color: lightgray;
+}
+.cross__cell.paint {
+    background-color: black;
+}
+.cross__cell.blank {
+    background: url(/blank.png) 0 0 no-repeat;
+    background-size: 30px;
+}

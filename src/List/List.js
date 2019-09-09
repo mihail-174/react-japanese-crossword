@@ -12,24 +12,35 @@ export default class List extends Component {
         const state = context.state;
         const setAppState = context.methods.setAppState;
 
-        // let clearArrData = state[state.selectedSize][e.currentTarget.getAttribute('data-id')];
-        // state[state.selectedSize][e.currentTarget.getAttribute('data-id')].arr.map((row, index)=> {
-        //     row.map((value, j) => {
-        //         // console.log(value);
-        //         if ( value === 1 ) {
-        //             value = 0;
-        //         }
-        //         console.log(value);
-        //     });
-        //     console.log(row);
-        // });
-        // console.log(clearArrData);
+        let arrOld = state[state.selectedSize][e.currentTarget.getAttribute('data-id')];
+        let selectedCrossData = arrOld.arr.map((row, index)=> {
+            let newNewArr = row.map((value, j) => {
+                if ( value === 1 ) {
+                    value = 2;
+                }
+                if ( value === 0 ) {
+                    value = 2;
+                }
+                return value;
+            });
+            return newNewArr;
+        });
         setAppState({
             selectedCross: e.currentTarget.getAttribute('data-id'),
-            selectedCrossData: state[state.selectedSize][e.currentTarget.getAttribute('data-id')]
+            selectedCrossName: state[state.selectedSize][e.currentTarget.getAttribute('data-id')].name,
+            // selectedCrossData
             // selectedCross: state[state.selectedSize][e.currentTarget.getAttribute('data-id')]
         });
-        localStorage.setItem('cross_' + state.selectedSize + '_id-' + e.currentTarget.getAttribute('data-id'), JSON.stringify( state[state.selectedSize][e.currentTarget.getAttribute('data-id')] ) );
+        if ( localStorage.getItem('cross_' + state.selectedSize + '_id-' + e.currentTarget.getAttribute('data-id')) ) {
+            setAppState({
+                selectedCrossData: JSON.parse( localStorage.getItem('cross_' + state.selectedSize + '_id-' + e.currentTarget.getAttribute('data-id')) )
+            });
+        } else {
+            setAppState({
+                selectedCrossData
+            });
+            // localStorage.setItem('cross_' + state.selectedSize + '_id-' + e.currentTarget.getAttribute('data-id'), JSON.stringify( selectedCrossData ) );
+        }
 
         // ВЫВОДИМ В ЛЕВУЮ КОЛОНКУ КОЛИЧЕСТВО ЗАКРАШИВАЕМЫХ КЛЕТОК
         function printNumLeft() {
@@ -60,11 +71,13 @@ export default class List extends Component {
                             // console.log('записали в новый массив количество единиц = ' + a);
                         }
                     }
+                    return true;
                     // newarrValues = [];
                 });
                 // console.log(newarrValues);
                 newarrRow.push(newarrValues);
                 newarrValues = [];
+                return true;
                 // console.groupEnd();
             });
             // console.log(newarrValues);
@@ -160,6 +173,13 @@ export default class List extends Component {
                     <div className='list__info'>
                         <div className='list__name'>{item.name}</div>
                         <div className='list__size'>{item.width}x{item.height}</div>
+                    </div>
+                    <div className='list__status'>
+                        {
+                            localStorage.getItem('cross_' + state.selectedSize + '_id-' + i + '_done' )
+                            &&
+                            <div className='status status_done'></div>
+                        }
                     </div>
                 </div>
             )

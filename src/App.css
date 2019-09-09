@@ -26,7 +26,15 @@ h1 {
     cursor: pointer;
 }
 
-
+/* статус */
+.status_done {
+    width: 24px;
+    height: 24px;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    background-image: url(/check.png);
+    background-size: 24px;
+}
 
 /* .list {
 	width: 200px;
@@ -63,12 +71,6 @@ div {
     background-color: red !important;
 }
 
-.paint {
-	background-color: black;
-}
-.blank {
-	background: url(/blank.png) 0 0 no-repeat;
-}
 .grid__result {
     position: absolute;
     z-index: 1;
@@ -127,6 +129,9 @@ div {
 .btn_delete {
     background-image: url(/delete.png);
 }
+.btn_save {
+    background-image: url(/save.png);
+}
 
 .grid {
     display: grid;
@@ -177,8 +182,8 @@ div {
 	display: flex;
 }
 .num__value {
-	width: 61px;
-	height: 61px;
+	width: 31px;
+	height: 31px;
     background-color: #fff;
     display: flex;
 	align-items: center;
@@ -210,48 +215,6 @@ div {
 }
 
 
-.cross {
-	display: flex;
-	flex-wrap: wrap;
-    width: 100%;
-}
-.cross__row {
-	width: 100%;
-}
-.cross__row-inner {
-    display: flex;
-}
-.cross__cell {
-    border-right: 1px solid grey;
-    border-bottom: 1px solid grey;
-    width: 60px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    /* margin: 0 -1px -1px 0; */
-    color: grey;
-    flex: 0 0 auto;
-    /* padding: 19px 0; */
-}
-.cross__cell:nth-child(5n) {
-	border-right-width: 2px;
-    border-color: #000;
-}
-.cross__row:nth-child(5n) .cross__cell {
-	border-bottom-width: 2px;
-    border-color: #000;
-}
-.cross__cell:last-child {
-    border-right: none;
-}
-.cross__row:last-child .cross__cell {
-    border-bottom: none;
-}
-.cross__cell.active {
-    background-color: gray;
-    color: lightgray;
-}
 /* td {
     border: 1px solid;
     width: 50px;

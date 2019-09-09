@@ -31,7 +31,9 @@
     background-color: lightgray;
     margin-right: 15px;
 }
-.list__info {}
+.list__info {
+    flex: 1;
+}
 .list__name {
     font-weight: 700;
     margin-bottom: 2px;
