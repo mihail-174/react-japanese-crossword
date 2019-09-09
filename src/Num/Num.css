@@ -1,0 +1,40 @@
+.num {
+    width: 100%;
+    display: flex;
+}
+.num__row,
+.num__col {
+    display: flex;
+}
+.num__value {
+    width: 31px;
+    height: 31px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.num_top .num__col  {
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+}
+.num_top .num__value  {
+    border-top: 1px solid grey;
+    border-left: 1px solid grey;
+    border-right: 1px solid grey;
+    margin-right: -1px;
+}
+
+.num_left  {
+    flex-direction: column;
+    align-items: flex-end;
+}
+.num_left .num__row  {}
+.num_left .num__value  {
+    border-top: 1px solid grey;
+    border-left: 1px solid grey;
+    border-bottom: 1px solid grey;
+    margin-bottom: -1px;
+}

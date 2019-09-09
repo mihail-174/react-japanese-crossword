@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import NumTop from '../NumTop';
-import NumLeft from '../NumLeft';
+import NumTop from '../Num/NumTop';
+import NumLeft from '../Num/NumLeft';
 import './Cross.css';
+import '../Num/Num.css';
 
 export default class Cross extends Component {
 

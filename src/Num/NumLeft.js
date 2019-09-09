@@ -8,7 +8,7 @@ export default class NumLeft extends Component {
 
         const list = state.numLeft.map(function(row, i) {
             return (
-                <div key={i} className='num__col'>
+                <div key={i} className='num__row'>
                     {
                         row.map((value, index) => {
                             return (
