@@ -41,12 +41,26 @@ a {
     background-size: 24px;
 } */
 .status_done {
-    width: 24px;
-    height: 24px;
+    width: 16px;
+    height: 16px;
     background-position: 0 0;
     background-repeat: no-repeat;
     background-image: url(/check.png);
-    background-size: 24px;
+    background-size: 16px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+.status_not-resolved {
+    width: 16px;
+    height: 16px;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    background-image: url(/pencil.svg);
+    background-size: 16px;
     position: absolute;
     top: 0;
     left: 0;

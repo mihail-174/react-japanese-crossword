@@ -169,23 +169,31 @@ export default class List extends Component {
         const list = state[state.selectedSize].map(function(item, i) {
             return (
                 <div key={i} data-id={i} className='list__item' onClick={newthis.click}>
+                    <div className='list__status'>
+                        {
+                            localStorage.getItem('cross_' + state.selectedSize + '_id-' + i + '_done' )
+                            &&
+                                <div className='status status_done'></div>
+                        }
+                        {
+                            !localStorage.getItem('cross_' + state.selectedSize + '_id-' + i + '_done' )
+                            &&
+                                <div className='status status_not-resolved'></div>
+                        }
+                    </div>
+                    {/*
                     <div className='list__img'>
                         {
                             localStorage.getItem('cross_' + state.selectedSize + '_id-' + i + '_done' )
                             &&
                                 <img src={process.env.PUBLIC_URL + '/icons-' + state.selectedSize + '/' + i + '.png'} alt='' />
                         }
-                        {
-                            localStorage.getItem('cross_' + state.selectedSize + '_id-' + i + '_done' )
-                            &&
-                                <div className='status status_done'></div>
-                        }
                     </div>
+                    */}
                     <div className='list__info'>
                         <div className='list__name'>{item.name}</div>
                         <div className='list__size'>{item.width}x{item.height}</div>
                     </div>
-                    {/*<div className='list__status'></div>*/}
                 </div>
             )
         })

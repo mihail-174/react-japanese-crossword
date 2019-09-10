@@ -37,12 +37,17 @@
     max-width: 100%;
     max-height: 100%;
 }
+.list__status {}
 .list__info {
     flex: 1;
+    padding-left: 25px;
+    display: flex;
 }
 .list__name {
     font-weight: 700;
-    margin-bottom: 2px;
+    /* margin-bottom: 2px; */
+    margin-right: 30px;
+    flex: 1;
 }
 .list__size {
     color: darkgray;
