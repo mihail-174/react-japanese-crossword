@@ -10,6 +10,12 @@ let initialState = {
     selectedSize: 'small',
     selectedCross: null,
     selectedCrossName: null,
+    selectedCrossChange: false,
+    selectedCrossTime: {
+        h: 0,
+        m: 0,
+        s: 0
+    },
     selectedCrossData: null,
     paint: false,
     blank: false,
@@ -186,7 +192,13 @@ class App extends Component {
         this.setState({
             selectedCross: null,
             selectedCrossName: null,
+            selectedCrossChange: false,
             selectedCrossData: null,
+            selectedCrossTime: {
+                h: 0,
+                m: 0,
+                s: 0
+            },
             numTop: null,
             numLeft: null
         })

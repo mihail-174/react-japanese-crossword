@@ -151,6 +151,7 @@ div {
                         ". cross-num-top"
                         "cross-num-left cross-content"; */
     grid-template-areas: "cross-name cross-name cross-name"
+                        "cross-time cross-time cross-time"
                          ". cross-num-top ."
                          " cross-num-left cross-content cross-btns-control";
     grid-gap: 0;
@@ -162,6 +163,23 @@ div {
     font-weight: 700;
     font-style: italic;
     margin-bottom: 15px;
+}
+.grid__time {
+    grid-area: cross-time;
+    font-size: 14px;
+    margin-bottom: 30px;
+    padding-left: 20px;
+}
+.grid__time:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    margin: auto;
+    width: 16px;
+    height: 16px;
+    background: url(/time.png) 0 0 no-repeat;
 }
 .grid__num-top {
     grid-area: cross-num-top;

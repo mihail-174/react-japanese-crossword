@@ -41,6 +41,11 @@ export default class List extends Component {
             });
             // localStorage.setItem('cross_' + state.selectedSize + '_id-' + e.currentTarget.getAttribute('data-id'), JSON.stringify( selectedCrossData ) );
         }
+        if ( localStorage.getItem('cross_' + state.selectedSize + '_id-' + e.currentTarget.getAttribute('data-id') + '_time') ) {
+            setAppState({
+                selectedCrossTime: JSON.parse( localStorage.getItem('cross_' + state.selectedSize + '_id-' + e.currentTarget.getAttribute('data-id') + '_time') )
+            });
+        }
 
         // ВЫВОДИМ В ЛЕВУЮ КОЛОНКУ КОЛИЧЕСТВО ЗАКРАШИВАЕМЫХ КЛЕТОК
         function printNumLeft() {
