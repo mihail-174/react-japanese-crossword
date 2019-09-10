@@ -216,15 +216,15 @@ class App extends Component {
                             </div>
                     }
                     {
-                        this.state.selectedCross !== null
+                        this.state.selectedCrossData !== null
                         &&
                         <Cross context={context} />
                     }
 
                     {
-                        <pre>
-                        {JSON.stringify(this.state, "", 4)}
-                        </pre>
+                        // <pre>
+                        // {JSON.stringify(this.state, "", 4)}
+                        // </pre>
                     }
 
                 </div>

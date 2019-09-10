@@ -266,18 +266,28 @@ export default class Cross extends Component {
     }
 
     componentDidMount() {
-
         document.querySelectorAll('.cross__cell').forEach(item=>{
             item.addEventListener('mouseenter', () => {
-                let row = item.parentNode.parentNode.getAttribute('data-index');
-                let col = item.getAttribute('data-index');
-                console.log(row + ' | ' + col);
-                item.classList.add('hover');
+                let rowId = item.parentNode.parentNode.getAttribute('data-index');
+                let colId = item.getAttribute('data-index');
+                document.querySelectorAll('.cross__row')[rowId].querySelectorAll('.cross__cell').forEach(colItem=>{
+                    colItem.classList.add('hover');
+                });
+                document.querySelectorAll('.cross__row').forEach((row, i)=>{
+                    row.querySelectorAll('.cross__cell')[parseInt(colId)].classList.add('hover');
+                });
+            });
+            item.addEventListener('mouseleave', () => {
+                let rowId = item.parentNode.parentNode.getAttribute('data-index');
+                let colId = item.getAttribute('data-index');
+                document.querySelectorAll('.cross__row')[rowId].querySelectorAll('.cross__cell').forEach(colItem=>{
+                    colItem.classList.remove('hover');
+                });
+                document.querySelectorAll('.cross__row').forEach((row, i)=>{
+                    row.querySelectorAll('.cross__cell')[parseInt(colId)].classList.remove('hover');
+                });
             });
         })
-
-        // document.querySelectorAll('.cross__cell')[0].addEventListener("click", handler);
-
     }
 
 }

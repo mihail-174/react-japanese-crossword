@@ -14,11 +14,8 @@
     border-bottom: 1px solid grey;
     width: 30px;
     height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: grey;
     flex: 0 0 auto;
+    cursor: pointer;
 }
 .cross__cell:nth-child(5n) {
     border-right-width: 2px;
@@ -44,4 +41,17 @@
 .cross__cell.blank {
     background: url(/blank.png) 0 0 no-repeat;
     background-size: 30px;
+}
+/* .cross__cell.hover {
+	background-color: aliceblue;
+} */
+.cross__cell.hover::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	right: 0;
+	background-color: rgba(0,0,0,0.1);
 }
