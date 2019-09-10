@@ -4,6 +4,41 @@ import NumLeft from '../Num/NumLeft';
 import './Cross.css';
 import '../Num/Num.css';
 
+
+// let timer = 0;
+// let sec = 0;
+// timer = setInterval(function(){
+//     sec++;
+//     console.log(sec);
+// }, 1000);
+// clearInterval(timer)
+
+// КОНВЕРТИРОВАТЬ СЕКУНДЫ В HH-MM-SS
+// ВАРИАНТ 1
+// var date = new Date(null);
+// date.setSeconds(sec); // specify value for SECONDS here
+// var result = date.toISOString().substr(11, 8);
+// console.log( result );
+// ВАРИАНТ 2
+// console.log( new Date(sec * 1000).toISOString().substr(11, 8) );
+// ВАРИАНТ 3
+// let totalSeconds = 28565;
+// let hours = Math.floor(totalSeconds / 3600);
+// totalSeconds %= 3600;
+// let minutes = Math.floor(totalSeconds / 60);
+// let seconds = totalSeconds % 60;
+// console.log("hours: " + hours);
+// console.log("minutes: " + minutes);
+// console.log("seconds: " + seconds);
+// // If you want strings with leading zeroes:
+// minutes = String(minutes).padStart(2, "0");
+// hours = String(hours).padStart(2, "0");
+// seconds = String(seconds).padStart(2, "0");
+// console.log(hours + ":" + minutes + ":" + seconds);
+
+let timer = 0;
+let totalCrossSeconds = 0;
+
 export default class Cross extends Component {
 
     constructor(props) {
@@ -14,6 +49,43 @@ export default class Cross extends Component {
         this.clickBlank = this.clickBlank.bind(this);
         this.clickDelete = this.clickDelete.bind(this);
         this.clickSave = this.clickSave.bind(this);
+        this.clickStartTimer = this.clickStartTimer.bind(this);
+    }
+
+    clickStartTimer() {
+        const {context} = this.props;
+        const state = context.state;
+        const setAppState = context.methods.setAppState;
+        timer = setInterval(function(){
+            totalCrossSeconds++;
+            // console.log(totalCrossSeconds);
+            let newSeconds = Math.floor( (state.selectedCrossTime.h * 60 * 60) + (state.selectedCrossTime.m * 60) + state.selectedCrossTime.s );
+            // console.log( newSeconds );
+            newSeconds += totalCrossSeconds;
+            // console.log( newSeconds );
+            //======================
+            let hours = Math.floor(newSeconds / 3600);
+                newSeconds %= 3600;
+            let minutes = Math.floor(newSeconds / 60);
+            let seconds = newSeconds % 60;
+            // console.log("hours: " + hours);
+            // console.log("minutes: " + minutes);
+            // console.log("seconds: " + seconds);
+            // If you want strings with leading zeroes:
+            // hours = String(hours).padStart(2, "0");
+            // minutes = String(minutes).padStart(2, "0");
+            // seconds = String(seconds).padStart(2, "0");
+            // console.log(hours + ":" + minutes + ":" + seconds);
+            //======================
+            setAppState({
+                selectedCrossTime: {
+                    h: hours,
+                    m: minutes,
+                    s: seconds
+                }
+            });
+        }, 1000);
+        totalCrossSeconds = 0;
     }
 
     clickPaint(e) {
@@ -62,6 +134,7 @@ export default class Cross extends Component {
         const {context} = this.props;
         const state = context.state;
         localStorage.setItem('cross_' + state.selectedSize + '_id-' + state.selectedCross, JSON.stringify( state.selectedCrossData ) );
+        localStorage.setItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_time', JSON.stringify( state.selectedCrossTime ) );
     }
 
     clickCell(e) {
@@ -72,16 +145,34 @@ export default class Cross extends Component {
             e.currentTarget.classList.add('paint');
             e.currentTarget.classList.remove('blank');
             e.currentTarget.setAttribute('data-type', 1);
+            if ( state.selectedCrossChange === false ) {
+                this.clickStartTimer();
+                setAppState({
+                    selectedCrossChange: true
+                })
+            }
         }
         if ( state.blank ) {
             e.currentTarget.classList.add('blank');
             e.currentTarget.classList.remove('paint');
             e.currentTarget.setAttribute('data-type', 0);
+            if ( state.selectedCrossChange === false ) {
+                this.clickStartTimer();
+                setAppState({
+                    selectedCrossChange: true
+                })
+            }
         }
         if ( state.delete ) {
             e.currentTarget.classList.remove('paint');
             e.currentTarget.classList.remove('blank');
             e.currentTarget.removeAttribute('data-type');
+            if ( state.selectedCrossChange === false ) {
+                this.clickStartTimer();
+                setAppState({
+                    selectedCrossChange: true
+                })
+            }
         }
 
         let selectedCrossDataNew = state.selectedCrossData;
@@ -227,6 +318,7 @@ export default class Cross extends Component {
         return (
             <div className="grid">
                 <div className='grid__name'>{state.selectedCrossName}</div>
+                <div className='grid__time'>{String(state.selectedCrossTime.h).padStart(2, "0") + ':' + String(state.selectedCrossTime.m).padStart(2, "0") + ':' + String(state.selectedCrossTime.s).padStart(2, "0")}</div>
                 <div className='grid__num-top'>
                     <NumTop context={context} />
                 </div>
@@ -279,5 +371,16 @@ export default class Cross extends Component {
         // document.querySelectorAll('.cross__cell')[0].addEventListener("click", handler);
 
     }
+
+    componentWillUnmount() {
+        const {context} = this.props;
+        const state = context.state;
+        if ( state.selectedCrossChange ) {
+            clearInterval(timer);
+            localStorage.setItem('cross_' + state.selectedSize + '_id-' + state.selectedCross, JSON.stringify( state.selectedCrossData ) );
+            localStorage.setItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_time', JSON.stringify( state.selectedCrossTime ) );
+        }
+    }
+
 
 }
