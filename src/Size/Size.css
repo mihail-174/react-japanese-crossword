@@ -7,9 +7,20 @@
     margin-right: 10px;
     cursor: pointer;
 }
-.size__item:hover {
+.size__item {
+    margin-right: 10px;
+    cursor: pointer;
+}
+.size__item:hover .size__name {
     text-decoration: underline;
 }
-.size__item.active {
+.size__item.active .size__name {
     text-decoration: underline;
+}
+.size__count {
+    top: -6px;
+    margin-left: 2px;
+    color: gray;
+    font-size: 11px;
+    position: relative;
 }

@@ -38,7 +38,8 @@ export default class Size extends Component {
                     }
                     onClick={newthis.click}
                 >
-                    {item.name}
+                    <span className='size__name'>{item.name}</span>
+                    <span className='size__count' title='количество'>({state[item.systemName].length})</span>
                 </div>
             )
         })
