@@ -318,7 +318,11 @@ export default class Cross extends Component {
         return (
             <div className="grid">
                 <div className='grid__name'>{state.selectedCrossName}</div>
-                <div className='grid__time'>{String(state.selectedCrossTime.h).padStart(2, "0") + ':' + String(state.selectedCrossTime.m).padStart(2, "0") + ':' + String(state.selectedCrossTime.s).padStart(2, "0")}</div>
+                {
+                    !localStorage.getItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done' )
+                    &&
+                        <div className='grid__time'>{String(state.selectedCrossTime.h).padStart(2, "0") + ':' + String(state.selectedCrossTime.m).padStart(2, "0") + ':' + String(state.selectedCrossTime.s).padStart(2, "0")}</div>
+                }
                 <div className='grid__num-top'>
                     <NumTop context={context} />
                 </div>
