@@ -30,6 +30,12 @@
     height: 40px;
     background-color: lightgray;
     margin-right: 15px;
+    display: flex;
+    justify-content: center;
+}
+.list__img img {
+    max-width: 100%;
+    max-height: 100%;
 }
 .list__info {
     flex: 1;

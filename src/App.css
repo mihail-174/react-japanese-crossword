@@ -32,6 +32,14 @@ a {
 }
 
 /* статус */
+/* .status_done {
+    width: 24px;
+    height: 24px;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    background-image: url(/check.png);
+    background-size: 24px;
+} */
 .status_done {
     width: 24px;
     height: 24px;
@@ -39,6 +47,12 @@ a {
     background-repeat: no-repeat;
     background-image: url(/check.png);
     background-size: 24px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
 }
 
 /* .list {
