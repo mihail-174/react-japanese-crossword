@@ -17,6 +17,7 @@ let initialState = {
         s: 0
     },
     selectedCrossData: null,
+    paintSuper: true,
     paint: false,
     blank: false,
     delete: false,
@@ -200,7 +201,10 @@ class App extends Component {
                 s: 0
             },
             numTop: null,
-            numLeft: null
+            numLeft: null,
+            paint: false,
+            blank: false,
+            delete: false
         })
     }
     setAppState(newState) {
