@@ -45,6 +45,7 @@ export default class Cross extends Component {
         super(props);
         // this.check = this.check.bind(this);
         this.clickCell = this.clickCell.bind(this);
+        this.clickPaintSuper = this.clickPaintSuper.bind(this);
         this.clickPaint = this.clickPaint.bind(this);
         this.clickBlank = this.clickBlank.bind(this);
         this.clickDelete = this.clickDelete.bind(this);
@@ -88,14 +89,21 @@ export default class Cross extends Component {
         totalCrossSeconds = 0;
     }
 
+    clickPaintSuper(e) {
+        const {context} = this.props;
+        const setAppState = context.methods.setAppState;
+        setAppState({
+            paintSuper: true,
+            paint: false,
+            blank: false,
+            delete: false,
+        });
+    }
     clickPaint(e) {
         const {context} = this.props;
         const setAppState = context.methods.setAppState;
-        document.querySelectorAll('.btns .btn').forEach(item => {
-            item.classList.remove('active');
-        })
-        e.currentTarget.classList.add('active');
         setAppState({
+            paintSuper: false,
             paint: true,
             blank: false,
             delete: false,
@@ -106,28 +114,22 @@ export default class Cross extends Component {
         const {context} = this.props;
         const setAppState = context.methods.setAppState;
         setAppState({
+            paintSuper: false,
             paint: false,
             blank: true,
             delete: false,
         });
-        document.querySelectorAll('.btns .btn').forEach(item => {
-            item.classList.remove('active');
-        })
-        e.currentTarget.classList.add('active');
     }
 
     clickDelete(e) {
         const {context} = this.props;
         const setAppState = context.methods.setAppState;
         setAppState({
+            paintSuper: false,
             paint: false,
             blank: false,
             delete: true,
         });
-        document.querySelectorAll('.btns .btn').forEach(item => {
-            item.classList.remove('active');
-        })
-        e.currentTarget.classList.add('active');
     }
 
     clickSave() {
@@ -141,6 +143,8 @@ export default class Cross extends Component {
         const {context} = this.props;
         const state = context.state;
         const setAppState = context.methods.setAppState;
+
+        // ЕСЛИ ВЫБРАНО: ЗАКРАСИТЬ КЛЕТКУ
         if ( state.paint ) {
             e.currentTarget.classList.add('paint');
             e.currentTarget.classList.remove('blank');
@@ -152,6 +156,9 @@ export default class Cross extends Component {
                 })
             }
         }
+        // END
+
+        // ЕСЛИ ВЫБРАНО: ПОМЕТИТЬ КЛЕТКУ КАК ПУСТУЮ
         if ( state.blank ) {
             e.currentTarget.classList.add('blank');
             e.currentTarget.classList.remove('paint');
@@ -163,6 +170,9 @@ export default class Cross extends Component {
                 })
             }
         }
+        // END
+
+        // ЕСЛИ ВЫБРАНО: ОЧИСТИТЬ КЛЕТКУ
         if ( state.delete ) {
             e.currentTarget.classList.remove('paint');
             e.currentTarget.classList.remove('blank');
@@ -174,27 +184,73 @@ export default class Cross extends Component {
                 })
             }
         }
+        // END
 
-        let selectedCrossDataNew = state.selectedCrossData;
-        if ( state.paint ) {
-            let row = e.currentTarget.parentNode.parentNode.getAttribute('data-index');
-            let col = e.currentTarget.getAttribute('data-index');
-            selectedCrossDataNew[row][col] = 1;
+        // ЕСЛИ ВЫБРАНО ТРОЙНОЕ ДЕЙСТВИЕ: ЗАКРАСИТЬ, ПОМЕТИТЬ, УДАЛИТЬ
+        if ( state.paintSuper ) {
+            if ( state.selectedCrossChange === false ) {
+                this.clickStartTimer();
+                setAppState({
+                    selectedCrossChange: true
+                })
+            }
+            let rowIndexCross = e.currentTarget.parentNode.parentNode.getAttribute('data-index');
+            let colIndexCross = e.currentTarget.getAttribute('data-index');
+            switch (state.selectedCrossData[rowIndexCross][colIndexCross]) {
+                case 1:
+                    setAppState((item, i) => {
+                        item.selectedCrossData[rowIndexCross][colIndexCross] = 0;
+                        return (
+                            item
+                        )
+                    });
+                    break;
+                case 0:
+                    setAppState((item, i) => {
+                        item.selectedCrossData[rowIndexCross][colIndexCross] = 2;
+                        return (
+                            item
+                        )
+                    });
+                    break;
+                case 2:
+                    setAppState((item, i) => {
+                        item.selectedCrossData[rowIndexCross][colIndexCross] = 1;
+                        return (
+                            item
+                        )
+                    });
+                    break;
+                default:
+            }
         }
-        if ( state.blank ) {
-            let row = e.currentTarget.parentNode.parentNode.getAttribute('data-index');
-            let col = e.currentTarget.getAttribute('data-index');
-            selectedCrossDataNew[row][col] = 0;
-        }
-        if ( state.delete ) {
-            let row = e.currentTarget.parentNode.parentNode.getAttribute('data-index');
-            let col = e.currentTarget.getAttribute('data-index');
-            selectedCrossDataNew[row][col] = 2;
-        }
-        setAppState({
-            selectedCrossData: selectedCrossDataNew
-        });
+        // END
 
+        // ЕСЛИ ВЫБРАНО НЕ ТРОЙНОЕ ДЕЙСТВИЕ, А ПООТДЕЛЬНОСТИ
+        if ( state.paintSuper === false ) {
+            let selectedCrossDataNew = state.selectedCrossData;
+            if ( state.paint ) {
+                let row = e.currentTarget.parentNode.parentNode.getAttribute('data-index');
+                let col = e.currentTarget.getAttribute('data-index');
+                selectedCrossDataNew[row][col] = 1;
+            }
+            if ( state.blank ) {
+                let row = e.currentTarget.parentNode.parentNode.getAttribute('data-index');
+                let col = e.currentTarget.getAttribute('data-index');
+                selectedCrossDataNew[row][col] = 0;
+            }
+            if ( state.delete ) {
+                let row = e.currentTarget.parentNode.parentNode.getAttribute('data-index');
+                let col = e.currentTarget.getAttribute('data-index');
+                selectedCrossDataNew[row][col] = 2;
+            }
+            setAppState({
+                selectedCrossData: selectedCrossDataNew
+            });
+        }
+        // END
+
+        // ПРОВЕРКА РЕШЕННОСТИ
         let arrCellTrue = 0;
         let arrCellFalse = 0;
         state[state.selectedSize][state.selectedCross].arr.map((row, i) => {
@@ -246,6 +302,7 @@ export default class Cross extends Component {
                 }, 2000
             );
         }
+        // END
 
     }
 
@@ -302,7 +359,11 @@ export default class Cross extends Component {
                                             (cell === 0 && 'cross__cell blank') ||
                                             (cell === 2 && 'cross__cell')
                                         }
-                                        data-type='0'
+                                        data-type={
+                                            (cell === 1 && '1') ||
+                                            (cell === 0 && '0') ||
+                                            (cell === 2 && '2')
+                                        }
                                         data-index={j}
                                         key={j}
                                     >
@@ -350,9 +411,10 @@ export default class Cross extends Component {
                             <div className='btns'>
                                 {/*<button className='btn btn_check' title='Проверить решение' onClick={this.check}>CHECK</button>*/}
                                 <button className='btn btn_save' title='Сохранить изменения' onClick={this.clickSave}>Сохранить изменения</button>
-                                <button className='btn btn_paint' title='Закрасить ячейку' onClick={this.clickPaint}>Закрасить</button>
-                                <button className='btn btn_blank' title='Пометить ячейку как пустую' onClick={this.clickBlank}>Крестик</button>
-                                <button className='btn btn_delete' title='Очистить ячейку' onClick={this.clickDelete}>удалить</button>
+                                <button className={'btn btn_paint-super' + (state.paintSuper?' active':'')} title='Закрасить, пометить, удалить' onClick={this.clickPaintSuper}>Закрасить, пометить, удалить</button>
+                                <button className={'btn btn_paint' + (state.paint?' active':'')} title='Закрасить клетку' onClick={this.clickPaint}>Закрасить клетку</button>
+                                <button className={'btn btn_blank' + (state.blank?' active':'')} title='Пометить клетку как пустую' onClick={this.clickBlank}>Пометить клетку как пустую</button>
+                                <button className={'btn btn_delete' + (state.delete?' active':'')} title='Очистить клетку' onClick={this.clickDelete}>Очистить клетку</button>
                             </div>
                     }
                 </div>
