@@ -43,7 +43,6 @@ export default class Cross extends Component {
 
     constructor(props) {
         super(props);
-        // this.check = this.check.bind(this);
         this.clickCell = this.clickCell.bind(this);
         this.clickPaintSuper = this.clickPaintSuper.bind(this);
         this.clickPaint = this.clickPaint.bind(this);
@@ -305,42 +304,6 @@ export default class Cross extends Component {
         // END
 
     }
-
-    // check (e) {
-    //     const {context} = this.props;
-    //     const state = context.state;
-    //     const setAppState = context.methods.setAppState;
-    //     console.clear();
-    //     // console.log( e.currentTarget );
-    //     var rows = document.querySelectorAll('.cross__row');
-    //     // console.log( rows );
-    //     outer: for (var i = 0; i < rows.length; i++) {
-    //         var cells = rows[i].querySelectorAll('.cross__cell');
-    //         for (var j = 0; j < cells.length; j++) {
-    //                 // console.log( cells[j] );
-    //                 if ( parseInt(cells[j].getAttribute('data-type'), 0) === state.selectedCrossData[i][j] ) {
-    //                     if ( cells[j].classList.contains('paint') ) {
-    //                         // console.log( 'row ' + i + ' | cell ' + j + ' — ' + this.state.pic1.arr[i][j] + ' | ' + parseInt(cells[j].getAttribute('data-type'), 0) + ' = ура' );
-    //                         setAppState({
-    //                             result: true
-    //                         });
-    //                     }
-    //                 } else {
-    //                     // console.log( 'row ' + i + ' | cell ' + j + ' — ' + this.state.pic1.arr[i][j] + ' | ' + parseInt(cells[j].getAttribute('data-type'), 0) + ' = ура' );
-    //                     setAppState({
-    //                         result: false
-    //                     });
-    //                     break outer;
-    //                 }
-    //         }
-    //     }
-    //     document.querySelector('.grid__result').classList.add('active')
-    //     setTimeout(
-    //         function() {
-    //             document.querySelector('.grid__result').classList.remove('active')
-    //         }, 2000
-    //     );
-    // }
 
     render() {
         const {context} = this.props;
