@@ -238,9 +238,9 @@ class App extends Component {
                     }
 
                     {
-                        // <pre>
-                        // {JSON.stringify(this.state, "", 4)}
-                        // </pre>
+                        <pre>
+                        {JSON.stringify(this.state, "", 4)}
+                        </pre>
                     }
 
                 </div>

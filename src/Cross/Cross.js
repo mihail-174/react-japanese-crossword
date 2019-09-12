@@ -185,7 +185,40 @@ export default class Cross extends Component {
         }
         // END
 
+        let selectedCrossDataNew = [];
+
         // ЕСЛИ ВЫБРАНО ТРОЙНОЕ ДЕЙСТВИЕ: ЗАКРАСИТЬ, ПОМЕТИТЬ, УДАЛИТЬ
+        // ВАРИАНТ 1
+        if ( state.paintSuper ) {
+            if ( state.selectedCrossChange === false ) {
+                this.clickStartTimer();
+                setAppState({
+                    selectedCrossChange: true
+                })
+            }
+            selectedCrossDataNew = state.selectedCrossData;
+            let rowIndexCross = e.currentTarget.parentNode.parentNode.getAttribute('data-index');
+            let colIndexCross = e.currentTarget.getAttribute('data-index');
+            switch (selectedCrossDataNew[rowIndexCross][colIndexCross]) {
+                case 1:
+                    selectedCrossDataNew[rowIndexCross][colIndexCross] = 0;
+                    break;
+                case 0:
+                    selectedCrossDataNew[rowIndexCross][colIndexCross] = 2;
+                    break;
+                case 2:
+                    selectedCrossDataNew[rowIndexCross][colIndexCross] = 1;
+                    break;
+                default:
+            }
+            setAppState({
+                selectedCrossData: selectedCrossDataNew
+            });
+            // console.log( selectedCrossDataNew );
+        }
+
+        /*
+        // ВАРИАНТ 2
         if ( state.paintSuper ) {
             if ( state.selectedCrossChange === false ) {
                 this.clickStartTimer();
@@ -223,11 +256,13 @@ export default class Cross extends Component {
                 default:
             }
         }
+        */
         // END
+
 
         // ЕСЛИ ВЫБРАНО НЕ ТРОЙНОЕ ДЕЙСТВИЕ, А ПООТДЕЛЬНОСТИ
         if ( state.paintSuper === false ) {
-            let selectedCrossDataNew = state.selectedCrossData;
+            selectedCrossDataNew = state.selectedCrossData;
             if ( state.paint ) {
                 let row = e.currentTarget.parentNode.parentNode.getAttribute('data-index');
                 let col = e.currentTarget.getAttribute('data-index');
@@ -249,6 +284,81 @@ export default class Cross extends Component {
         }
         // END
 
+        // Warn if overriding existing method
+        if (Array.prototype.equals) {
+            console.warn("Overriding existing Array.prototype.equals. Possible causes: New API defines the method, there's a framework conflict or you've got double inclusions in your code.");
+        }
+        // attach the .equals method to Array's prototype to call it on any array
+        Array.prototype.equals = function (array) {
+            // if the other array is a falsy value, return
+            if (!array)
+            return false;
+            // compare lengths - can save a lot of time
+            if (this.length !== array.length)
+            return false;
+            for (var i = 0, l=this.length; i < l; i++) {
+                // Check if we have nested arrays
+                if (this[i] instanceof Array && array[i] instanceof Array) {
+                    // recurse into the nested arrays
+                    if (!this[i].equals(array[i]))
+                    return false;
+                }
+                else if (this[i] !== array[i]) {
+                    // Warning - two different object instances will never be equal: {x:20} != {x:20}
+                    return false;
+                }
+            }
+            return true;
+        }
+        // Hide method from for-in loops
+        Object.defineProperty(Array.prototype, "equals", {enumerable: false});
+
+        // *********************************************************************
+        // let selectedCrossDataNewForCheck = state.selectedCrossData;
+        let selectedCrossDataNewForCheck = selectedCrossDataNew;
+        let tempMiniArr = [];
+        let countTrue = 0;
+        // console.log( selectedCrossDataNewForCheck );
+        selectedCrossDataNewForCheck.map((rowNew, i) => {
+            // console.group('rowNew-'+i);
+            // console.log('строка: ' + rowNew);
+            rowNew.map((value, j) => {
+                if ( value === 2 ) {
+                    // console.log('ОПА ДВОЙКА');
+                    tempMiniArr.push(0);
+                    // console.log(tempMiniArr);
+                } else {
+                    tempMiniArr.push(value);
+                    // console.log(tempMiniArr);
+                }
+                return tempMiniArr;
+            });
+            // console.log('строка новая: ' + tempMiniArr);
+            // console.log( tempMiniArr.equals(state[state.selectedSize][state.selectedCross].arr[i]) );
+            if ( tempMiniArr.equals(state[state.selectedSize][state.selectedCross].arr[i]) ) {
+                countTrue++;
+            }
+            tempMiniArr = [];
+            // console.groupEnd();
+        });
+        if ( state[state.selectedSize][state.selectedCross].height === countTrue ) {
+            setAppState({
+                result: true
+            });
+            this.clickSave();
+            localStorage.setItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done', true );
+            document.querySelector('.grid__result').classList.add('active')
+            setTimeout(
+                function() {
+                    document.querySelector('.grid__result').classList.remove('active')
+                }, 2000
+            );
+        }
+        // console.log(countTrue);
+        countTrue = 0;
+        // *********************************************************************
+
+        /*
         // ПРОВЕРКА РЕШЕННОСТИ
         let arrCellTrue = 0;
         let arrCellFalse = 0;
@@ -264,7 +374,7 @@ export default class Cross extends Component {
             });
             return true;
         });
-        // console.log( 'true=' + arrCellTrue + ' | false=' + arrCellFalse );
+        console.log( 'true=' + arrCellTrue + ' | false=' + arrCellFalse );
 
         let myArrCellTrue = 0;
         let myArrCellFalse = 0;
@@ -273,27 +383,27 @@ export default class Cross extends Component {
                 // if ( value === state[state.selectedSize][state.selectedCross].arr[i][j] ) {
                     if ( value === 1 ) {
                         myArrCellTrue++;
-                        // console.log( '[' + i + ',' + j + '] ' + value + ' ' + state[state.selectedSize][state.selectedCross].arr[i][j] + ' совпадает' );
+                        console.log( '[' + i + ',' + j + '] ' + value + ' ' + state[state.selectedSize][state.selectedCross].arr[i][j] + ' совпадает' );
                     }
                     if ( value === 0 || value === 2 ) {
                         myArrCellFalse++;
-                        // console.log( '[' + i + ',' + j + '] ' + value + ' ' + state[state.selectedSize][state.selectedCross].arr[i][j] + ' ПУСТАЯ КЛЕТКА' );
-                        // document.querySelector('h1').innerText = '-';
+                        console.log( '[' + i + ',' + j + '] ' + value + ' ' + state[state.selectedSize][state.selectedCross].arr[i][j] + ' ПУСТАЯ КЛЕТКА' );
+                        document.querySelector('h1').innerText = '-';
                     }
                     return true;
                 // }
             });
             return true;
         });
-        // console.log( 'true=' + myArrCellTrue + ' | false=' + myArrCellFalse );
+        console.log( 'true=' + myArrCellTrue + ' | false=' + myArrCellFalse );
 
         if ( myArrCellTrue===arrCellTrue && myArrCellFalse===arrCellFalse ) {
-            // document.querySelector('h1').innerText = '+';
-            setAppState({
-                result: true
-            });
-            this.clickSave();
-            localStorage.setItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done', true );
+            document.querySelector('h1').innerText = '+';
+            // setAppState({
+            //     result: true
+            // });
+            // this.clickSave();
+            // localStorage.setItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done', true );
             document.querySelector('.grid__result').classList.add('active')
             setTimeout(
                 function() {
@@ -302,6 +412,7 @@ export default class Cross extends Component {
             );
         }
         // END
+        */
 
     }
 
