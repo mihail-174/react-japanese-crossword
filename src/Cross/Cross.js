@@ -191,6 +191,12 @@ export default class Cross extends Component {
         // ЕСЛИ ВЫБРАНО ТРОЙНОЕ ДЕЙСТВИЕ: ЗАКРАСИТЬ, ПОМЕТИТЬ, УДАЛИТЬ
         // ВАРИАНТ 1
         if ( state.paintSuper ) {
+            if ( state.selectedCrossChange === false ) {
+                this.clickStartTimer();
+                setAppState({
+                    selectedCrossChange: true
+                })
+            }
             selectedCrossDataNew = state.selectedCrossData;
             let rowIndexCross = e.currentTarget.parentNode.parentNode.getAttribute('data-index');
             let colIndexCross = e.currentTarget.getAttribute('data-index');
@@ -279,23 +285,18 @@ export default class Cross extends Component {
         }
         // END
 
-
-
-
-
         // Warn if overriding existing method
-        if(Array.prototype.equals)
-        console.warn("Overriding existing Array.prototype.equals. Possible causes: New API defines the method, there's a framework conflict or you've got double inclusions in your code.");
+        if (Array.prototype.equals) {
+            console.warn("Overriding existing Array.prototype.equals. Possible causes: New API defines the method, there's a framework conflict or you've got double inclusions in your code.");
+        }
         // attach the .equals method to Array's prototype to call it on any array
         Array.prototype.equals = function (array) {
             // if the other array is a falsy value, return
             if (!array)
             return false;
-
             // compare lengths - can save a lot of time
-            if (this.length != array.length)
+            if (this.length !== array.length)
             return false;
-
             for (var i = 0, l=this.length; i < l; i++) {
                 // Check if we have nested arrays
                 if (this[i] instanceof Array && array[i] instanceof Array) {
@@ -303,7 +304,7 @@ export default class Cross extends Component {
                     if (!this[i].equals(array[i]))
                     return false;
                 }
-                else if (this[i] != array[i]) {
+                else if (this[i] !== array[i]) {
                     // Warning - two different object instances will never be equal: {x:20} != {x:20}
                     return false;
                 }
@@ -313,43 +314,52 @@ export default class Cross extends Component {
         // Hide method from for-in loops
         Object.defineProperty(Array.prototype, "equals", {enumerable: false});
 
+        // *********************************************************************
+        // let selectedCrossDataNewForCheck = state.selectedCrossData;
+        let selectedCrossDataNewForCheck = selectedCrossDataNew;
+        let tempMiniArr = [];
+        let countTrue = 0;
+        // console.log( selectedCrossDataNewForCheck );
+        selectedCrossDataNewForCheck.map((rowNew, i) => {
+            // console.group('rowNew-'+i);
+            // console.log('строка: ' + rowNew);
+            rowNew.map((value, j) => {
+                if ( value === 2 ) {
+                    // console.log('ОПА ДВОЙКА');
+                    tempMiniArr.push(0);
+                    // console.log(tempMiniArr);
+                } else {
+                    tempMiniArr.push(value);
+                    // console.log(tempMiniArr);
+                }
+                return tempMiniArr;
+            });
+            // console.log('строка новая: ' + tempMiniArr);
+            // console.log( tempMiniArr.equals(state[state.selectedSize][state.selectedCross].arr[i]) );
+            if ( tempMiniArr.equals(state[state.selectedSize][state.selectedCross].arr[i]) ) {
+                countTrue++;
+            }
+            tempMiniArr = [];
+            // console.groupEnd();
+        });
+        if ( state[state.selectedSize][state.selectedCross].height === countTrue ) {
+            setAppState({
+                result: true
+            });
+            this.clickSave();
+            localStorage.setItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done', true );
+            document.querySelector('.grid__result').classList.add('active')
+            setTimeout(
+                function() {
+                    document.querySelector('.grid__result').classList.remove('active')
+                }, 2000
+            );
+        }
+        // console.log(countTrue);
+        countTrue = 0;
+        // *********************************************************************
 
-        // **************
-        var selectedCrossDataNewForCheck = selectedCrossDataNew;
-        console.log( selectedCrossDataNewForCheck );
-        // let rowIndexCross = e.currentTarget.parentNode.parentNode.getAttribute('data-index');
-        // let colIndexCrossNew = e.currentTarget.getAttribute('data-index');
-        // // state[state.selectedSize][state.selectedCross].arr.map((row, i) => {
-        // selectedCrossDataNewForCheck.map((rowNew, i) => {
-        //     // console.group('rowNew-'+i);
-        //     if ( rowNew[colIndexCrossNew] === 2 ) {
-        //         // rowNew[colIndexCrossNew] = 0;
-        //     }
-        //     // rowNew.map((value, j) => {
-        //     //     console.group('old');
-        //     //     console.log(value);
-        //     //     console.groupEnd();
-        //     //     if ( value === 2 ) {
-        //     //         value = 0;
-        //     //         // console.log(value);
-        //     //     }
-        //     //     console.group('new');
-        //     //     console.log(value);
-        //     //     console.groupEnd();
-        //     //     return value;
-        //     // });
-        //     console.log( rowNew );
-        //     // console.log( state[state.selectedSize][state.selectedCross].arr[i] );
-        //     // console.log( rowNew.equals(state[state.selectedSize][state.selectedCross].arr[i]) );
-        //     // console.log( selectedCrossDataNew[i].equals(rowNew) );
-        //     // console.log( state.selectedCrossData[i] );
-        //     // console.groupEnd();
-        //     // return true;
-        //     // return rowNew;
-        // });
-        // console.log( selectedCrossDataNew );
-
-/*
+        /*
         // ПРОВЕРКА РЕШЕННОСТИ
         let arrCellTrue = 0;
         let arrCellFalse = 0;
@@ -366,7 +376,6 @@ export default class Cross extends Component {
             return true;
         });
         console.log( 'true=' + arrCellTrue + ' | false=' + arrCellFalse );
-
 
         let myArrCellTrue = 0;
         let myArrCellFalse = 0;
@@ -404,11 +413,7 @@ export default class Cross extends Component {
             );
         }
         // END
-*/
-
-
-
-
+        */
 
     }
 
