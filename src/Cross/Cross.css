@@ -3,6 +3,9 @@
     flex-wrap: wrap;
     width: 100%;
 }
+.cross_done .cross__cell {
+    cursor: default;
+}
 .cross__row {
     width: 100%;
 }
