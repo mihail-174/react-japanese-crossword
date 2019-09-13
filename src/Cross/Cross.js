@@ -465,7 +465,19 @@ export default class Cross extends Component {
 
         return (
             <div className="grid">
-                <div className='grid__name'>{state.selectedCrossName}</div>
+                <div className='grid__name'>
+                    {
+                        state.settingHideNames
+                        ?
+                            localStorage.getItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done' )
+                            ?
+                                state.selectedCrossName
+                            :
+                                state.selectedCrossName.replace(/[\W\w]/g, "*")
+                        :
+                            state.selectedCrossName
+                    }
+                </div>
                 {
                     !localStorage.getItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done' )
                     &&

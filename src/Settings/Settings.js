@@ -121,8 +121,7 @@ export default class Settings extends Component {
                                     Показывать направляющие линии
                                 </label>
                             </div>
-                            {/*
-                                <div className="settings__item settings__hide-names">
+                            <div className="settings__item settings__hide-names">
                                 <label className='settings__label' htmlFor='hide-names'>
                                     <input
                                         id='hide-names'
@@ -134,7 +133,6 @@ export default class Settings extends Component {
                                     Скрыть названия
                                 </label>
                             </div>
-                            */}
                             {/*
                                 <div className="settings__item settings__marker-empty-cells">
                                 <label className='settings__label' htmlFor='marker-empty-cells'>

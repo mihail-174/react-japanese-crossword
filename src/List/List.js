@@ -196,7 +196,19 @@ export default class List extends Component {
                     </div>
                     */}
                     <div className='list__info'>
-                        <div className='list__name'>{item.name}</div>
+                        <div className='list__name'>
+                            {
+                                state.settingHideNames
+                                ?
+                                    localStorage.getItem('cross_' + state.selectedSize + '_id-' + i + '_done' )
+                                    ?
+                                        item.name
+                                    :
+                                        item.name.replace(/[\W\w]/g, "*")
+                                :
+                                    item.name
+                            }
+                        </div>
                         <div className='list__size'>{item.width}x{item.height}</div>
                     </div>
                 </div>

@@ -20,7 +20,7 @@ let initialState = {
     selectedCrossData: null,
     modal: false,
     settingGuideLines: true,
-    settingHideNames: false,
+    settingHideNames: true,
     settingMarkerEmptyCells: false,
     paintSuper: true,
     paint: false,
