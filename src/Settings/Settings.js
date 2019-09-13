@@ -10,6 +10,7 @@ export default class Settings extends Component {
         this.clickGuideLines = this.clickGuideLines.bind(this);
         this.clickHideNames = this.clickHideNames.bind(this);
         this.clickMarkerEmptyCells = this.clickMarkerEmptyCells.bind(this);
+        this.clickQuickDraw = this.clickQuickDraw.bind(this);
     }
 
     clickClose(e) {
@@ -94,6 +95,15 @@ export default class Settings extends Component {
         });
     }
 
+    clickQuickDraw(e) {
+        const {context} = this.props;
+        const state = context.state;
+        const setAppState = context.methods.setAppState;
+        setAppState({
+            settingQuickDraw: !state.settingQuickDraw
+        });
+    }
+
     render() {
         const {context} = this.props;
         const state = context.state;
@@ -147,20 +157,18 @@ export default class Settings extends Component {
                                 </label>
                             </div>
                             */}
-                            {/*
-                                <div className="settings__item settings__quick-draw">
+                            <div className="settings__item settings__quick-draw">
                                 <label className='settings__label' htmlFor='quick-draw'>
                                     <input
                                         id='quick-draw'
                                         type='checkbox'
-                                        onChange={this.clickMarkerEmptyCells}
-                                        defaultChecked={state.settingMarkerEmptyCells}
+                                        onChange={this.clickQuickDraw}
+                                        defaultChecked={state.settingQuickDraw}
                                         name=''
                                     />
                                     Разрешить быстрое рисование в ячейке
                                 </label>
                             </div>
-                            */}
                         </div>
 
                     </div>
