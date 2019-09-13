@@ -22,6 +22,7 @@ let initialState = {
     settingGuideLines: true,
     settingHideNames: true,
     settingMarkerEmptyCells: false,
+    settingQuickDraw: true,
     paintSuper: true,
     paint: false,
     blank: false,

@@ -46,12 +46,11 @@ a:hover {
     background-size: 24px;
 } */
 .status_done {
-    width: 16px;
+    width: 12px;
     height: 16px;
     background-position: 0 0;
     background-repeat: no-repeat;
-    background-image: url(/check.png);
-    background-size: 16px;
+    background-image: url(/ok.svg);
     position: absolute;
     top: 0;
     left: 0;
@@ -163,10 +162,14 @@ div {
     background-image: url(/check.png);
 }
 .btn_paint {
-    background-image: url(/paint.png);
+    background-image: url(/pencil-02.png);
+}
+.btn_paint-super {
+    background-image: url(/ico-01.png);
+    background-size: 40px;
 }
 .btn_blank {
-    background-image: url(/blank.png);
+    background-image: url(/blank-03.svg);
 }
 .btn_delete {
     background-image: url(/eraser.png);
@@ -212,7 +215,7 @@ div {
     margin: auto;
     width: 16px;
     height: 16px;
-    background: url(/time.png) 0 0 no-repeat;
+    background: url(/time.svg) 0 0 no-repeat;
 }
 .grid__settings {
     grid-area: cross-settings;
@@ -226,6 +229,17 @@ div {
 .grid__settings:hover {
     text-decoration: none;
     color: #e74c3c;
+}
+.grid__settings:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    margin: auto;
+    width: 16px;
+    height: 16px;
+    background: url(/setting.svg) 0 0 no-repeat;
 }
 .grid__num-top {
     grid-area: cross-num-top;

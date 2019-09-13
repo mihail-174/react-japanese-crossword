@@ -147,6 +147,20 @@ export default class Settings extends Component {
                                 </label>
                             </div>
                             */}
+                            {/*
+                                <div className="settings__item settings__quick-draw">
+                                <label className='settings__label' htmlFor='quick-draw'>
+                                    <input
+                                        id='quick-draw'
+                                        type='checkbox'
+                                        onChange={this.clickMarkerEmptyCells}
+                                        defaultChecked={state.settingMarkerEmptyCells}
+                                        name=''
+                                    />
+                                    Разрешить быстрое рисование в ячейке
+                                </label>
+                            </div>
+                            */}
                         </div>
 
                     </div>
