@@ -3,6 +3,7 @@ import './App.css';
 import Size from './Size/Size';
 import List from './List/List';
 import Cross from './Cross/Cross';
+import Settings from './Settings/Settings';
 
 const Context = React.createContext()
 
@@ -17,6 +18,10 @@ let initialState = {
         s: 0
     },
     selectedCrossData: null,
+    modal: false,
+    settingGuideLines: true,
+    settingHideNames: false,
+    settingMarkerEmptyCells: false,
     paintSuper: true,
     paint: false,
     blank: false,
@@ -236,13 +241,13 @@ class App extends Component {
                         &&
                         <Cross context={context} />
                     }
+                    <Settings context={context} />
 
                     {
                         <pre>
                         {JSON.stringify(this.state, "", 4)}
                         </pre>
                     }
-
                 </div>
 
             )}</Context.Consumer>

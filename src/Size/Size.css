@@ -13,9 +13,11 @@
 }
 .size__item:hover .size__name {
     text-decoration: underline;
+    color: #e74c3c;
 }
 .size__item.active .size__name {
     text-decoration: underline;
+    color: #e74c3c;
 }
 .size__count {
     top: -6px;

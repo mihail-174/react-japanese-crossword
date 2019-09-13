@@ -4,6 +4,7 @@ body {
     background-color: #f1f1f1;
     line-height: 1.2;
     font-family: arial;
+    color: #333;
 }
 * {
     box-sizing: border-box;
@@ -20,6 +21,9 @@ h1 {
 a {
     text-decoration: underline;
 }
+a:hover {
+    color: #e74c3c;
+}
 
 /* ссылка вернуться назад к списку */
 .return-back-list {
@@ -29,6 +33,7 @@ a {
 }
 .return-back-list:hover {
     text-decoration: none;
+    color: #e74c3c;
 }
 
 /* статус */
@@ -179,7 +184,7 @@ div {
                         ". cross-num-top"
                         "cross-num-left cross-content"; */
     grid-template-areas: "cross-name cross-name cross-name"
-                        "cross-time cross-time cross-time"
+                        "cross-time cross-settings ."
                          ". cross-num-top ."
                          " cross-num-left cross-content cross-btns-control";
     grid-gap: 0;
@@ -208,6 +213,19 @@ div {
     width: 16px;
     height: 16px;
     background: url(/time.png) 0 0 no-repeat;
+}
+.grid__settings {
+    grid-area: cross-settings;
+    font-size: 14px;
+    margin-bottom: 30px;
+    padding-left: 20px;
+    text-decoration: underline;
+    margin-bottom: 30px;
+    cursor: pointer;
+}
+.grid__settings:hover {
+    text-decoration: none;
+    color: #e74c3c;
 }
 .grid__num-top {
     grid-area: cross-num-top;

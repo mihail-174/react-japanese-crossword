@@ -50,6 +50,7 @@ export default class Cross extends Component {
         this.clickDelete = this.clickDelete.bind(this);
         this.clickSave = this.clickSave.bind(this);
         this.clickStartTimer = this.clickStartTimer.bind(this);
+        this.openSettings = this.openSettings.bind(this);
     }
 
     clickStartTimer() {
@@ -420,6 +421,14 @@ export default class Cross extends Component {
 
     }
 
+    openSettings() {
+        const {context} = this.props;
+        const setAppState = context.methods.setAppState;
+        setAppState({
+            modal: true
+        });
+    }
+
     render() {
         const {context} = this.props;
         const state = context.state;
@@ -461,6 +470,11 @@ export default class Cross extends Component {
                     !localStorage.getItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done' )
                     &&
                         <div className='grid__time'>{String(state.selectedCrossTime.h).padStart(2, "0") + ':' + String(state.selectedCrossTime.m).padStart(2, "0") + ':' + String(state.selectedCrossTime.s).padStart(2, "0")}</div>
+                }
+                {
+                    !localStorage.getItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done' )
+                    &&
+                        <div className='grid__settings' onClick={this.openSettings}>Настройки</div>
                 }
                 <div className='grid__num-top'>
                     <NumTop context={context} />
@@ -504,30 +518,52 @@ export default class Cross extends Component {
     componentDidMount() {
         const {context} = this.props;
         const state = context.state;
+
+        // НАПРАВЛЯЮЩИЕ ЛИНИИ
+        function guideLinesMouseEnter(cell) {
+            // console.log("MOUSEENTER");
+            let rowId = cell.parentNode.parentNode.getAttribute('data-index');
+            let colId = cell.getAttribute('data-index');
+            document.querySelectorAll('.cross__row')[rowId].querySelectorAll('.cross__cell').forEach(colItem=>{
+                colItem.classList.add('hover');
+            });
+            document.querySelectorAll('.cross__row').forEach((row, i)=>{
+                row.querySelectorAll('.cross__cell')[parseInt(colId)].classList.add('hover');
+            });
+        }
+        function guideLinesMouseLeave(cell) {
+            // console.log("MOUSELEAVE");
+            let rowId = cell.parentNode.parentNode.getAttribute('data-index');
+            let colId = cell.getAttribute('data-index');
+            document.querySelectorAll('.cross__row')[rowId].querySelectorAll('.cross__cell').forEach(colItem=>{
+                colItem.classList.remove('hover');
+            });
+            document.querySelectorAll('.cross__row').forEach((row, i)=>{
+                row.querySelectorAll('.cross__cell')[parseInt(colId)].classList.remove('hover');
+            });
+        }
         if ( !localStorage.getItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done' ) ) {
-            document.querySelectorAll('.cross__cell').forEach(item=>{
-                item.addEventListener('mouseenter', () => {
-                    let rowId = item.parentNode.parentNode.getAttribute('data-index');
-                    let colId = item.getAttribute('data-index');
-                    document.querySelectorAll('.cross__row')[rowId].querySelectorAll('.cross__cell').forEach(colItem=>{
-                        colItem.classList.add('hover');
-                    });
-                    document.querySelectorAll('.cross__row').forEach((row, i)=>{
-                        row.querySelectorAll('.cross__cell')[parseInt(colId)].classList.add('hover');
-                    });
+            document.querySelectorAll('.cross__cell').forEach(cell=>{
+                cell.addEventListener('mouseenter', () => {
+                    if ( state.settingGuideLines ) {
+                        // console.log( 'ЕСТЬ' );
+                        guideLinesMouseEnter(cell);
+                    } else {
+                        // console.log( 'НЕТ' );
+                    }
                 });
-                item.addEventListener('mouseleave', () => {
-                    let rowId = item.parentNode.parentNode.getAttribute('data-index');
-                    let colId = item.getAttribute('data-index');
-                    document.querySelectorAll('.cross__row')[rowId].querySelectorAll('.cross__cell').forEach(colItem=>{
-                        colItem.classList.remove('hover');
-                    });
-                    document.querySelectorAll('.cross__row').forEach((row, i)=>{
-                        row.querySelectorAll('.cross__cell')[parseInt(colId)].classList.remove('hover');
-                    });
+                cell.addEventListener('mouseleave', () => {
+                    if ( state.settingGuideLines ) {
+                        // console.log( 'ЕСТЬ' );
+                        guideLinesMouseLeave(cell);
+                    } else {
+                        // console.log( 'НЕТ' );
+                    }
                 });
             })
         }
+        // КОНЕЦ
+
     }
 
     componentWillUnmount() {
