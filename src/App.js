@@ -23,10 +23,15 @@ let initialState = {
     settingHideNames: true,
     settingMarkerEmptyCells: false,
     settingQuickDraw: true,
-    paintSuper: true,
-    paint: false,
-    blank: false,
-    delete: false,
+    btnDrawQuick: true,
+    btnDraw: false,
+    btnEmpty: false,
+    btnClean: false,
+
+    // paintSuper: true,
+    // paint: false,
+    // blank: false,
+    // delete: false,
     result: false,
     numTop: [],
     numLeft: [],
@@ -208,9 +213,9 @@ class App extends Component {
             },
             numTop: null,
             numLeft: null,
-            paint: false,
-            blank: false,
-            delete: false
+            btnDraw: false,
+            btnEmpty: false,
+            btnClean: false
         })
     }
     setAppState(newState) {

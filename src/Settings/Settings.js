@@ -99,14 +99,43 @@ export default class Settings extends Component {
         const {context} = this.props;
         const state = context.state;
         const setAppState = context.methods.setAppState;
+        // localStorage.setItem('cross_setting_quick-draw', Boolean(e.currentTarget.checked) );
+        localStorage.setItem('cross_setting_quick-draw', e.currentTarget.checked );
+        // console.log( localStorage.setItem('cross_setting_quick-draw', e.currentTarget.checked ) );
+        // if ( state.settingQuickDraw ) {
+            // localStorage.setItem('cross_setting_quick-draw', JSON.stringify( state.settingQuickDraw ) );
+        // }
         setAppState({
             settingQuickDraw: !state.settingQuickDraw
         });
+        if ( state.settingQuickDraw ) {
+            setAppState({
+                btnDrawQuick: false,
+                btnDraw: false,
+                btnEmpty: false,
+                btnClean: false
+            });
+        } else {
+            setAppState({
+                btnDrawQuick: true,
+                btnDraw: false,
+                btnEmpty: false,
+                btnClean: false
+            });
+        }
     }
 
     render() {
         const {context} = this.props;
         const state = context.state;
+
+        // console.log( Boolean( localStorage.getItem('cross_setting_quick-draw') ) );
+
+        // if ( localStorage.getItem('cross_setting_quick-draw') ) {
+        //     console.log( localStorage.getItem('cross_setting_quick-draw') );
+        // } else {
+        //     console.log( state.settingQuickDraw );
+        // }
 
         return (
             <div className={"modal" + (state.modal ? ' active':'')} ref='modal'>
@@ -163,7 +192,10 @@ export default class Settings extends Component {
                                         id='quick-draw'
                                         type='checkbox'
                                         onChange={this.clickQuickDraw}
-                                        defaultChecked={state.settingQuickDraw}
+                                        defaultChecked={
+                                            // Boolean( localStorage.getItem('cross_setting_quick-draw') )
+                                            state.settingQuickDraw
+                                        }
                                         name=''
                                     />
                                     Разрешить быстрое рисование в ячейке
@@ -177,7 +209,25 @@ export default class Settings extends Component {
         )
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        const {context} = this.props;
+        const state = context.state;
+        const setAppState = context.methods.setAppState;
+        console.log( state.settingQuickDraw );
+        console.log( JSON.parse(localStorage.getItem('cross_setting_quick-draw')) );
+        if ( state.settingQuickDraw !== localStorage.getItem('cross_setting_quick-draw') ) {
+            console.log('не равен');
+            setAppState({
+                settingQuickDraw: localStorage.getItem('cross_setting_quick-draw')
+            });
+        }
+        // if ( !Boolean(localStorage.getItem('cross_setting_quick-draw')) ) {
+            // localStorage.setItem('cross_setting_quick-draw', JSON.stringify( state.settingQuickDraw ) );
+        // }
+        // setAppState({
+        //     settingQuickDraw: localStorage.getItem('cross_setting_quick-draw')
+        // });
+    }
 
     componentWillUnmount() {}
 

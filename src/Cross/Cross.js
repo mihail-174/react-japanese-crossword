@@ -44,10 +44,10 @@ export default class Cross extends Component {
     constructor(props) {
         super(props);
         this.clickCell = this.clickCell.bind(this);
-        this.clickPaintSuper = this.clickPaintSuper.bind(this);
-        this.clickPaint = this.clickPaint.bind(this);
-        this.clickBlank = this.clickBlank.bind(this);
-        this.clickDelete = this.clickDelete.bind(this);
+        this.clickDrawQuick = this.clickDrawQuick.bind(this);
+        this.clickDraw = this.clickDraw.bind(this);
+        this.clickEmpty = this.clickEmpty.bind(this);
+        this.clickClean = this.clickClean.bind(this);
         this.clickSave = this.clickSave.bind(this);
         this.clickStartTimer = this.clickStartTimer.bind(this);
         this.openSettings = this.openSettings.bind(this);
@@ -89,46 +89,46 @@ export default class Cross extends Component {
         totalCrossSeconds = 0;
     }
 
-    clickPaintSuper(e) {
+    clickDrawQuick(e) {
         const {context} = this.props;
         const setAppState = context.methods.setAppState;
         setAppState({
-            paintSuper: true,
-            paint: false,
-            blank: false,
-            delete: false,
+            btnDrawQuick: true,
+            btnDraw: false,
+            btnEmpty: false,
+            btnClean: false,
         });
     }
-    clickPaint(e) {
+    clickDraw(e) {
         const {context} = this.props;
         const setAppState = context.methods.setAppState;
         setAppState({
-            paintSuper: false,
-            paint: true,
-            blank: false,
-            delete: false,
-        });
-    }
-
-    clickBlank(e) {
-        const {context} = this.props;
-        const setAppState = context.methods.setAppState;
-        setAppState({
-            paintSuper: false,
-            paint: false,
-            blank: true,
-            delete: false,
+            btnDrawQuick: false,
+            btnDraw: true,
+            btnEmpty: false,
+            btnClean: false,
         });
     }
 
-    clickDelete(e) {
+    clickEmpty(e) {
         const {context} = this.props;
         const setAppState = context.methods.setAppState;
         setAppState({
-            paintSuper: false,
-            paint: false,
-            blank: false,
-            delete: true,
+            btnDrawQuick: false,
+            btnDraw: false,
+            btnEmpty: true,
+            btnClean: false,
+        });
+    }
+
+    clickClean(e) {
+        const {context} = this.props;
+        const setAppState = context.methods.setAppState;
+        setAppState({
+            btnDrawQuick: false,
+            btnDraw: false,
+            btnEmpty: false,
+            btnClean: true,
         });
     }
 
@@ -147,7 +147,7 @@ export default class Cross extends Component {
         if ( !localStorage.getItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done' ) ) {
 
             // ЕСЛИ ВЫБРАНО: ЗАКРАСИТЬ КЛЕТКУ
-            if ( state.paint ) {
+            if ( state.btnDraw ) {
                 e.currentTarget.classList.add('paint');
                 e.currentTarget.classList.remove('blank');
                 e.currentTarget.setAttribute('data-type', 1);
@@ -161,7 +161,7 @@ export default class Cross extends Component {
             // END
 
             // ЕСЛИ ВЫБРАНО: ПОМЕТИТЬ КЛЕТКУ КАК ПУСТУЮ
-            if ( state.blank ) {
+            if ( state.btnEmpty ) {
                 e.currentTarget.classList.add('blank');
                 e.currentTarget.classList.remove('paint');
                 e.currentTarget.setAttribute('data-type', 0);
@@ -175,7 +175,7 @@ export default class Cross extends Component {
             // END
 
             // ЕСЛИ ВЫБРАНО: ОЧИСТИТЬ КЛЕТКУ
-            if ( state.delete ) {
+            if ( state.btnClean ) {
                 e.currentTarget.classList.remove('paint');
                 e.currentTarget.classList.remove('blank');
                 e.currentTarget.removeAttribute('data-type');
@@ -192,7 +192,7 @@ export default class Cross extends Component {
 
             // ЕСЛИ ВЫБРАНО ТРОЙНОЕ ДЕЙСТВИЕ: ЗАКРАСИТЬ, ПОМЕТИТЬ, УДАЛИТЬ
             // ВАРИАНТ 1
-            if ( state.paintSuper ) {
+            if ( state.btnDrawQuick ) {
                 if ( state.selectedCrossChange === false ) {
                     this.clickStartTimer();
                     setAppState({
@@ -222,7 +222,7 @@ export default class Cross extends Component {
 
             /*
             // ВАРИАНТ 2
-            if ( state.paintSuper ) {
+            if ( state.btnDrawQuick ) {
                 if ( state.selectedCrossChange === false ) {
                     this.clickStartTimer();
                     setAppState({
@@ -264,19 +264,19 @@ export default class Cross extends Component {
 
 
             // ЕСЛИ ВЫБРАНО НЕ ТРОЙНОЕ ДЕЙСТВИЕ, А ПООТДЕЛЬНОСТИ
-            if ( state.paintSuper === false ) {
+            if ( state.btnDrawQuick === false ) {
                 selectedCrossDataNew = state.selectedCrossData;
-                if ( state.paint ) {
+                if ( state.btnDraw ) {
                     let row = e.currentTarget.parentNode.parentNode.getAttribute('data-index');
                     let col = e.currentTarget.getAttribute('data-index');
                     selectedCrossDataNew[row][col] = 1;
                 }
-                if ( state.blank ) {
+                if ( state.btnEmpty ) {
                     let row = e.currentTarget.parentNode.parentNode.getAttribute('data-index');
                     let col = e.currentTarget.getAttribute('data-index');
                     selectedCrossDataNew[row][col] = 0;
                 }
-                if ( state.delete ) {
+                if ( state.btnClean ) {
                     let row = e.currentTarget.parentNode.parentNode.getAttribute('data-index');
                     let col = e.currentTarget.getAttribute('data-index');
                     selectedCrossDataNew[row][col] = 2;
@@ -515,10 +515,26 @@ export default class Cross extends Component {
                             <div className='btns'>
                                 {/*<button className='btn btn_check' title='Проверить решение' onClick={this.check}>CHECK</button>*/}
                                 <button className='btn btn_save' title='Сохранить изменения' onClick={this.clickSave}>Сохранить изменения</button>
-                                <button className={'btn btn_paint-super' + (state.paintSuper?' active':'')} title='Закрасить, пометить, удалить' onClick={this.clickPaintSuper}>Закрасить, пометить, удалить</button>
-                                <button className={'btn btn_paint' + (state.paint?' active':'')} title='Закрасить клетку' onClick={this.clickPaint}>Закрасить клетку</button>
-                                <button className={'btn btn_blank' + (state.blank?' active':'')} title='Пометить клетку как пустую' onClick={this.clickBlank}>Пометить клетку как пустую</button>
-                                <button className={'btn btn_delete' + (state.delete?' active':'')} title='Очистить клетку' onClick={this.clickDelete}>Очистить клетку</button>
+                                {
+                                    state.settingQuickDraw
+                                    &&
+                                        <button className={'btn btn_paint-super' + (state.btnDrawQuick?' active':'')} title='Закрасить, пометить, удалить' onClick={this.clickDrawQuick}>Быстрое рисование</button>
+                                }
+                                {
+                                    !state.settingQuickDraw
+                                    &&
+                                        <button className={'btn btn_paint' + (state.btnDraw?' active':'')} title='Закрасить клетку' onClick={this.clickDraw}>Закрасить клетку</button>
+                                }
+                                {
+                                    !state.settingQuickDraw
+                                    &&
+                                        <button className={'btn btn_blank' + (state.btnEmpty?' active':'')} title='Пометить клетку как пустую' onClick={this.clickEmpty}>Пометить клетку как пустую</button>
+                                }
+                                {
+                                    !state.settingQuickDraw
+                                    &&
+                                        <button className={'btn btn_delete' + (state.btnClean?' active':'')} title='Очистить клетку' onClick={this.clickClean}>Очистить клетку</button>
+                                }
                             </div>
                     }
                 </div>
@@ -587,6 +603,5 @@ export default class Cross extends Component {
             localStorage.setItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_time', JSON.stringify( state.selectedCrossTime ) );
         }
     }
-
 
 }
