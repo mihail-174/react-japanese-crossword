@@ -1,0 +1,12 @@
+.settings__item {
+    margin-bottom: 5px;
+}
+.settings__item:last-child {
+    margin-bottom: 0;
+}
+.settings__label {
+    cursor: pointer;
+}
+.settings__label:hover {
+    color: #e74c3c;
+}

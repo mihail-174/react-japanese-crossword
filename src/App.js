@@ -3,10 +3,19 @@ import './App.css';
 import Size from './Size/Size';
 import List from './List/List';
 import Cross from './Cross/Cross';
+import Settings from './Settings/Settings';
 
 const Context = React.createContext()
 
 let initialState = {
+    settingGuideLines: true,
+    settingHideNames: true,
+    settingQuickDraw: true,
+    // settingMarkerEmptyCells: false,
+    btnDrawQuick: true,
+    btnDraw: false,
+    btnEmpty: false,
+    btnClean: false,
     selectedSize: 'small',
     selectedCross: null,
     selectedCrossName: null,
@@ -17,10 +26,7 @@ let initialState = {
         s: 0
     },
     selectedCrossData: null,
-    paintSuper: true,
-    paint: false,
-    blank: false,
-    delete: false,
+    modal: false,
     result: false,
     numTop: [],
     numLeft: [],
@@ -202,9 +208,9 @@ class App extends Component {
             },
             numTop: null,
             numLeft: null,
-            paint: false,
-            blank: false,
-            delete: false
+            btnDraw: false,
+            btnEmpty: false,
+            btnClean: false
         })
     }
     setAppState(newState) {
@@ -236,13 +242,13 @@ class App extends Component {
                         &&
                         <Cross context={context} />
                     }
+                    <Settings context={context} />
 
                     {
                         <pre>
                         {JSON.stringify(this.state, "", 4)}
                         </pre>
                     }
-
                 </div>
 
             )}</Context.Consumer>
@@ -253,7 +259,6 @@ class App extends Component {
     componentDidMount() {
         this.setState({
             ...initialState
-            // data: this.props.data
         });
     }
 }

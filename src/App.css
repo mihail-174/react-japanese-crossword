@@ -4,6 +4,7 @@ body {
     background-color: #f1f1f1;
     line-height: 1.2;
     font-family: arial;
+    color: #333;
 }
 * {
     box-sizing: border-box;
@@ -20,6 +21,9 @@ h1 {
 a {
     text-decoration: underline;
 }
+a:hover {
+    color: #e74c3c;
+}
 
 /* ссылка вернуться назад к списку */
 .return-back-list {
@@ -29,6 +33,7 @@ a {
 }
 .return-back-list:hover {
     text-decoration: none;
+    color: #e74c3c;
 }
 
 /* статус */
@@ -41,12 +46,11 @@ a {
     background-size: 24px;
 } */
 .status_done {
-    width: 16px;
+    width: 12px;
     height: 16px;
     background-position: 0 0;
     background-repeat: no-repeat;
-    background-image: url(/check.png);
-    background-size: 16px;
+    background-image: url(/ok.svg);
     position: absolute;
     top: 0;
     left: 0;
@@ -158,10 +162,14 @@ div {
     background-image: url(/check.png);
 }
 .btn_paint {
-    background-image: url(/paint.png);
+    background-image: url(/pencil-02.png);
+}
+.btn_paint-super {
+    background-image: url(/ico-01.png);
+    background-size: 40px;
 }
 .btn_blank {
-    background-image: url(/blank.png);
+    background-image: url(/blank-03.svg);
 }
 .btn_delete {
     background-image: url(/eraser.png);
@@ -179,7 +187,7 @@ div {
                         ". cross-num-top"
                         "cross-num-left cross-content"; */
     grid-template-areas: "cross-name cross-name cross-name"
-                        "cross-time cross-time cross-time"
+                        "cross-time cross-settings ."
                          ". cross-num-top ."
                          " cross-num-left cross-content cross-btns-control";
     grid-gap: 0;
@@ -207,7 +215,31 @@ div {
     margin: auto;
     width: 16px;
     height: 16px;
-    background: url(/time.png) 0 0 no-repeat;
+    background: url(/time.svg) 0 0 no-repeat;
+}
+.grid__settings {
+    grid-area: cross-settings;
+    font-size: 14px;
+    margin-bottom: 30px;
+    padding-left: 20px;
+    text-decoration: underline;
+    margin-bottom: 30px;
+    cursor: pointer;
+}
+.grid__settings:hover {
+    text-decoration: none;
+    color: #e74c3c;
+}
+.grid__settings:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    margin: auto;
+    width: 16px;
+    height: 16px;
+    background: url(/setting.svg) 0 0 no-repeat;
 }
 .grid__num-top {
     grid-area: cross-num-top;
