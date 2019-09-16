@@ -205,6 +205,7 @@ div {
     font-size: 14px;
     margin-bottom: 30px;
     padding-left: 20px;
+    min-width: 100px;
 }
 .grid__time:before {
     content: '';
@@ -243,15 +244,11 @@ div {
 }
 .grid__num-top {
     grid-area: cross-num-top;
-    /* background-color: lightgray; */
-    display: flex;
-    align-items: flex-end;
     padding-left: 1px;
 }
 .grid__num-left {
     grid-area: cross-num-left;
     padding-top: 1px;
-    /* background-color: lightgray; */
 }
 .grid__content {
     grid-area: cross-content;

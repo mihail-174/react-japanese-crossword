@@ -553,8 +553,16 @@ export default class Cross extends Component {
             // console.log("MOUSEENTER");
             let rowId = cell.parentNode.parentNode.getAttribute('data-index');
             let colId = cell.getAttribute('data-index');
+            document.querySelectorAll('.num_top .num__col').forEach((num, i)=>{
+                num.classList.remove('hover');
+            });
+            document.querySelectorAll('.num_left .num__row').forEach((num, i)=>{
+                num.classList.remove('hover');
+            });
             document.querySelectorAll('.cross__row')[rowId].querySelectorAll('.cross__cell').forEach(colItem=>{
                 colItem.classList.add('hover');
+                document.querySelectorAll('.num_left .num__row')[rowId].classList.add('hover');
+                document.querySelectorAll('.num_top .num__col')[colId].classList.add('hover');
             });
             document.querySelectorAll('.cross__row').forEach((row, i)=>{
                 row.querySelectorAll('.cross__cell')[parseInt(colId)].classList.add('hover');
@@ -569,6 +577,12 @@ export default class Cross extends Component {
             });
             document.querySelectorAll('.cross__row').forEach((row, i)=>{
                 row.querySelectorAll('.cross__cell')[parseInt(colId)].classList.remove('hover');
+            });
+            document.querySelectorAll('.num_top .num__col').forEach((num, i)=>{
+                num.classList.remove('hover');
+            });
+            document.querySelectorAll('.num_left .num__row').forEach((num, i)=>{
+                num.classList.remove('hover');
             });
         }
         if ( !JSON.parse(localStorage.getItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done')) ) {

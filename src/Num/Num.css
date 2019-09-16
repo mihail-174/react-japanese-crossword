@@ -14,7 +14,17 @@
     align-items: center;
     justify-content: center;
 }
-
+.num__row.hover .num__value:before,
+.num__col.hover .num__value:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.1);
+}
 .num_top .num__col  {
     flex-direction: column;
     justify-content: flex-end;
@@ -31,7 +41,11 @@
     flex-direction: column;
     align-items: flex-end;
 }
-.num_left .num__row  {}
+.num_left .num__row {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
 .num_left .num__value  {
     border-top: 1px solid grey;
     border-left: 1px solid grey;
