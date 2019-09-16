@@ -287,10 +287,21 @@ export default class Cross extends Component {
             }
             // END
 
+            Array.prototype.equals = function (other, callback = (x, y) => (x === y)) {
+              // Check the other object is of the same type
+              if (Object.getPrototypeOf(this) !== Object.getPrototypeOf(other)) {
+                return false;
+              }
+              if (this.length === undefined || this.length !== other.length) {
+                return false;
+              }
+              return Array.prototype.every.call(this, (x, i) => callback(x, other[i]));
+            };
+            /*
             // Warn if overriding existing method
-            if (Array.prototype.equals) {
-                console.warn("Overriding existing Array.prototype.equals. Possible causes: New API defines the method, there's a framework conflict or you've got double inclusions in your code.");
-            }
+            // if (Array.prototype.equals) {
+            //     console.warn("Overriding existing Array.prototype.equals. Possible causes: New API defines the method, there's a framework conflict or you've got double inclusions in your code.");
+            // }
             // attach the .equals method to Array's prototype to call it on any array
             Array.prototype.equals = function (array) {
                 // if the other array is a falsy value, return
@@ -315,6 +326,7 @@ export default class Cross extends Component {
             }
             // Hide method from for-in loops
             Object.defineProperty(Array.prototype, "equals", {enumerable: false});
+            */
 
             // *********************************************************************
             // let selectedCrossDataNewForCheck = state.selectedCrossData;
@@ -467,15 +479,11 @@ export default class Cross extends Component {
             <div className="grid">
                 <div className='grid__name'>
                     {
-                        state.settingHideNames
+                        JSON.parse(localStorage.getItem('cross_setting_hide-names')) && !JSON.parse(localStorage.getItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done'))
                         ?
-                            localStorage.getItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done' )
-                            ?
-                                state.selectedCrossName
-                            :
-                                state.selectedCrossName.replace(/[\W\w]/g, "*")
+                        state.selectedCrossName.replace(/[\W\w]/g, "*")
                         :
-                            state.selectedCrossName
+                        state.selectedCrossName
                     }
                 </div>
                 {
@@ -513,27 +521,20 @@ export default class Cross extends Component {
                         !localStorage.getItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done' )
                         &&
                             <div className='btns'>
-                                {/*<button className='btn btn_check' title='Проверить решение' onClick={this.check}>CHECK</button>*/}
                                 <button className='btn btn_save' title='Сохранить изменения' onClick={this.clickSave}>Сохранить изменения</button>
                                 {
-                                    state.settingQuickDraw
+                                    JSON.parse(localStorage.getItem('cross_setting_quick-draw'))
                                     &&
                                         <button className={'btn btn_paint-super' + (state.btnDrawQuick?' active':'')} title='Закрасить, пометить, удалить' onClick={this.clickDrawQuick}>Быстрое рисование</button>
                                 }
                                 {
-                                    !state.settingQuickDraw
+                                    !JSON.parse(localStorage.getItem('cross_setting_quick-draw'))
                                     &&
-                                        <button className={'btn btn_paint' + (state.btnDraw?' active':'')} title='Закрасить клетку' onClick={this.clickDraw}>Закрасить клетку</button>
-                                }
-                                {
-                                    !state.settingQuickDraw
-                                    &&
-                                        <button className={'btn btn_blank' + (state.btnEmpty?' active':'')} title='Пометить клетку как пустую' onClick={this.clickEmpty}>Пометить клетку как пустую</button>
-                                }
-                                {
-                                    !state.settingQuickDraw
-                                    &&
-                                        <button className={'btn btn_delete' + (state.btnClean?' active':'')} title='Очистить клетку' onClick={this.clickClean}>Очистить клетку</button>
+                                        <div>
+                                            <button className={'btn btn_paint' + (state.btnDraw?' active':'')} title='Закрасить клетку' onClick={this.clickDraw}>Закрасить клетку</button>
+                                            <button className={'btn btn_blank' + (state.btnEmpty?' active':'')} title='Пометить клетку как пустую' onClick={this.clickEmpty}>Пометить клетку как пустую</button>
+                                            <button className={'btn btn_delete' + (state.btnClean?' active':'')} title='Очистить клетку' onClick={this.clickClean}>Очистить клетку</button>
+                                        </div>
                                 }
                             </div>
                     }
@@ -570,22 +571,16 @@ export default class Cross extends Component {
                 row.querySelectorAll('.cross__cell')[parseInt(colId)].classList.remove('hover');
             });
         }
-        if ( !localStorage.getItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done' ) ) {
+        if ( !JSON.parse(localStorage.getItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done')) ) {
             document.querySelectorAll('.cross__cell').forEach(cell=>{
                 cell.addEventListener('mouseenter', () => {
-                    if ( state.settingGuideLines ) {
-                        // console.log( 'ЕСТЬ' );
+                    if ( JSON.parse(localStorage.getItem('cross_setting_guide-lines')) ) {
                         guideLinesMouseEnter(cell);
-                    } else {
-                        // console.log( 'НЕТ' );
                     }
                 });
                 cell.addEventListener('mouseleave', () => {
-                    if ( state.settingGuideLines ) {
-                        // console.log( 'ЕСТЬ' );
+                    if ( JSON.parse(localStorage.getItem('cross_setting_guide-lines')) ) {
                         guideLinesMouseLeave(cell);
-                    } else {
-                        // console.log( 'НЕТ' );
                     }
                 });
             })

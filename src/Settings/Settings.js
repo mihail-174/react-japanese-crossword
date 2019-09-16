@@ -9,8 +9,20 @@ export default class Settings extends Component {
         this.clickClose = this.clickClose.bind(this);
         this.clickGuideLines = this.clickGuideLines.bind(this);
         this.clickHideNames = this.clickHideNames.bind(this);
-        this.clickMarkerEmptyCells = this.clickMarkerEmptyCells.bind(this);
+        // this.clickMarkerEmptyCells = this.clickMarkerEmptyCells.bind(this);
         this.clickQuickDraw = this.clickQuickDraw.bind(this);
+
+        const {context} = this.props;
+        const state = context.state;
+        if ( localStorage.getItem('cross_setting_guide-lines') === null ) {
+            localStorage.setItem('cross_setting_guide-lines', state.settingGuideLines );
+        }
+        if ( localStorage.getItem('cross_setting_quick-draw') === null ) {
+            localStorage.setItem('cross_setting_quick-draw', state.settingQuickDraw );
+        }
+        if ( localStorage.getItem('cross_setting_hide-names') === null ) {
+            localStorage.setItem('cross_setting_hide-names', state.settingHideNames );
+        }
     }
 
     clickClose(e) {
@@ -26,98 +38,84 @@ export default class Settings extends Component {
         const {context} = this.props;
         const state = context.state;
         const setAppState = context.methods.setAppState;
+        localStorage.setItem('cross_setting_guide-lines', e.currentTarget.checked );
         setAppState({
-            settingGuideLines: !state.settingGuideLines
+            settingGuideLines: e.currentTarget.checked
         });
 
         // НАПРАВЛЯЮЩИЕ ЛИНИИ
-        function guideLinesMouseEnter(cell) {
-            // console.log("MOUSEENTER");
-            let rowId = cell.parentNode.parentNode.getAttribute('data-index');
-            let colId = cell.getAttribute('data-index');
-            document.querySelectorAll('.cross__row')[rowId].querySelectorAll('.cross__cell').forEach(colItem=>{
-                colItem.classList.add('hover');
-            });
-            document.querySelectorAll('.cross__row').forEach((row, i)=>{
-                row.querySelectorAll('.cross__cell')[parseInt(colId)].classList.add('hover');
+        function guideLinesMouseEnter() {
+            document.querySelectorAll('.cross__cell').forEach(item=>{
+                let rowId = item.parentNode.parentNode.getAttribute('data-index');
+                let colId = item.getAttribute('data-index');
+                document.querySelectorAll('.cross__row')[rowId].querySelectorAll('.cross__cell').forEach(colItem=>{
+                    colItem.classList.add('hover');
+                });
+                document.querySelectorAll('.cross__row').forEach((row, i)=>{
+                    row.querySelectorAll('.cross__cell')[parseInt(colId)].classList.add('hover');
+                });
             });
         }
-        function guideLinesMouseLeave(cell) {
-            // console.log("MOUSELEAVE");
-            let rowId = cell.parentNode.parentNode.getAttribute('data-index');
-            let colId = cell.getAttribute('data-index');
-            document.querySelectorAll('.cross__row')[rowId].querySelectorAll('.cross__cell').forEach(colItem=>{
-                colItem.classList.remove('hover');
-            });
-            document.querySelectorAll('.cross__row').forEach((row, i)=>{
-                row.querySelectorAll('.cross__cell')[parseInt(colId)].classList.remove('hover');
+        function guideLinesMouseLeave() {
+            document.querySelectorAll('.cross__cell').forEach(item=>{
+                let rowId = item.parentNode.parentNode.getAttribute('data-index');
+                let colId = item.getAttribute('data-index');
+                document.querySelectorAll('.cross__row')[rowId].querySelectorAll('.cross__cell').forEach(colItem=>{
+                    colItem.classList.remove('hover');
+                });
+                document.querySelectorAll('.cross__row').forEach((row, i)=>{
+                    row.querySelectorAll('.cross__cell')[parseInt(colId)].classList.remove('hover');
+                });
             });
         }
 
-        document.querySelectorAll('.cross__cell').forEach(item=>{
-            item.addEventListener('mouseenter', () => {
-                if ( state.settingGuideLines ) {
-                    guideLinesMouseLeave(item);
-                    // console.log( 'БЫЛО ЕСТЬ' );
-                } else {
-                    guideLinesMouseEnter(item);
-                    // console.log( 'БЫЛО НЕТ' );
-                }
-            });
-            item.addEventListener('mouseleave', () => {
-                if ( state.settingGuideLines ) {
-                    // console.log( 'БЫЛО ЕСТЬ' );
-                } else {
-                    guideLinesMouseLeave(item);
-                    // console.log( 'БЫЛО НЕТ' );
-                }
-            });
-        });
-        // КОНЕЦ
+        if ( JSON.parse(localStorage.getItem('cross_setting_guide-lines')) ) {
+            // console.log( 'ВКЛЮЧИЛИ НАПРАВЛЯЮЩИЕ' );
+            guideLinesMouseLeave();
+        } else {
+            // console.log( 'ОТКЛЮЧИЛИ НАПРАВЛЯЮЩИЕ' );
+            guideLinesMouseLeave();
+        }
 
     }
 
     clickHideNames(e) {
         const {context} = this.props;
-        const state = context.state;
+        // const state = context.state;
         const setAppState = context.methods.setAppState;
+        localStorage.setItem('cross_setting_hide-names', e.currentTarget.checked );
         setAppState({
-            settingHideNames: !state.settingHideNames
+            settingHideNames: e.currentTarget.checked
         });
     }
 
-    clickMarkerEmptyCells(e) {
-        const {context} = this.props;
-        const state = context.state;
-        const setAppState = context.methods.setAppState;
-        setAppState({
-            settingMarkerEmptyCells: !state.settingMarkerEmptyCells
-        });
-    }
+    // clickMarkerEmptyCells(e) {
+    //     const {context} = this.props;
+    //     const state = context.state;
+    //     const setAppState = context.methods.setAppState;
+    //     setAppState({
+    //         settingMarkerEmptyCells: !state.settingMarkerEmptyCells
+    //     });
+    // }
 
     clickQuickDraw(e) {
         const {context} = this.props;
         const state = context.state;
         const setAppState = context.methods.setAppState;
-        // localStorage.setItem('cross_setting_quick-draw', Boolean(e.currentTarget.checked) );
         localStorage.setItem('cross_setting_quick-draw', e.currentTarget.checked );
-        // console.log( localStorage.setItem('cross_setting_quick-draw', e.currentTarget.checked ) );
-        // if ( state.settingQuickDraw ) {
-            // localStorage.setItem('cross_setting_quick-draw', JSON.stringify( state.settingQuickDraw ) );
-        // }
         setAppState({
-            settingQuickDraw: !state.settingQuickDraw
+            settingQuickDraw: e.currentTarget.checked
         });
-        if ( state.settingQuickDraw ) {
+        if ( JSON.parse(localStorage.getItem('cross_setting_quick-draw')) ) {
             setAppState({
-                btnDrawQuick: false,
+                btnDrawQuick: true,
                 btnDraw: false,
                 btnEmpty: false,
                 btnClean: false
             });
         } else {
             setAppState({
-                btnDrawQuick: true,
+                btnDrawQuick: false,
                 btnDraw: false,
                 btnEmpty: false,
                 btnClean: false
@@ -128,15 +126,6 @@ export default class Settings extends Component {
     render() {
         const {context} = this.props;
         const state = context.state;
-
-        // console.log( Boolean( localStorage.getItem('cross_setting_quick-draw') ) );
-
-        // if ( localStorage.getItem('cross_setting_quick-draw') ) {
-        //     console.log( localStorage.getItem('cross_setting_quick-draw') );
-        // } else {
-        //     console.log( state.settingQuickDraw );
-        // }
-
         return (
             <div className={"modal" + (state.modal ? ' active':'')} ref='modal'>
                 <div className="modal__overlay" onClick={this.clickClose}></div>
@@ -154,7 +143,7 @@ export default class Settings extends Component {
                                         id='guide-lines'
                                         type='checkbox'
                                         onChange={this.clickGuideLines}
-                                        defaultChecked={state.settingGuideLines}
+                                        defaultChecked={JSON.parse(localStorage.getItem('cross_setting_guide-lines'))}
                                         name=''
                                     />
                                     Показывать направляющие линии
@@ -166,7 +155,7 @@ export default class Settings extends Component {
                                         id='hide-names'
                                         type='checkbox'
                                         onChange={this.clickHideNames}
-                                        defaultChecked={state.settingHideNames}
+                                        defaultChecked={JSON.parse(localStorage.getItem('cross_setting_hide-names'))}
                                         name=''
                                     />
                                     Скрыть названия
@@ -192,10 +181,7 @@ export default class Settings extends Component {
                                         id='quick-draw'
                                         type='checkbox'
                                         onChange={this.clickQuickDraw}
-                                        defaultChecked={
-                                            // Boolean( localStorage.getItem('cross_setting_quick-draw') )
-                                            state.settingQuickDraw
-                                        }
+                                        defaultChecked={JSON.parse(localStorage.getItem('cross_setting_quick-draw'))}
                                         name=''
                                     />
                                     Разрешить быстрое рисование в ячейке
@@ -209,25 +195,7 @@ export default class Settings extends Component {
         )
     }
 
-    componentDidMount() {
-        const {context} = this.props;
-        const state = context.state;
-        const setAppState = context.methods.setAppState;
-        console.log( state.settingQuickDraw );
-        console.log( JSON.parse(localStorage.getItem('cross_setting_quick-draw')) );
-        if ( state.settingQuickDraw !== localStorage.getItem('cross_setting_quick-draw') ) {
-            console.log('не равен');
-            setAppState({
-                settingQuickDraw: localStorage.getItem('cross_setting_quick-draw')
-            });
-        }
-        // if ( !Boolean(localStorage.getItem('cross_setting_quick-draw')) ) {
-            // localStorage.setItem('cross_setting_quick-draw', JSON.stringify( state.settingQuickDraw ) );
-        // }
-        // setAppState({
-        //     settingQuickDraw: localStorage.getItem('cross_setting_quick-draw')
-        // });
-    }
+    componentDidMount() {}
 
     componentWillUnmount() {}
 

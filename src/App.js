@@ -8,6 +8,14 @@ import Settings from './Settings/Settings';
 const Context = React.createContext()
 
 let initialState = {
+    settingGuideLines: true,
+    settingHideNames: true,
+    settingQuickDraw: true,
+    // settingMarkerEmptyCells: false,
+    btnDrawQuick: true,
+    btnDraw: false,
+    btnEmpty: false,
+    btnClean: false,
     selectedSize: 'small',
     selectedCross: null,
     selectedCrossName: null,
@@ -19,19 +27,6 @@ let initialState = {
     },
     selectedCrossData: null,
     modal: false,
-    settingGuideLines: true,
-    settingHideNames: true,
-    settingMarkerEmptyCells: false,
-    settingQuickDraw: true,
-    btnDrawQuick: true,
-    btnDraw: false,
-    btnEmpty: false,
-    btnClean: false,
-
-    // paintSuper: true,
-    // paint: false,
-    // blank: false,
-    // delete: false,
     result: false,
     numTop: [],
     numLeft: [],
@@ -264,7 +259,6 @@ class App extends Component {
     componentDidMount() {
         this.setState({
             ...initialState
-            // data: this.props.data
         });
     }
 }
