@@ -525,15 +525,15 @@ export default class Cross extends Component {
                                 {
                                     JSON.parse(localStorage.getItem('cross_setting_quick-draw'))
                                     &&
-                                        <button className={'btn btn_paint-super' + (state.btnDrawQuick?' active':'')} title='Закрасить, пометить, удалить' onClick={this.clickDrawQuick}>Быстрое рисование</button>
+                                        <button className={'btn btn_draw-quick' + (state.btnDrawQuick?' active':'')} title='Закрасить, пометить, удалить' onClick={this.clickDrawQuick}>Быстрое рисование</button>
                                 }
                                 {
                                     !JSON.parse(localStorage.getItem('cross_setting_quick-draw'))
                                     &&
                                         <div>
-                                            <button className={'btn btn_paint' + (state.btnDraw?' active':'')} title='Закрасить клетку' onClick={this.clickDraw}>Закрасить клетку</button>
-                                            <button className={'btn btn_blank' + (state.btnEmpty?' active':'')} title='Пометить клетку как пустую' onClick={this.clickEmpty}>Пометить клетку как пустую</button>
-                                            <button className={'btn btn_delete' + (state.btnClean?' active':'')} title='Очистить клетку' onClick={this.clickClean}>Очистить клетку</button>
+                                            <button className={'btn btn_draw' + (state.btnDraw?' active':'')} title='Закрасить клетку' onClick={this.clickDraw}>Закрасить клетку</button>
+                                            <button className={'btn btn_empty' + (state.btnEmpty?' active':'')} title='Пометить клетку как пустую' onClick={this.clickEmpty}>Пометить клетку как пустую</button>
+                                            <button className={'btn btn_clean' + (state.btnClean?' active':'')} title='Очистить клетку' onClick={this.clickClean}>Очистить клетку</button>
                                         </div>
                                 }
                             </div>

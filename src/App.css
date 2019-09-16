@@ -161,17 +161,17 @@ div {
 .btn_check {
     background-image: url(/check.png);
 }
-.btn_paint {
+.btn_draw {
     background-image: url(/pencil-02.png);
 }
-.btn_paint-super {
+.btn_draw-quick {
     background-image: url(/ico-01.png);
     background-size: 40px;
 }
-.btn_blank {
+.btn_empty {
     background-image: url(/blank-03.svg);
 }
-.btn_delete {
+.btn_clean {
     background-image: url(/eraser.png);
 }
 .btn_save {
