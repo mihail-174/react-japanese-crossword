@@ -26,6 +26,7 @@ let initialState = {
         m: 0,
         s: 0
     },
+    selectedCrossTimerId: null,
     selectedCrossData: null,
     modal: false,
     result: false,

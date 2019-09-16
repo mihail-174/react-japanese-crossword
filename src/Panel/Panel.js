@@ -34,8 +34,10 @@ export default class Panel extends Component {
                 h: 0,
                 m: 0,
                 s: 0
-            }
+            },
+            selectedCrossChange: false
         });
+        clearInterval(state.selectedCrossTimerId);
     }
 
     render() {

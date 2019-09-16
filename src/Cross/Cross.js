@@ -74,7 +74,8 @@ export default class Cross extends Component {
                     h: hours,
                     m: minutes,
                     s: seconds
-                }
+                },
+                selectedCrossTimerId: timer
             });
         }, 1000);
         totalCrossSeconds = 0;
