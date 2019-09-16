@@ -118,6 +118,7 @@ export default class List extends Component {
         // КОНЕЦ
 
         // ВЫВОДИМ В ВЕРХНЮЮ КОЛОНКУ КОЛИЧЕСТВО ЗАКРАШИВАЕМЫХ КЛЕТОК
+        printNumTop(this);
         function printNumTop() {
             let newArrRow = []
             let newArrValues = []
@@ -136,6 +137,7 @@ export default class List extends Component {
                         // console.log( key );
                         // console.log( parseInt(key) + 1 );
                         // console.log( arr.length );
+                        // console.log('записали в новый массив количество единиц = ' + a);
                         if ( parseInt(key) + 1 === arr.length ) {
                             // console.log('+');
                             newArrValues.push(a);
@@ -164,7 +166,6 @@ export default class List extends Component {
                 numTop: newArrRow
             });
         }
-        printNumTop(this);
     }
 
     render() {

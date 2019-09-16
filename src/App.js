@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import Size from './Size/Size';
 import List from './List/List';
-import Cross from './Cross/Cross';
+import Panel from './Panel/Panel';
+import Grid from './Grid/Grid';
 import Settings from './Settings/Settings';
 
 const Context = React.createContext()
@@ -73,7 +74,7 @@ let initialState = {
         },
         {
             id: 2,
-            name: 'два',
+            name: 'Смайлик',
             width: 10,
             height: 5,
             arr: [
@@ -206,8 +207,8 @@ class App extends Component {
                 m: 0,
                 s: 0
             },
-            numTop: null,
-            numLeft: null,
+            numTop: [],
+            numLeft: [],
             btnDraw: false,
             btnEmpty: false,
             btnClean: false
@@ -222,12 +223,23 @@ class App extends Component {
             <Context.Provider value={{ state: this.state, methods: {setAppState: (value) => this.setState(value)}}}>
             <Context.Consumer>{context => (
 
-                <div className="App">
-                    <h1>Японские кроссворды</h1>
+                <div className="app">
+                    <h1 className='app__title'>Японские кроссворды</h1>
                     {
                         this.state.selectedCross !== null
                         &&
                             <div className='return-back-list' onClick={this.returnBackList}>Вернуться к списку</div>
+                    }
+
+                    {
+                        JSON.parse(localStorage.getItem('cross_' + this.state.selectedSize + '_id-' + this.state.selectedCross + '_done'))
+                        &&
+                        <h2 className='title-cross'>{this.state.selectedCrossName}</h2>
+                    }
+                    {
+                        this.state.selectedCross !== null
+                        &&
+                            <Panel context={context} />
                     }
                     {
                         this.state.selectedCross === null
@@ -240,7 +252,7 @@ class App extends Component {
                     {
                         this.state.selectedCrossData !== null
                         &&
-                        <Cross context={context} />
+                        <Grid context={context} />
                     }
                     <Settings context={context} />
 

@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import NumTop from '../Num/NumTop';
-import NumLeft from '../Num/NumLeft';
 import './Cross.css';
-import '../Num/Num.css';
-
 
 // let timer = 0;
 // let sec = 0;
@@ -44,13 +40,8 @@ export default class Cross extends Component {
     constructor(props) {
         super(props);
         this.clickCell = this.clickCell.bind(this);
-        // this.clickDrawQuick = this.clickDrawQuick.bind(this);
-        this.clickDraw = this.clickDraw.bind(this);
-        this.clickEmpty = this.clickEmpty.bind(this);
-        this.clickClean = this.clickClean.bind(this);
         this.clickSave = this.clickSave.bind(this);
         this.clickStartTimer = this.clickStartTimer.bind(this);
-        this.openSettings = this.openSettings.bind(this);
     }
 
     clickStartTimer() {
@@ -89,48 +80,6 @@ export default class Cross extends Component {
         totalCrossSeconds = 0;
     }
 
-    // clickDrawQuick(e) {
-    //     const {context} = this.props;
-    //     const setAppState = context.methods.setAppState;
-    //     setAppState({
-    //         // btnDrawQuick: true,
-    //         btnDraw: false,
-    //         btnEmpty: false,
-    //         btnClean: false,
-    //     });
-    // }
-    clickDraw(e) {
-        const {context} = this.props;
-        const setAppState = context.methods.setAppState;
-        setAppState({
-            // btnDrawQuick: false,
-            btnDraw: true,
-            btnEmpty: false,
-            btnClean: false,
-        });
-    }
-
-    clickEmpty(e) {
-        const {context} = this.props;
-        const setAppState = context.methods.setAppState;
-        setAppState({
-            // btnDrawQuick: false,
-            btnDraw: false,
-            btnEmpty: true,
-            btnClean: false,
-        });
-    }
-
-    clickClean(e) {
-        const {context} = this.props;
-        const setAppState = context.methods.setAppState;
-        setAppState({
-            // btnDrawQuick: false,
-            btnDraw: false,
-            btnEmpty: false,
-            btnClean: true,
-        });
-    }
 
     clickSave() {
         const {context} = this.props;
@@ -287,17 +236,18 @@ export default class Cross extends Component {
             }
             // END
 
-            Array.prototype.equals = function (other, callback = (x, y) => (x === y)) {
-              // Check the other object is of the same type
-              if (Object.getPrototypeOf(this) !== Object.getPrototypeOf(other)) {
-                return false;
-              }
-              if (this.length === undefined || this.length !== other.length) {
-                return false;
-              }
-              return Array.prototype.every.call(this, (x, i) => callback(x, other[i]));
-            };
+            // Array.prototype.equals = function (other, callback = (x, y) => (x === y)) {
+            //   // Check the other object is of the same type
+            //   if (Object.getPrototypeOf(this) !== Object.getPrototypeOf(other)) {
+            //     return false;
+            //   }
+            //   if (this.length === undefined || this.length !== other.length) {
+            //     return false;
+            //   }
+            //   return Array.prototype.every.call(this, (x, i) => callback(x, other[i]));
+            // };
             /*
+            */
             // Warn if overriding existing method
             // if (Array.prototype.equals) {
             //     console.warn("Overriding existing Array.prototype.equals. Possible causes: New API defines the method, there's a framework conflict or you've got double inclusions in your code.");
@@ -326,7 +276,6 @@ export default class Cross extends Component {
             }
             // Hide method from for-in loops
             Object.defineProperty(Array.prototype, "equals", {enumerable: false});
-            */
 
             // *********************************************************************
             // let selectedCrossDataNewForCheck = state.selectedCrossData;
@@ -433,14 +382,6 @@ export default class Cross extends Component {
 
     }
 
-    openSettings() {
-        const {context} = this.props;
-        const setAppState = context.methods.setAppState;
-        setAppState({
-            modal: true
-        });
-    }
-
     render() {
         const {context} = this.props;
         const state = context.state;
@@ -476,71 +417,10 @@ export default class Cross extends Component {
         }, this)
 
         return (
-            <div className="grid">
-                <div className='grid__name'>
-                    {
-                        JSON.parse(localStorage.getItem('cross_setting_hide-names')) && !JSON.parse(localStorage.getItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done'))
-                        ?
-                        state.selectedCrossName.replace(/[\W\w]/g, "*")
-                        :
-                        state.selectedCrossName
-                    }
-                </div>
-                {
-                    !localStorage.getItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done' )
-                    &&
-                        <div className='grid__time'>{String(state.selectedCrossTime.h).padStart(2, "0") + ':' + String(state.selectedCrossTime.m).padStart(2, "0") + ':' + String(state.selectedCrossTime.s).padStart(2, "0")}</div>
-                }
-                {
-                    !localStorage.getItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done' )
-                    &&
-                        <div className='grid__settings' onClick={this.openSettings}>Настройки</div>
-                }
-                <div className='grid__num-top'>
-                    <NumTop context={context} />
-                </div>
-                <div className='grid__num-left'>
-                    <NumLeft context={context} />
-                </div>
-                <div className='grid__content'>
-                    <div className={'cross' + (localStorage.getItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done') ? ' cross_done':'')}>
-                        {crossList}
-                    </div>
-                    <div className='grid__result'>
-                        {
-                            state.result
-                            ?
-                            'Отлично'
-                            :
-                            'Не верно'
-                        }
-                    </div>
-                </div>
-                <div className='grid__btns-control'>
-                    {
-                        !localStorage.getItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done' )
-                        &&
-                            <div className='btns'>
-                                <button className='btn btn_save' title='Сохранить изменения' onClick={this.clickSave}>Сохранить изменения</button>
-                                {
-                                    JSON.parse(localStorage.getItem('cross_setting_quick-draw'))
-                                    &&
-                                        <button className='btn btn_draw-quick active' title='Закрасить, пометить, удалить' onClick={this.clickDrawQuick}>Быстрое рисование</button>
-                                }
-                                {
-                                    !JSON.parse(localStorage.getItem('cross_setting_quick-draw'))
-                                    &&
-                                        <div>
-                                            <button className={'btn btn_draw' + (state.btnDraw?' active':'')} title='Закрасить клетку' onClick={this.clickDraw}>Закрасить клетку</button>
-                                            <button className={'btn btn_empty' + (state.btnEmpty?' active':'')} title='Пометить клетку как пустую' onClick={this.clickEmpty}>Пометить клетку как пустую</button>
-                                            <button className={'btn btn_clean' + (state.btnClean?' active':'')} title='Очистить клетку' onClick={this.clickClean}>Очистить клетку</button>
-                                        </div>
-                                }
-                            </div>
-                    }
-                </div>
-
+            <div className={'cross' + (localStorage.getItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done') ? ' cross_done':'')}>
+                {crossList}
             </div>
+
         )
     }
 
@@ -548,7 +428,7 @@ export default class Cross extends Component {
         const {context} = this.props;
         const state = context.state;
 
-        // НАПРАВЛЯЮЩИЕ ЛИНИИ
+        // ОТОБРАЖЕНИЕ НАПРАВЛЯЮЩИХ ЛИНИЙ
         function guideLinesMouseEnter(cell) {
             // console.log("MOUSEENTER");
             let rowId = cell.parentNode.parentNode.getAttribute('data-index');

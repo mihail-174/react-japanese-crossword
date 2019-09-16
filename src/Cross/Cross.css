@@ -22,11 +22,9 @@
 }
 .cross__cell:nth-child(5n) {
     border-right-width: 2px;
-    /* border-color: #000; */
 }
 .cross__row:nth-child(5n) .cross__cell {
     border-bottom-width: 2px;
-    /* border-color: #000; */
 }
 .cross__cell:last-child {
     border-right: none;
@@ -45,9 +43,6 @@
     background: url(/blank.png) 0 0 no-repeat;
     background-size: 30px;
 }
-/* .cross__cell.hover {
-	background-color: aliceblue;
-} */
 .cross__cell.hover::before {
 	content: '';
 	position: absolute;

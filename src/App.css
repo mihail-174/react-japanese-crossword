@@ -9,14 +9,20 @@ body {
 * {
     box-sizing: border-box;
 }
-.App {
+.app {
     padding: 15px;
     /* display: flex; */
     /* align-items: flex-start; */
 }
-h1 {
+.app__title {
     margin: 0 0 30px;
     font-family: cursive;
+}
+.title-cross {
+    font-size: 24px;
+    font-weight: 700;
+    font-style: italic;
+    margin-bottom: 15px;
 }
 a {
     text-decoration: underline;
@@ -85,9 +91,6 @@ a:hover {
 .list__select {
     padding: 10px;
 } */
-.App-link {
-  color: #61dafb;
-}
 
 @keyframes App-logo-spin {
   from {
@@ -100,12 +103,6 @@ a:hover {
 
 div {
     position: relative;
-}
-.AAA {
-    background-color: green !important;
-}
-.BBB {
-    background-color: red !important;
 }
 
 .grid__result {
@@ -186,61 +183,10 @@ div {
     /* grid-template-areas: 'cross-name cross-name'
                         ". cross-num-top"
                         "cross-num-left cross-content"; */
-    grid-template-areas: "cross-name cross-name cross-name"
-                        "cross-time cross-settings ."
-                         ". cross-num-top ."
+    grid-template-areas: ". cross-num-top ."
                          " cross-num-left cross-content cross-btns-control";
     grid-gap: 0;
     align-items: flex-start;
-}
-.grid__name {
-    grid-area: cross-name;
-    font-size: 24px;
-    font-weight: 700;
-    font-style: italic;
-    margin-bottom: 15px;
-}
-.grid__time {
-    grid-area: cross-time;
-    font-size: 14px;
-    margin-bottom: 30px;
-    padding-left: 20px;
-    min-width: 100px;
-}
-.grid__time:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    margin: auto;
-    width: 16px;
-    height: 16px;
-    background: url(/time.svg) 0 0 no-repeat;
-}
-.grid__settings {
-    grid-area: cross-settings;
-    font-size: 14px;
-    margin-bottom: 30px;
-    padding-left: 20px;
-    text-decoration: underline;
-    margin-bottom: 30px;
-    cursor: pointer;
-}
-.grid__settings:hover {
-    text-decoration: none;
-    color: #e74c3c;
-}
-.grid__settings:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    margin: auto;
-    width: 16px;
-    height: 16px;
-    background: url(/setting.svg) 0 0 no-repeat;
 }
 .grid__num-top {
     grid-area: cross-num-top;
