@@ -12,7 +12,7 @@ let initialState = {
     settingHideNames: true,
     settingQuickDraw: true,
     // settingMarkerEmptyCells: false,
-    btnDrawQuick: true,
+    // btnDrawQuick: true,
     btnDraw: false,
     btnEmpty: false,
     btnClean: false,

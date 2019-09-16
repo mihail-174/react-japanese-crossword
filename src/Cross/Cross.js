@@ -44,7 +44,7 @@ export default class Cross extends Component {
     constructor(props) {
         super(props);
         this.clickCell = this.clickCell.bind(this);
-        this.clickDrawQuick = this.clickDrawQuick.bind(this);
+        // this.clickDrawQuick = this.clickDrawQuick.bind(this);
         this.clickDraw = this.clickDraw.bind(this);
         this.clickEmpty = this.clickEmpty.bind(this);
         this.clickClean = this.clickClean.bind(this);
@@ -89,21 +89,21 @@ export default class Cross extends Component {
         totalCrossSeconds = 0;
     }
 
-    clickDrawQuick(e) {
-        const {context} = this.props;
-        const setAppState = context.methods.setAppState;
-        setAppState({
-            btnDrawQuick: true,
-            btnDraw: false,
-            btnEmpty: false,
-            btnClean: false,
-        });
-    }
+    // clickDrawQuick(e) {
+    //     const {context} = this.props;
+    //     const setAppState = context.methods.setAppState;
+    //     setAppState({
+    //         // btnDrawQuick: true,
+    //         btnDraw: false,
+    //         btnEmpty: false,
+    //         btnClean: false,
+    //     });
+    // }
     clickDraw(e) {
         const {context} = this.props;
         const setAppState = context.methods.setAppState;
         setAppState({
-            btnDrawQuick: false,
+            // btnDrawQuick: false,
             btnDraw: true,
             btnEmpty: false,
             btnClean: false,
@@ -114,7 +114,7 @@ export default class Cross extends Component {
         const {context} = this.props;
         const setAppState = context.methods.setAppState;
         setAppState({
-            btnDrawQuick: false,
+            // btnDrawQuick: false,
             btnDraw: false,
             btnEmpty: true,
             btnClean: false,
@@ -125,7 +125,7 @@ export default class Cross extends Component {
         const {context} = this.props;
         const setAppState = context.methods.setAppState;
         setAppState({
-            btnDrawQuick: false,
+            // btnDrawQuick: false,
             btnDraw: false,
             btnEmpty: false,
             btnClean: true,
@@ -192,7 +192,7 @@ export default class Cross extends Component {
 
             // ЕСЛИ ВЫБРАНО ТРОЙНОЕ ДЕЙСТВИЕ: ЗАКРАСИТЬ, ПОМЕТИТЬ, УДАЛИТЬ
             // ВАРИАНТ 1
-            if ( state.btnDrawQuick ) {
+            if ( JSON.parse(localStorage.getItem('cross_setting_quick-draw')) ) {
                 if ( state.selectedCrossChange === false ) {
                     this.clickStartTimer();
                     setAppState({
@@ -222,7 +222,7 @@ export default class Cross extends Component {
 
             /*
             // ВАРИАНТ 2
-            if ( state.btnDrawQuick ) {
+            if ( JSON.parse(localStorage.getItem('cross_setting_quick-draw')) ) {
                 if ( state.selectedCrossChange === false ) {
                     this.clickStartTimer();
                     setAppState({
@@ -264,7 +264,7 @@ export default class Cross extends Component {
 
 
             // ЕСЛИ ВЫБРАНО НЕ ТРОЙНОЕ ДЕЙСТВИЕ, А ПООТДЕЛЬНОСТИ
-            if ( state.btnDrawQuick === false ) {
+            if ( !JSON.parse(localStorage.getItem('cross_setting_quick-draw')) ) {
                 selectedCrossDataNew = state.selectedCrossData;
                 if ( state.btnDraw ) {
                     let row = e.currentTarget.parentNode.parentNode.getAttribute('data-index');
@@ -525,7 +525,7 @@ export default class Cross extends Component {
                                 {
                                     JSON.parse(localStorage.getItem('cross_setting_quick-draw'))
                                     &&
-                                        <button className={'btn btn_draw-quick' + (state.btnDrawQuick?' active':'')} title='Закрасить, пометить, удалить' onClick={this.clickDrawQuick}>Быстрое рисование</button>
+                                        <button className='btn btn_draw-quick active' title='Закрасить, пометить, удалить' onClick={this.clickDrawQuick}>Быстрое рисование</button>
                                 }
                                 {
                                     !JSON.parse(localStorage.getItem('cross_setting_quick-draw'))
