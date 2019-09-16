@@ -15,8 +15,8 @@ export default class Size extends Component {
             selectedCross: null,
             selectedCrossName: null,
             selectedCrossData: null,
-            numTop: null,
-            numLeft: null
+            numTop: [],
+            numLeft: []
         });
         document.querySelectorAll('.size__item').forEach(function(item, i) {
             item.classList.remove('active')

@@ -32,6 +32,8 @@ export default class NumLeft extends Component {
     componentDidMount() {
         const {context} = this.props;
         const state = context.state;
+        
+        // ОТОБРАЖЕНИЕ НАПРАВЛЯЮЩИХ ЛИНИЙ
         function numGuideLinesMouseEnter(numRow, rowId) {
             numRow.classList.add('hover');
             document.querySelectorAll('.cross__row')[rowId].querySelectorAll('.cross__cell').forEach((col, i) => {
