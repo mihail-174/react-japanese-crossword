@@ -273,6 +273,36 @@ class App extends Component {
         this.setState({
             ...initialState
         });
+
+        // require.context(directory, useSubdirectories = true, regExp = /^\.\/.*$/, mode = 'sync');
+        function importAll(r) {
+          return r.keys().map(r);
+        }
+        const listFiles = importAll(require.context('./files/big', false, /\.(json|js)$/));
+        console.log( listFiles );
+        listFiles.map((item, i) => {
+            console.log(item.name);
+        });
+
+        // console.log( require.context('./files', false, /\.(json|js)$/).keys().map( require.context('./files', false, /\.(json|js)$/) ) );
+
+        // fetch(`${process.env.PUBLIC_URL}/small/`)
+        // .then(res =>res.blob())
+        // .then(
+        //     (result) => {
+        //         console.log( result );
+        //         // setTimeout(() => {
+        //         // }, 500);
+        //     },
+        //     (error) => {
+        //         console.log( error );
+        //         // this.setState({
+        //         //     isLoaded: false,
+        //         //     error
+        //         // });
+        //     }
+        // )
+
     }
 }
 
