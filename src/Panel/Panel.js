@@ -6,6 +6,7 @@ export default class Panel extends Component {
     constructor(props) {
         super(props);
         this.openSettings = this.openSettings.bind(this);
+        this.startAgain = this.startAgain.bind(this);
     }
 
     openSettings() {
@@ -13,6 +14,27 @@ export default class Panel extends Component {
         const setAppState = context.methods.setAppState;
         setAppState({
             modal: true
+        });
+    }
+
+    startAgain() {
+        const {context} = this.props;
+        const state = context.state;
+        const setAppState = context.methods.setAppState;
+        localStorage.removeItem('cross_' + state.selectedSize + '_id-' + state.selectedCross);
+        localStorage.removeItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done');
+        localStorage.removeItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_time');
+        state.selectedCrossData.map((row, i) => {
+            row.map((value, j) => {
+                row[j] = 2;
+            });
+        });
+        setAppState({
+            selectedCrossTime: {
+                h: 0,
+                m: 0,
+                s: 0
+            }
         });
     }
 
@@ -31,6 +53,7 @@ export default class Panel extends Component {
                     &&
                     <div className='panel__settings' onClick={this.openSettings}>Настройки</div>
                 }
+                <div className='panel__start-again' onClick={this.startAgain}>Начать заново</div>
             </div>
         )
     }
