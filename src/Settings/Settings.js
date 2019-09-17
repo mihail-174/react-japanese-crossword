@@ -36,7 +36,6 @@ export default class Settings extends Component {
 
     clickGuideLines(e) {
         const {context} = this.props;
-        const state = context.state;
         const setAppState = context.methods.setAppState;
         localStorage.setItem('cross_setting_guide-lines', e.currentTarget.checked );
         setAppState({
@@ -44,18 +43,6 @@ export default class Settings extends Component {
         });
 
         // НАПРАВЛЯЮЩИЕ ЛИНИИ
-        function guideLinesMouseEnter() {
-            document.querySelectorAll('.cross__cell').forEach(item=>{
-                let rowId = item.parentNode.parentNode.getAttribute('data-index');
-                let colId = item.getAttribute('data-index');
-                document.querySelectorAll('.cross__row')[rowId].querySelectorAll('.cross__cell').forEach(colItem=>{
-                    colItem.classList.add('hover');
-                });
-                document.querySelectorAll('.cross__row').forEach((row, i)=>{
-                    row.querySelectorAll('.cross__cell')[parseInt(colId)].classList.add('hover');
-                });
-            });
-        }
         function guideLinesMouseLeave() {
             document.querySelectorAll('.cross__cell').forEach(item=>{
                 let rowId = item.parentNode.parentNode.getAttribute('data-index');
@@ -100,7 +87,6 @@ export default class Settings extends Component {
 
     clickQuickDraw(e) {
         const {context} = this.props;
-        const state = context.state;
         const setAppState = context.methods.setAppState;
         localStorage.setItem('cross_setting_quick-draw', e.currentTarget.checked );
         setAppState({

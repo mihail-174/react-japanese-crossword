@@ -8,6 +8,10 @@ import Settings from './Settings/Settings';
 
 const Context = React.createContext()
 
+function importFilesCross(r) {
+    return r.keys().map(r);
+}
+
 let initialState = {
     settingGuideLines: true,
     settingHideNames: true,
@@ -17,7 +21,8 @@ let initialState = {
     btnDraw: false,
     btnEmpty: false,
     btnClean: false,
-    selectedSize: 'small',
+    selectedSize: 'all',
+    selectedType: null,
     selectedCross: null,
     selectedCrossName: null,
     selectedCrossChange: false,
@@ -34,6 +39,10 @@ let initialState = {
     numLeft: [],
     size: [
         {
+            systemName: 'all',
+            name: 'Все'
+        },
+        {
             systemName: 'small',
             name: 'Маленькие'
         },
@@ -46,146 +55,101 @@ let initialState = {
             name: 'Большие'
         }
     ],
-    small: [
-        {
-            id: 0,
-            name: 'smile',
-            width: 5,
-            height: 5,
-            arr: [
-                [1,1,1,1,1],
-                [1,0,1,0,1],
-                [1,1,1,1,1],
-                [1,0,0,0,1],
-                [1,1,1,1,1]
-            ]
-        },
-        {
-            id: 1,
-            name: 'раз',
-            width: 10,
-            height: 5,
-            arr: [
-                [1,1,1,1,1],
-                [1,0,1,0,1],
-                [1,1,1,1,1],
-                [1,0,0,0,1],
-                [1,1,1,1,1]
-            ]
-        },
-        {
-            id: 2,
-            name: 'Смайлик',
-            width: 10,
-            height: 5,
-            arr: [
-                [1,1,1,1,1],
-                [1,0,1,0,1],
-                [1,1,1,1,1],
-                [1,0,0,0,1],
-                [1,1,1,1,1]
-            ]
-        }
-    ],
-    medium: [
-        {
-            id: 0,
-            name: 'batman',
-            width: 5,
-            height: 5,
-            arr: [
-                [1,0,0,0,1],
-                [1,1,1,1,1],
-                [1,0,1,0,1],
-                [1,1,1,1,1],
-                [1,1,1,1,1]
-            ]
-        }
-    ],
-    big: [
-        {
-            id: 0,
-            name: 'Кораблик',
-            width: 10,
-            height: 10,
-            arr: [
-                [1,1,0,0,1,0,0,0,0,0],
-                [1,0,0,0,1,1,0,0,0,0],
-                [0,0,0,0,1,1,1,1,1,1],
-                [0,0,0,0,1,1,1,1,0,0],
-                [0,0,0,0,1,1,1,1,1,0],
-                [0,0,0,0,1,1,1,1,1,1],
-                [0,0,0,0,1,0,0,0,0,0],
-                [1,1,1,1,1,1,1,1,1,1],
-                [0,1,0,0,0,0,0,0,1,0],
-                [0,0,1,1,1,1,1,1,0,0]
-            ]
-        },
-        {
-            id: 2,
-            name: 'Бэтмен',
-            width: 10,
-            height: 10,
-            arr: [
-                [1,1,0,0,1,0,0,0,0,0],
-                [1,0,0,0,1,1,0,0,0,0],
-                [0,0,0,0,1,1,1,1,1,1],
-                [0,0,0,0,1,1,1,1,0,0],
-                [0,0,0,0,1,1,1,1,1,0],
-                [0,0,0,0,1,1,1,1,1,1],
-                [0,0,0,0,1,0,0,0,0,0],
-                [1,1,1,1,1,1,1,1,1,1],
-                [0,1,0,0,0,0,0,0,1,0],
-                [0,0,1,1,1,1,1,1,0,0]
-            ]
-        }
-    ],
-    images: {
-        img0: {
-            name: 'smile',
-            width: 5,
-            height: 5,
-            size: 'small',
-            arr: [
-                [1,1,1,1,1],
-                [1,0,1,0,1],
-                [1,1,1,1,1],
-                [1,0,0,0,1],
-                [1,1,1,1,1]
-            ]
-        },
-        img1: {
-            name: 'batman',
-            width: 5,
-            height: 5,
-            size: 'medium',
-            arr: [
-                [1,0,0,0,1],
-                [1,1,1,1,1],
-                [1,0,1,0,1],
-                [1,1,1,1,1],
-                [1,1,1,1,1]
-            ]
-        },
-        img2: {
-            name: 'Кораблик',
-            width: 10,
-            height: 10,
-            size: 'big',
-            arr: [
-                [1,1,0,0,1,0,0,0,0,0],
-                [1,0,0,0,1,1,0,0,0,0],
-                [0,0,0,0,1,1,1,1,1,1],
-                [0,0,0,0,1,1,1,1,0,0],
-                [0,0,0,0,1,1,1,1,1,0],
-                [0,0,0,0,1,1,1,1,1,1],
-                [0,0,0,0,1,0,0,0,0,0],
-                [1,1,1,1,1,1,1,1,1,1],
-                [0,1,0,0,0,0,0,0,1,0],
-                [0,0,1,1,1,1,1,1,0,0]
-            ]
-        }
-    }
+    crossList: []
+    // small: [
+    //     {
+    //         id: 0,
+    //         name: 'smile',
+    //         width: 5,
+    //         height: 5,
+    //         arr: [
+    //             [1,1,1,1,1],
+    //             [1,0,1,0,1],
+    //             [1,1,1,1,1],
+    //             [1,0,0,0,1],
+    //             [1,1,1,1,1]
+    //         ]
+    //     },
+    //     {
+    //         id: 1,
+    //         name: 'раз',
+    //         width: 10,
+    //         height: 5,
+    //         arr: [
+    //             [1,1,1,1,1],
+    //             [1,0,1,0,1],
+    //             [1,1,1,1,1],
+    //             [1,0,0,0,1],
+    //             [1,1,1,1,1]
+    //         ]
+    //     },
+    //     {
+    //         id: 2,
+    //         name: 'Смайлик',
+    //         width: 10,
+    //         height: 5,
+    //         arr: [
+    //             [1,1,1,1,1],
+    //             [1,0,1,0,1],
+    //             [1,1,1,1,1],
+    //             [1,0,0,0,1],
+    //             [1,1,1,1,1]
+    //         ]
+    //     }
+    // ],
+    // medium: [
+    //     {
+    //         id: 0,
+    //         name: 'batman',
+    //         width: 5,
+    //         height: 5,
+    //         arr: [
+    //             [1,0,0,0,1],
+    //             [1,1,1,1,1],
+    //             [1,0,1,0,1],
+    //             [1,1,1,1,1],
+    //             [1,1,1,1,1]
+    //         ]
+    //     }
+    // ],
+    // big: [
+    //     {
+    //         id: 0,
+    //         name: 'Кораблик',
+    //         width: 10,
+    //         height: 10,
+    //         arr: [
+    //             [1,1,0,0,1,0,0,0,0,0],
+    //             [1,0,0,0,1,1,0,0,0,0],
+    //             [0,0,0,0,1,1,1,1,1,1],
+    //             [0,0,0,0,1,1,1,1,0,0],
+    //             [0,0,0,0,1,1,1,1,1,0],
+    //             [0,0,0,0,1,1,1,1,1,1],
+    //             [0,0,0,0,1,0,0,0,0,0],
+    //             [1,1,1,1,1,1,1,1,1,1],
+    //             [0,1,0,0,0,0,0,0,1,0],
+    //             [0,0,1,1,1,1,1,1,0,0]
+    //         ]
+    //     },
+    //     {
+    //         id: 2,
+    //         name: 'Бэтмен',
+    //         width: 10,
+    //         height: 10,
+    //         arr: [
+    //             [1,1,0,0,1,0,0,0,0,0],
+    //             [1,0,0,0,1,1,0,0,0,0],
+    //             [0,0,0,0,1,1,1,1,1,1],
+    //             [0,0,0,0,1,1,1,1,0,0],
+    //             [0,0,0,0,1,1,1,1,1,0],
+    //             [0,0,0,0,1,1,1,1,1,1],
+    //             [0,0,0,0,1,0,0,0,0,0],
+    //             [1,1,1,1,1,1,1,1,1,1],
+    //             [0,1,0,0,0,0,0,0,1,0],
+    //             [0,0,1,1,1,1,1,1,0,0]
+    //         ]
+    //     }
+    // ]
 }
 
 class App extends Component {
@@ -200,6 +164,7 @@ class App extends Component {
     returnBackList() {
         this.setState({
             selectedCross: null,
+            selectedType: null,
             selectedCrossName: null,
             selectedCrossChange: false,
             selectedCrossData: null,
@@ -233,7 +198,7 @@ class App extends Component {
                     }
 
                     {
-                        JSON.parse(localStorage.getItem('cross_' + this.state.selectedSize + '_id-' + this.state.selectedCross + '_done'))
+                        JSON.parse(localStorage.getItem('cross_' + this.state.selectedType + '_id-' + this.state.selectedCross + '_done'))
                         &&
                         <h2 className='title-cross'>{this.state.selectedCrossName}</h2>
                     }
@@ -271,20 +236,9 @@ class App extends Component {
     }
     componentDidMount() {
         this.setState({
-            ...initialState
+            ...initialState,
+            crossList: importFilesCross( require.context('./files/', true, /\.json$/) )
         });
-
-        // require.context(directory, useSubdirectories = true, regExp = /^\.\/.*$/, mode = 'sync');
-        function importAll(r) {
-          return r.keys().map(r);
-        }
-        const listFiles = importAll(require.context('./files/big', false, /\.(json|js)$/));
-        console.log( listFiles );
-        listFiles.map((item, i) => {
-            console.log(item.name);
-        });
-
-        // console.log( require.context('./files', false, /\.(json|js)$/).keys().map( require.context('./files', false, /\.(json|js)$/) ) );
 
         // fetch(`${process.env.PUBLIC_URL}/small/`)
         // .then(res =>res.blob())

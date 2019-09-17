@@ -62,8 +62,10 @@ export default class Grid extends Component {
     clickSave() {
         const {context} = this.props;
         const state = context.state;
-        localStorage.setItem('cross_' + state.selectedSize + '_id-' + state.selectedCross, JSON.stringify( state.selectedCrossData ) );
-        localStorage.setItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_time', JSON.stringify( state.selectedCrossTime ) );
+        localStorage.setItem('cross_' + state.selectedType + '_id-' + state.selectedCross, JSON.stringify( state.selectedCrossData ) );
+        localStorage.setItem('cross_' + state.selectedType + '_id-' + state.selectedCross + '_time', JSON.stringify( state.selectedCrossTime ) );
+        // localStorage.setItem('cross_' + state.selectedSize + '_id-' + state.selectedCross, JSON.stringify( state.selectedCrossData ) );
+        // localStorage.setItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_time', JSON.stringify( state.selectedCrossTime ) );
     }
 
     render() {
