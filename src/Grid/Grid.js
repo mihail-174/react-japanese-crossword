@@ -81,7 +81,7 @@ export default class Grid extends Component {
                     <NumLeft context={context} />
                 </div>
                 <div className='grid__content'>
-                    <div className={'cross' + (localStorage.getItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done') ? ' cross_done':'')}>
+                    <div className={'cross' + (localStorage.getItem('cross_' + state.selectedType + '_id-' + state.selectedCross + '_done') ? ' cross_done':'')}>
                         <Cross context={context} />
                     </div>
                     <div className='grid__result'>
@@ -96,7 +96,7 @@ export default class Grid extends Component {
                 </div>
                 <div className='grid__btns-control'>
                     {
-                        !localStorage.getItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done' )
+                        !localStorage.getItem('cross_' + state.selectedType + '_id-' + state.selectedCross + '_done' )
                         &&
                             <div className='btns'>
                                 <button className='btn btn_save' title='Сохранить изменения' onClick={this.clickSave}>Сохранить изменения</button>

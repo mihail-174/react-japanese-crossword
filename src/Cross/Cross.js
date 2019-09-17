@@ -96,7 +96,7 @@ export default class Cross extends Component {
         const state = context.state;
         const setAppState = context.methods.setAppState;
 
-        if ( !localStorage.getItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done' ) ) {
+        if ( !localStorage.getItem('cross_' + state.selectedType + '_id-' + state.selectedCross + '_done' ) ) {
 
             // ЕСЛИ ВЫБРАНО: ЗАКРАСИТЬ КЛЕТКУ
             if ( state.btnDraw ) {
@@ -419,7 +419,7 @@ export default class Cross extends Component {
         }, this)
 
         return (
-            <div className={'cross' + (localStorage.getItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done') ? ' cross_done':'')}>
+            <div className={'cross' + (localStorage.getItem('cross_' + state.selectedType + '_id-' + state.selectedCross + '_done') ? ' cross_done':'')}>
                 {crossList}
             </div>
 
@@ -467,7 +467,7 @@ export default class Cross extends Component {
                 num.classList.remove('hover');
             });
         }
-        if ( !JSON.parse(localStorage.getItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done')) ) {
+        if ( !JSON.parse(localStorage.getItem('cross_' + state.selectedType + '_id-' + state.selectedCross + '_done')) ) {
             document.querySelectorAll('.cross__cell').forEach(cell=>{
                 cell.addEventListener('mouseenter', () => {
                     if ( JSON.parse(localStorage.getItem('cross_setting_guide-lines')) ) {

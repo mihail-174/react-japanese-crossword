@@ -171,19 +171,18 @@ export default class List extends Component {
     render() {
         const {context} = this.props;
         const state = context.state;
-        const newthis = this;
 
-        const list = state.crossList.map(function(item, i) {
+        const list = state.crossList.map((item, i) => {
             return (
-                <div key={i} id={i} data-id-cross={item.id} className='list__item' onClick={newthis.click}>
+                <div key={i} id={i} data-id-cross={item.id} data-type-cross={item.type} className='list__item' onClick={this.click}>
                     <div className='list__status'>
                         {
-                            localStorage.getItem('cross_' + state.selectedSize + '_id-' + i + '_done' )
+                            JSON.parse(localStorage.getItem('cross_' + item.type + '_id-' + i + '_done' ))
                             &&
                                 <div className='status status_done'></div>
                         }
                         {
-                            !localStorage.getItem('cross_' + state.selectedSize + '_id-' + i + '_done' )
+                            !JSON.parse(localStorage.getItem('cross_' + item.type + '_id-' + i + '_done' ))
                             &&
                                 <div className='status status_not-resolved'></div>
                         }
@@ -201,7 +200,7 @@ export default class List extends Component {
 
                         <div className='list__name'>
                             {
-                                JSON.parse(localStorage.getItem('cross_setting_hide-names')) && !JSON.parse(localStorage.getItem('cross_' + state.selectedSize + '_id-' + i + '_done'))
+                                JSON.parse(localStorage.getItem('cross_setting_hide-names')) && !JSON.parse(localStorage.getItem('cross_' + state.selectedType + '_id-' + i + '_done'))
                                 ?
                                 item.name.replace(/[\W\w]/g, "*")
                                 :
