@@ -180,6 +180,7 @@ class App extends Component {
             btnClean: false
         })
     }
+
     setAppState(newState) {
       this.setState(newState);
     }
@@ -196,11 +197,13 @@ class App extends Component {
                         &&
                             <div className='return-back-list' onClick={this.returnBackList}>Вернуться к списку</div>
                     }
-
                     {
                         JSON.parse(localStorage.getItem('cross_' + this.state.selectedType + '_id-' + this.state.selectedCross + '_done'))
                         &&
-                        <h2 className='title-cross'>{this.state.selectedCrossName}</h2>
+                            <div className='message'>
+                                <b>Поздравляем!</b><br/>
+                                Вы выполнили "{this.state.selectedCrossName}" за {String(this.state.selectedCrossTime.h).padStart(2, "0") + ':' + String(this.state.selectedCrossTime.m).padStart(2, "0") + ':' + String(this.state.selectedCrossTime.s).padStart(2, "0")}
+                            </div>
                     }
                     {
                         this.state.selectedCross !== null
@@ -234,30 +237,14 @@ class App extends Component {
 
         );
     }
+
     componentDidMount() {
         this.setState({
             ...initialState,
             crossList: importFilesCross( require.context('./files/', true, /\.json$/) )
         });
-
-        // fetch(`${process.env.PUBLIC_URL}/small/`)
-        // .then(res =>res.blob())
-        // .then(
-        //     (result) => {
-        //         console.log( result );
-        //         // setTimeout(() => {
-        //         // }, 500);
-        //     },
-        //     (error) => {
-        //         console.log( error );
-        //         // this.setState({
-        //         //     isLoaded: false,
-        //         //     error
-        //         // });
-        //     }
-        // )
-
     }
+
 }
 
 export default App;

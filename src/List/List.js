@@ -12,9 +12,10 @@ export default class List extends Component {
         const state = context.state;
         const setAppState = context.methods.setAppState;
         const crossType = state.crossList[e.currentTarget.getAttribute('id')].type; // ТИП выбранного кроссворда
+        const crossListId = e.currentTarget.getAttribute('id'); // ID выбранного кроссворда из списка
         const crossId = e.currentTarget.getAttribute('data-id-cross'); // ID выбранного кроссворда
 
-        let arrOld = state.crossList[e.currentTarget.getAttribute('data-id-cross')];
+        let arrOld = state.crossList[crossListId];
         let selectedCrossData = arrOld.arr.map((row, index)=> {
             let newNewArr = row.map((value, j) => {
                 if ( value === 1 ) {
@@ -53,7 +54,7 @@ export default class List extends Component {
             let newarrValues = []
             let a = 0;
             // console.log('строк в массиве = ' + this.state.images['img' + this.state.selected].arr.length);
-            state.crossList[crossId].arr.map((row, i) => {
+            state.crossList[crossListId].arr.map((row, i) => {
                 // console.group('СТРОКА #' + i);
                 // console.log(row);
                 row.map((value, j) => {
@@ -125,7 +126,7 @@ export default class List extends Component {
             let a = 0;
             // let j = 1;
             // console.log('строк в массиве = ' + arr.length);
-            let arr = state.crossList[crossId].arr;
+            let arr = state.crossList[crossListId].arr;
             for (var i = 0; i < arr[0].length; i++) {
                 // console.group('************* GROUP *************');
                 // console.log( arr );
@@ -171,18 +172,17 @@ export default class List extends Component {
     render() {
         const {context} = this.props;
         const state = context.state;
-
         const list = state.crossList.map((item, i) => {
             return (
                 <div key={i} id={i} data-id-cross={item.id} data-type-cross={item.type} className='list__item' onClick={this.click}>
                     <div className='list__status'>
                         {
-                            JSON.parse(localStorage.getItem('cross_' + item.type + '_id-' + i + '_done' ))
+                            JSON.parse(localStorage.getItem('cross_' + item.type + '_id-' + item.id + '_done'))
                             &&
                                 <div className='status status_done'></div>
                         }
                         {
-                            !JSON.parse(localStorage.getItem('cross_' + item.type + '_id-' + i + '_done' ))
+                            !JSON.parse(localStorage.getItem('cross_' + item.type + '_id-' + item.id + '_done'))
                             &&
                                 <div className='status status_not-resolved'></div>
                         }

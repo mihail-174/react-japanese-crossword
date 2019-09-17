@@ -42,6 +42,10 @@ a:hover {
     color: #e74c3c;
 }
 
+.message {
+    margin-bottom: 30px;
+}
+
 /* статус */
 /* .status_done {
     width: 24px;

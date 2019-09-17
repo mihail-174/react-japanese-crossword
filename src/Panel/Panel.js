@@ -43,21 +43,18 @@ export default class Panel extends Component {
     render() {
         const {context} = this.props;
         const state = context.state;
-        return (
-            <div className='panel'>
+        if ( !JSON.parse(localStorage.getItem('cross_' + state.selectedType + '_id-' + state.selectedCross + '_done')) ) {
+            return (
+                <div className='panel'>
                     <div className='panel__time'>{String(state.selectedCrossTime.h).padStart(2, "0") + ':' + String(state.selectedCrossTime.m).padStart(2, "0") + ':' + String(state.selectedCrossTime.s).padStart(2, "0")}</div>
-                {
-                    !localStorage.getItem('cross_' + state.selectedType + '_id-' + state.selectedCross + '_done' )
-                    &&
                     <div className='panel__settings' onClick={this.openSettings}>Настройки</div>
-                }
-                {
-                    !localStorage.getItem('cross_' + state.selectedType + '_id-' + state.selectedCross + '_done' )
-                    &&
                     <div className='panel__start-again' onClick={this.startAgain}>Начать заново</div>
-                }
-            </div>
-        )
+                </div>
+            )
+        } else {
+            return true
+        }
+
     }
 
 }

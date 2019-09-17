@@ -46,7 +46,7 @@ export default class NumTop extends Component {
                 row.querySelectorAll('.cross__cell')[colId].classList.remove('hover');
             });
         }
-        if ( !JSON.parse(localStorage.getItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done')) ) {
+        if ( !JSON.parse(localStorage.getItem('cross_' + state.selectedType + '_id-' + state.selectedCross + '_done')) ) {
             document.querySelectorAll('.num_top .num__col').forEach((col, i) => {
                 col.addEventListener('mouseenter', () => {
                     if ( JSON.parse(localStorage.getItem('cross_setting_guide-lines')) ) {

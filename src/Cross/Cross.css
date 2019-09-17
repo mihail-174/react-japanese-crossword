@@ -5,6 +5,7 @@
 }
 .cross_done .cross__cell {
     cursor: default;
+    border: none;
 }
 .cross__row {
     width: 100%;
