@@ -24,6 +24,7 @@ let initialState = {
     selectedSize: 'all',
     selectedType: null,
     selectedCross: null,
+    selectedCrossId: null,
     selectedCrossName: null,
     selectedCrossChange: false,
     selectedCrossTime: {

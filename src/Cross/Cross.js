@@ -301,14 +301,14 @@ export default class Cross extends Component {
                     return tempMiniArr;
                 });
                 // console.log('строка новая: ' + tempMiniArr);
-                // console.log( tempMiniArr.equals(state.crossList[state.selectedCross].arr[i]) );
-                if ( tempMiniArr.equals(state.crossList[state.selectedCross].arr[i]) ) {
+                // console.log( tempMiniArr.equals(state.crossList[state.selectedCrossId].arr[i]) );
+                if ( tempMiniArr.equals(state.crossList[state.selectedCrossId].arr[i]) ) {
                     countTrue++;
                 }
                 tempMiniArr = [];
                 // console.groupEnd();
             });
-            if ( state.crossList[state.selectedCross].height === countTrue ) {
+            if ( state.crossList[state.selectedCrossId].height === countTrue ) {
                 setAppState({
                     result: true
                 });

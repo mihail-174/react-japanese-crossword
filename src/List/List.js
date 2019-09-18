@@ -30,6 +30,7 @@ export default class List extends Component {
         });
         setAppState({
             selectedType: crossType,
+            selectedCrossId: crossListId,
             selectedCross: crossId,
             selectedCrossName: state.crossList[e.currentTarget.getAttribute('id')].name
         });
