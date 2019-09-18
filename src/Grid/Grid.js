@@ -62,8 +62,10 @@ export default class Grid extends Component {
     clickSave() {
         const {context} = this.props;
         const state = context.state;
-        localStorage.setItem('cross_' + state.selectedSize + '_id-' + state.selectedCross, JSON.stringify( state.selectedCrossData ) );
-        localStorage.setItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_time', JSON.stringify( state.selectedCrossTime ) );
+        localStorage.setItem('cross_' + state.selectedType + '_id-' + state.selectedCross, JSON.stringify( state.selectedCrossData ) );
+        localStorage.setItem('cross_' + state.selectedType + '_id-' + state.selectedCross + '_time', JSON.stringify( state.selectedCrossTime ) );
+        // localStorage.setItem('cross_' + state.selectedSize + '_id-' + state.selectedCross, JSON.stringify( state.selectedCrossData ) );
+        // localStorage.setItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_time', JSON.stringify( state.selectedCrossTime ) );
     }
 
     render() {
@@ -72,16 +74,22 @@ export default class Grid extends Component {
 
         return (
             <div className="grid">
-                <div className='grid__num-top'>
-                    <NumTop context={context} />
-                </div>
-                <div className='grid__num-left'>
-                    <NumLeft context={context} />
-                </div>
+                {
+                    !JSON.parse(localStorage.getItem('cross_' + state.selectedType + '_id-' + state.selectedCross + '_done' ))
+                    &&
+                        <div className='grid__num-top'>
+                            <NumTop context={context} />
+                        </div>
+                }
+                {
+                    !JSON.parse(localStorage.getItem('cross_' + state.selectedType + '_id-' + state.selectedCross + '_done' ))
+                    &&
+                        <div className='grid__num-left'>
+                            <NumLeft context={context} />
+                        </div>
+                }
                 <div className='grid__content'>
-                    <div className={'cross' + (localStorage.getItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done') ? ' cross_done':'')}>
-                        <Cross context={context} />
-                    </div>
+                    <Cross context={context} />
                     <div className='grid__result'>
                         {
                             state.result
@@ -94,7 +102,7 @@ export default class Grid extends Component {
                 </div>
                 <div className='grid__btns-control'>
                     {
-                        !localStorage.getItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done' )
+                        !JSON.parse(localStorage.getItem('cross_' + state.selectedType + '_id-' + state.selectedCross + '_done' ))
                         &&
                             <div className='btns'>
                                 <button className='btn btn_save' title='Сохранить изменения' onClick={this.clickSave}>Сохранить изменения</button>

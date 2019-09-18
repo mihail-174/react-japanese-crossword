@@ -85,8 +85,10 @@ export default class Cross extends Component {
     clickSave() {
         const {context} = this.props;
         const state = context.state;
-        localStorage.setItem('cross_' + state.selectedSize + '_id-' + state.selectedCross, JSON.stringify( state.selectedCrossData ) );
-        localStorage.setItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_time', JSON.stringify( state.selectedCrossTime ) );
+        localStorage.setItem('cross_' + state.selectedType + '_id-' + state.selectedCross, JSON.stringify( state.selectedCrossData ) );
+        localStorage.setItem('cross_' + state.selectedType + '_id-' + state.selectedCross + '_time', JSON.stringify( state.selectedCrossTime ) );
+        // localStorage.setItem('cross_' + state.selectedSize + '_id-' + state.selectedCross, JSON.stringify( state.selectedCrossData ) );
+        // localStorage.setItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_time', JSON.stringify( state.selectedCrossTime ) );
     }
 
     clickCell(e) {
@@ -94,7 +96,7 @@ export default class Cross extends Component {
         const state = context.state;
         const setAppState = context.methods.setAppState;
 
-        if ( !localStorage.getItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done' ) ) {
+        if ( !localStorage.getItem('cross_' + state.selectedType + '_id-' + state.selectedCross + '_done' ) ) {
 
             // ЕСЛИ ВЫБРАНО: ЗАКРАСИТЬ КЛЕТКУ
             if ( state.btnDraw ) {
@@ -299,20 +301,21 @@ export default class Cross extends Component {
                     return tempMiniArr;
                 });
                 // console.log('строка новая: ' + tempMiniArr);
-                // console.log( tempMiniArr.equals(state[state.selectedSize][state.selectedCross].arr[i]) );
-                if ( tempMiniArr.equals(state[state.selectedSize][state.selectedCross].arr[i]) ) {
+                // console.log( tempMiniArr.equals(state.crossList[state.selectedCross].arr[i]) );
+                if ( tempMiniArr.equals(state.crossList[state.selectedCross].arr[i]) ) {
                     countTrue++;
                 }
                 tempMiniArr = [];
                 // console.groupEnd();
             });
-            if ( state[state.selectedSize][state.selectedCross].height === countTrue ) {
+            if ( state.crossList[state.selectedCross].height === countTrue ) {
                 setAppState({
                     result: true
                 });
                 this.clickSave();
-                localStorage.setItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done', true );
+                localStorage.setItem('cross_' + state.selectedType + '_id-' + state.selectedCross + '_done', true );
                 document.querySelector('.grid__result').classList.add('active')
+                clearInterval(state.selectedCrossTimerId);
                 setTimeout(function() {
                     document.querySelector('.grid__result.active').classList.remove('active')
                 }, 2000);
@@ -325,7 +328,7 @@ export default class Cross extends Component {
             // ПРОВЕРКА РЕШЕННОСТИ
             let arrCellTrue = 0;
             let arrCellFalse = 0;
-            state[state.selectedSize][state.selectedCross].arr.map((row, i) => {
+            state.crossList[state.selectedCross].arr.map((row, i) => {
                 row.map((value, j) => {
                     if ( value === 1 ) {
                         arrCellTrue++;
@@ -343,14 +346,14 @@ export default class Cross extends Component {
             let myArrCellFalse = 0;
             state.selectedCrossData.map((row, i) => {
                 row.map((value, j) => {
-                    // if ( value === state[state.selectedSize][state.selectedCross].arr[i][j] ) {
+                    // if ( value === state.crossList[state.selectedCross].arr[i][j] ) {
                         if ( value === 1 ) {
                             myArrCellTrue++;
-                            console.log( '[' + i + ',' + j + '] ' + value + ' ' + state[state.selectedSize][state.selectedCross].arr[i][j] + ' совпадает' );
+                            console.log( '[' + i + ',' + j + '] ' + value + ' ' + state.crossList[state.selectedCross].arr[i][j] + ' совпадает' );
                         }
                         if ( value === 0 || value === 2 ) {
                             myArrCellFalse++;
-                            console.log( '[' + i + ',' + j + '] ' + value + ' ' + state[state.selectedSize][state.selectedCross].arr[i][j] + ' ПУСТАЯ КЛЕТКА' );
+                            console.log( '[' + i + ',' + j + '] ' + value + ' ' + state.crossList[state.selectedCross].arr[i][j] + ' ПУСТАЯ КЛЕТКА' );
                             document.querySelector('h1').innerText = '-';
                         }
                         return true;
@@ -416,7 +419,7 @@ export default class Cross extends Component {
         }, this)
 
         return (
-            <div className={'cross' + (localStorage.getItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done') ? ' cross_done':'')}>
+            <div className={'cross' + (localStorage.getItem('cross_' + state.selectedType + '_id-' + state.selectedCross + '_done') ? ' cross_done':'')}>
                 {crossList}
             </div>
 
@@ -464,7 +467,7 @@ export default class Cross extends Component {
                 num.classList.remove('hover');
             });
         }
-        if ( !JSON.parse(localStorage.getItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_done')) ) {
+        if ( !JSON.parse(localStorage.getItem('cross_' + state.selectedType + '_id-' + state.selectedCross + '_done')) ) {
             document.querySelectorAll('.cross__cell').forEach(cell=>{
                 cell.addEventListener('mouseenter', () => {
                     if ( JSON.parse(localStorage.getItem('cross_setting_guide-lines')) ) {
@@ -487,8 +490,10 @@ export default class Cross extends Component {
         const state = context.state;
         if ( state.selectedCrossChange ) {
             clearInterval(timer);
-            localStorage.setItem('cross_' + state.selectedSize + '_id-' + state.selectedCross, JSON.stringify( state.selectedCrossData ) );
-            localStorage.setItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_time', JSON.stringify( state.selectedCrossTime ) );
+            localStorage.setItem('cross_' + state.selectedType + '_id-' + state.selectedCross, JSON.stringify( state.selectedCrossData ) );
+            localStorage.setItem('cross_' + state.selectedType + '_id-' + state.selectedCross + '_time', JSON.stringify( state.selectedCrossTime ) );
+            // localStorage.setItem('cross_' + state.selectedSize + '_id-' + state.selectedCross, JSON.stringify( state.selectedCrossData ) );
+            // localStorage.setItem('cross_' + state.selectedSize + '_id-' + state.selectedCross + '_time', JSON.stringify( state.selectedCrossTime ) );
         }
     }
 

@@ -8,21 +8,20 @@
     display: flex;
     align-items: center;
     flex: 0 0 auto;
-    width: 459px;
+    width: calc(25% - 12px);
     padding: 10px;
     border-bottom: 1px solid lightgray;
     cursor: pointer;
     transition: all 0.2s;
     margin-right: 15px;
 }
-.list__item:nth-child(2n) {
+.list__item:nth-child(4n) {
     margin-right: 0;
 }
 .list__item:hover {
     background-color: #ebebeb;
 }
-.list__item:nth-child(1),
-.list__item:nth-child(2) {
+.list__item:nth-child(-n + 4) {
     border-top: 1px solid lightgray;
 }
 .list__img {

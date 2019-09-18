@@ -11,8 +11,11 @@ export default class List extends Component {
         const {context} = this.props;
         const state = context.state;
         const setAppState = context.methods.setAppState;
+        const crossType = state.crossList[e.currentTarget.getAttribute('id')].type; // ТИП выбранного кроссворда
+        const crossListId = e.currentTarget.getAttribute('id'); // ID выбранного кроссворда из списка
+        const crossId = e.currentTarget.getAttribute('data-id-cross'); // ID выбранного кроссворда
 
-        let arrOld = state[state.selectedSize][e.currentTarget.getAttribute('data-id')];
+        let arrOld = state.crossList[crossListId];
         let selectedCrossData = arrOld.arr.map((row, index)=> {
             let newNewArr = row.map((value, j) => {
                 if ( value === 1 ) {
@@ -26,24 +29,22 @@ export default class List extends Component {
             return newNewArr;
         });
         setAppState({
-            selectedCross: e.currentTarget.getAttribute('data-id'),
-            selectedCrossName: state[state.selectedSize][e.currentTarget.getAttribute('data-id')].name,
-            // selectedCrossData
-            // selectedCross: state[state.selectedSize][e.currentTarget.getAttribute('data-id')]
+            selectedType: crossType,
+            selectedCross: crossId,
+            selectedCrossName: state.crossList[e.currentTarget.getAttribute('id')].name
         });
-        if ( localStorage.getItem('cross_' + state.selectedSize + '_id-' + e.currentTarget.getAttribute('data-id')) ) {
+        if ( localStorage.getItem('cross_' + crossType + '_id-' + crossId) ) {
             setAppState({
-                selectedCrossData: JSON.parse( localStorage.getItem('cross_' + state.selectedSize + '_id-' + e.currentTarget.getAttribute('data-id')) )
+                selectedCrossData: JSON.parse( localStorage.getItem('cross_' + crossType + '_id-' + crossId) )
             });
         } else {
             setAppState({
                 selectedCrossData
             });
-            // localStorage.setItem('cross_' + state.selectedSize + '_id-' + e.currentTarget.getAttribute('data-id'), JSON.stringify( selectedCrossData ) );
         }
-        if ( localStorage.getItem('cross_' + state.selectedSize + '_id-' + e.currentTarget.getAttribute('data-id') + '_time') ) {
+        if ( localStorage.getItem('cross_' + crossType + '_id-' + crossId + '_time') ) {
             setAppState({
-                selectedCrossTime: JSON.parse( localStorage.getItem('cross_' + state.selectedSize + '_id-' + e.currentTarget.getAttribute('data-id') + '_time') )
+                selectedCrossTime: JSON.parse( localStorage.getItem('cross_' + crossType + '_id-' + crossId + '_time') )
             });
         }
 
@@ -53,7 +54,7 @@ export default class List extends Component {
             let newarrValues = []
             let a = 0;
             // console.log('строк в массиве = ' + this.state.images['img' + this.state.selected].arr.length);
-            state[state.selectedSize][e.currentTarget.getAttribute('data-id')].arr.map((row, i) => {
+            state.crossList[crossListId].arr.map((row, i) => {
                 // console.group('СТРОКА #' + i);
                 // console.log(row);
                 row.map((value, j) => {
@@ -125,7 +126,7 @@ export default class List extends Component {
             let a = 0;
             // let j = 1;
             // console.log('строк в массиве = ' + arr.length);
-            let arr = state[state.selectedSize][e.currentTarget.getAttribute('data-id')].arr;
+            let arr = state.crossList[crossListId].arr;
             for (var i = 0; i < arr[0].length; i++) {
                 // console.group('************* GROUP *************');
                 // console.log( arr );
@@ -171,18 +172,17 @@ export default class List extends Component {
     render() {
         const {context} = this.props;
         const state = context.state;
-        const newthis = this;
-        const list = state[state.selectedSize].map(function(item, i) {
+        const list = state.crossList.map((item, i) => {
             return (
-                <div key={i} data-id={i} className='list__item' onClick={newthis.click}>
+                <div key={i} id={i} data-id-cross={item.id} data-type-cross={item.type} className='list__item' onClick={this.click}>
                     <div className='list__status'>
                         {
-                            localStorage.getItem('cross_' + state.selectedSize + '_id-' + i + '_done' )
+                            JSON.parse(localStorage.getItem('cross_' + item.type + '_id-' + item.id + '_done'))
                             &&
                                 <div className='status status_done'></div>
                         }
                         {
-                            !localStorage.getItem('cross_' + state.selectedSize + '_id-' + i + '_done' )
+                            !JSON.parse(localStorage.getItem('cross_' + item.type + '_id-' + item.id + '_done'))
                             &&
                                 <div className='status status_not-resolved'></div>
                         }
@@ -200,7 +200,7 @@ export default class List extends Component {
 
                         <div className='list__name'>
                             {
-                                JSON.parse(localStorage.getItem('cross_setting_hide-names')) && !JSON.parse(localStorage.getItem('cross_' + state.selectedSize + '_id-' + i + '_done'))
+                                JSON.parse(localStorage.getItem('cross_setting_hide-names')) && !JSON.parse(localStorage.getItem('cross_' + state.selectedType + '_id-' + i + '_done'))
                                 ?
                                 item.name.replace(/[\W\w]/g, "*")
                                 :
@@ -211,12 +211,15 @@ export default class List extends Component {
                     </div>
                 </div>
             )
-        })
+        });
+
         return (
             <div className='list'>
                 {list}
             </div>
         )
     }
+
+    componentDidMount() {}
 
 }
