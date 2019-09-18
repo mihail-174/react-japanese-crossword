@@ -42,7 +42,7 @@
 }
 .cross__cell.blank {
     background: url(/blank.png) 0 0 no-repeat;
-    background-size: 30px;
+    background-size: 20px;
 }
 .cross__cell.hover::before {
 	content: '';
