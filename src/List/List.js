@@ -1,10 +1,19 @@
 import React, { Component } from 'react';
 import './List.css';
 
+function importFilesCross(r) {
+    return r.keys().map(r);
+}
+
 export default class List extends Component {
     constructor(props) {
         super(props);
         this.click = this.click.bind(this);
+        this.state = {
+            small: 0,
+            medium: 0,
+            big: 0
+        }
     }
 
     click(e){
@@ -217,10 +226,24 @@ export default class List extends Component {
         return (
             <div className='list'>
                 {list}
+                {
+                    this.state[state.selectedSize] === 0
+                    &&
+                        <div className='list__empty'>Список пуст</div>
+                }
             </div>
         )
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        let countCrossSmall = importFilesCross( require.context('../files/small', false, /\.json$/) );
+        let countCrossMedium = importFilesCross( require.context('../files/medium', false, /\.json$/) );
+        let countCrossBig = importFilesCross( require.context('../files/big', false, /\.json$/) );
+        this.setState({
+            small: countCrossSmall.length,
+            medium: countCrossMedium.length,
+            big: countCrossBig.length
+        });
+    }
 
 }
