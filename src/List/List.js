@@ -207,7 +207,6 @@ export default class List extends Component {
                     </div>
                     */}
                     <div className='list__info'>
-
                         <div className='list__name'>
                             {
                                 JSON.parse(localStorage.getItem('cross_setting_hide-names')) && !JSON.parse(localStorage.getItem('cross_' + state.selectedType + '_id-' + i + '_done'))
@@ -219,6 +218,14 @@ export default class List extends Component {
                         </div>
                         <div className='list__size'>{item.width}x{item.height}</div>
                     </div>
+                    {
+                        localStorage.getItem('cross_' + item.type + '_id-' + item.id + '_progress')
+                        &&
+                            <div
+                                class="list__progress progress"
+                                style={{width: localStorage.getItem('cross_' + item.type + '_id-' + item.id + '_progress') + '%'}}
+                            ></div>
+                    }
                 </div>
             )
         });

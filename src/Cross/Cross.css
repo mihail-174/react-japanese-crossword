@@ -7,6 +7,9 @@
     cursor: default;
     border: none;
 }
+.cross_done .cross__cell.blank {
+    background-image: none;
+}
 .cross__row {
     width: 100%;
 }

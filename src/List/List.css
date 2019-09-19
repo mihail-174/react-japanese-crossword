@@ -51,3 +51,11 @@
 .list__size {
     color: darkgray;
 }
+.list__progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 128, 0, 0.05);
+    bottom: 0;
+    z-index: -1;
+}
