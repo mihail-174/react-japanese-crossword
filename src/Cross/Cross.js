@@ -285,6 +285,7 @@ export default class Cross extends Component {
             let selectedCrossDataNewForCheck = selectedCrossDataNew;
             let tempMiniArr = [];
             let countTrue = 0;
+            let progress = 0;
             // console.log( selectedCrossDataNewForCheck );
             selectedCrossDataNewForCheck.map((rowNew, i) => {
                 // console.group('rowNew-'+i);
@@ -304,10 +305,12 @@ export default class Cross extends Component {
                 // console.log( tempMiniArr.equals(state.crossList[state.selectedCrossId].arr[i]) );
                 if ( tempMiniArr.equals(state.crossList[state.selectedCrossId].arr[i]) ) {
                     countTrue++;
+                    progress += 100 / state.crossList[state.selectedCrossId].height;
                 }
                 tempMiniArr = [];
                 // console.groupEnd();
             });
+            localStorage.setItem('cross_' + state.selectedType + '_id-' + state.selectedCross + '_progress', progress );
             if ( state.crossList[state.selectedCrossId].height === countTrue ) {
                 setAppState({
                     result: true
