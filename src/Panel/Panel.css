@@ -18,7 +18,18 @@
 }
 .panel__progress {
     font-size: 14px;
+    padding-left: 20px;
     margin-right: 30px;
+}
+.panel__progress:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    background: url(/done.svg) 0 0 no-repeat;
+    background-size: 18px;
 }
 .panel__settings {
     font-size: 14px;
@@ -53,10 +64,10 @@
 .panel__start-again:before {
     content: '';
     position: absolute;
-    top: 2px;
+    top: 1px;
     left: 0;
-    width: 13px;
-    height: 13px;
-    background: url(/blank-03.svg) 0 0 no-repeat;
-    background-size: 13px;
+    width: 16px;
+    height: 16px;
+    background: url(/refresh.svg) 0 0 no-repeat;
+    background-size: 16px;
 }

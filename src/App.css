@@ -36,6 +36,17 @@ a:hover {
     text-decoration: underline;
     margin-bottom: 30px;
     cursor: pointer;
+    padding-left: 25px;
+}
+.return-back-list:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 25px;
+    height: 25px;
+    background: url(/return.svg) 0 0 no-repeat;
+    background-size: 25px;
 }
 .return-back-list:hover {
     text-decoration: none;
@@ -68,13 +79,25 @@ a:hover {
     bottom: 0;
     margin: auto;
 }
+.status_edit {
+    width: 16px;
+    height: 16px;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    background-image: url(/list-edit.svg);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
 .status_not-resolved {
     width: 16px;
     height: 16px;
     background-position: 0 0;
     background-repeat: no-repeat;
-    background-image: url(/pencil.svg);
-    background-size: 16px;
+    background-image: url(/list.svg);
     position: absolute;
     top: 0;
     left: 0;
