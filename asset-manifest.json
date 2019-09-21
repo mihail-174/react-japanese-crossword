@@ -1,13 +1,15 @@
 {
-  "main.css": "/react-japanese-crossword/static/css/main.07011549.chunk.css",
-  "main.js": "/react-japanese-crossword/static/js/main.2dcd6ec7.chunk.js",
-  "main.js.map": "/react-japanese-crossword/static/js/main.2dcd6ec7.chunk.js.map",
+  "main.css": "/react-japanese-crossword/static/css/main.148ac0a0.chunk.css",
+  "main.js": "/react-japanese-crossword/static/js/main.dbd9f2a7.chunk.js",
+  "main.js.map": "/react-japanese-crossword/static/js/main.dbd9f2a7.chunk.js.map",
   "static/js/1.e48d0e5f.chunk.js": "/react-japanese-crossword/static/js/1.e48d0e5f.chunk.js",
   "static/js/1.e48d0e5f.chunk.js.map": "/react-japanese-crossword/static/js/1.e48d0e5f.chunk.js.map",
   "runtime~main.js": "/react-japanese-crossword/static/js/runtime~main.89cb581b.js",
   "runtime~main.js.map": "/react-japanese-crossword/static/js/runtime~main.89cb581b.js.map",
-  "static/css/main.07011549.chunk.css.map": "/react-japanese-crossword/static/css/main.07011549.chunk.css.map",
+  "static/media/App.css": "/react-japanese-crossword/static/media/save.213f4cb5.png",
+  "static/media/Panel.css": "/react-japanese-crossword/static/media/refresh.c652fc63.svg",
+  "static/css/main.148ac0a0.chunk.css.map": "/react-japanese-crossword/static/css/main.148ac0a0.chunk.css.map",
   "index.html": "/react-japanese-crossword/index.html",
-  "precache-manifest.d27e4bdc2c277699e23a3454e02743df.js": "/react-japanese-crossword/precache-manifest.d27e4bdc2c277699e23a3454e02743df.js",
+  "precache-manifest.aab0561ca8811481a7019966ca4ae53b.js": "/react-japanese-crossword/precache-manifest.aab0561ca8811481a7019966ca4ae53b.js",
   "service-worker.js": "/react-japanese-crossword/service-worker.js"
 }

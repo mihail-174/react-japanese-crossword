@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/react-japanese-crossword/precache-manifest.d27e4bdc2c277699e23a3454e02743df.js"
+  "/react-japanese-crossword/precache-manifest.aab0561ca8811481a7019966ca4ae53b.js"
 );
 
 workbox.clientsClaim();
