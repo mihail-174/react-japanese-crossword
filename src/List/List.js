@@ -192,9 +192,14 @@ export default class List extends Component {
                                 <div className='status status_done'></div>
                         }
                         {
-                            !JSON.parse(localStorage.getItem('cross_' + item.type + '_id-' + item.id + '_done'))
+                            !JSON.parse(localStorage.getItem('cross_' + item.type + '_id-' + item.id + '_done')) && !localStorage.getItem('cross_' + item.type + '_id-' + item.id + '_progress')
                             &&
                                 <div className='status status_not-resolved'></div>
+                        }
+                        {
+                            localStorage.getItem('cross_' + item.type + '_id-' + item.id + '_progress')
+                            &&
+                                <div className='status status_edit'></div>
                         }
                     </div>
                     {/*

@@ -2,7 +2,7 @@
   "name": "japanese-crossword",
   "version": "0.1.0",
   "private": true,
-  "homepage": "",
+  "homepage": "https://mihail-174.github.io/react-japanese-crossword",
   "dependencies": {
     "react": "^16.6.0",
     "react-dom": "^16.6.0",

@@ -5,6 +5,7 @@ body {
     line-height: 1.2;
     font-family: arial;
     color: #333;
+    min-width: 1000px;
 }
 * {
     box-sizing: border-box;
@@ -45,7 +46,7 @@ a:hover {
     left: 0;
     width: 25px;
     height: 25px;
-    background: url(/return.svg) 0 0 no-repeat;
+    background: url(./img/return.svg) 0 0 no-repeat;
     background-size: 25px;
 }
 .return-back-list:hover {
@@ -63,7 +64,7 @@ a:hover {
     height: 24px;
     background-position: 0 0;
     background-repeat: no-repeat;
-    background-image: url(/check.png);
+    background-image: url(./img/check.png);
     background-size: 24px;
 } */
 .status_done {
@@ -71,7 +72,7 @@ a:hover {
     height: 16px;
     background-position: 0 0;
     background-repeat: no-repeat;
-    background-image: url(/ok.svg);
+    background-image: url(./img/ok.svg);
     position: absolute;
     top: 0;
     left: 0;
@@ -84,7 +85,7 @@ a:hover {
     height: 16px;
     background-position: 0 0;
     background-repeat: no-repeat;
-    background-image: url(/list-edit.svg);
+    background-image: url(./img/list-edit.svg);
     position: absolute;
     top: 0;
     left: 0;
@@ -97,7 +98,7 @@ a:hover {
     height: 16px;
     background-position: 0 0;
     background-repeat: no-repeat;
-    background-image: url(/list.svg);
+    background-image: url(./img/list.svg);
     position: absolute;
     top: 0;
     left: 0;
@@ -161,24 +162,21 @@ div {
 .btn.active {
     background-color: rgba(0,0,0,0.1);
 }
-.btn_check {
-    background-image: url(/check.png);
-}
 .btn_draw {
-    background-image: url(/pencil-02.png);
+    background-image: url(./img/pencil-02.png);
 }
 .btn_draw-quick {
-    background-image: url(/ico-01.png);
+    background-image: url(./img/ico-01.png);
     background-size: 40px;
 }
 .btn_empty {
-    background-image: url(/blank-03.svg);
+    background-image: url(./img/blank-03.svg);
 }
 .btn_clean {
-    background-image: url(/eraser.png);
+    background-image: url(./img/eraser.png);
 }
 .btn_save {
-    background-image: url(/save.png);
+    background-image: url(./img//save.png);
 }
 
 /* td {

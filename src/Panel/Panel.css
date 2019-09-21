@@ -14,7 +14,7 @@
     left: 0;
     width: 16px;
     height: 16px;
-    background: url(/time.svg) 0 0 no-repeat;
+    background: url(../img/time.svg) 0 0 no-repeat;
 }
 .panel__progress {
     font-size: 14px;
@@ -28,7 +28,7 @@
     left: 0;
     width: 18px;
     height: 18px;
-    background: url(/done.svg) 0 0 no-repeat;
+    background: url(../img/done.svg) 0 0 no-repeat;
     background-size: 18px;
 }
 .panel__settings {
@@ -49,7 +49,7 @@
     left: 0;
     width: 16px;
     height: 16px;
-    background: url(/setting.svg) 0 0 no-repeat;
+    background: url(../img/setting.svg) 0 0 no-repeat;
 }
 .panel__start-again {
     font-size: 14px;
@@ -68,6 +68,6 @@
     left: 0;
     width: 16px;
     height: 16px;
-    background: url(/refresh.svg) 0 0 no-repeat;
+    background: url(../img/refresh.svg) 0 0 no-repeat;
     background-size: 16px;
 }
