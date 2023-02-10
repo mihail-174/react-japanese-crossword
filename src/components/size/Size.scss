@@ -1,0 +1,27 @@
+.size {
+    display: flex;
+    margin-bottom: 30px;
+}
+.size__item {
+    margin-right: 10px;
+    cursor: pointer;
+}
+.size__item {
+    margin-right: 10px;
+    cursor: pointer;
+}
+.size__item:hover .size__name {
+    text-decoration: underline;
+    color: #e74c3c;
+}
+.size__item.active .size__name {
+    text-decoration: underline;
+    color: #e74c3c;
+}
+.size__count {
+    top: -6px;
+    margin-left: 2px;
+    color: gray;
+    font-size: 11px;
+    position: relative;
+}

@@ -46,7 +46,7 @@ a:hover {
     left: 0;
     width: 25px;
     height: 25px;
-    background: url(./img/return.svg) 0 0 no-repeat;
+    background: url(old/img/return.svg) 0 0 no-repeat;
     background-size: 25px;
 }
 .return-back-list:hover {
@@ -72,7 +72,7 @@ a:hover {
     height: 16px;
     background-position: 0 0;
     background-repeat: no-repeat;
-    background-image: url(./img/ok.svg);
+    background-image: url(old/img/ok.svg);
     position: absolute;
     top: 0;
     left: 0;
@@ -85,7 +85,7 @@ a:hover {
     height: 16px;
     background-position: 0 0;
     background-repeat: no-repeat;
-    background-image: url(./img/list-edit.svg);
+    background-image: url(old/img/list-edit.svg);
     position: absolute;
     top: 0;
     left: 0;
@@ -98,7 +98,7 @@ a:hover {
     height: 16px;
     background-position: 0 0;
     background-repeat: no-repeat;
-    background-image: url(./img/list.svg);
+    background-image: url(old/img/list.svg);
     position: absolute;
     top: 0;
     left: 0;
@@ -163,20 +163,20 @@ div {
     background-color: rgba(0,0,0,0.1);
 }
 .btn_draw {
-    background-image: url(./img/pencil-02.png);
+    background-image: url(old/img/pencil-02.png);
 }
 .btn_draw-quick {
-    background-image: url(./img/ico-01.png);
+    background-image: url(old/img/ico-01.png);
     background-size: 40px;
 }
 .btn_empty {
-    background-image: url(./img/blank-03.svg);
+    background-image: url(old/img/blank-03.svg);
 }
 .btn_clean {
-    background-image: url(./img/eraser.png);
+    background-image: url(old/img/eraser.png);
 }
 .btn_save {
-    background-image: url(./img//save.png);
+    background-image: url(old/img//save.png);
 }
 
 /* td {
