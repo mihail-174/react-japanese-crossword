@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React/*, { useState, useEffect }*/ from 'react';
 
 import { Size } from './components/size/Size';
 import { List } from './components/list/List';
 
 import './App.css';
+
+// https://skeletonreact.com/
 
 function App() {
     return (

@@ -1,4 +1,4 @@
-import {createSlice, current} from '@reduxjs/toolkit'
+import {createSlice} from '@reduxjs/toolkit'
 
 function importFilesCross(r) {
     return r.keys().map(r);
@@ -16,19 +16,16 @@ export const listSlice = createSlice({
     reducers: {
         getAll: (state, action) => {
             state.all = importFilesCross( require.context('../../files', true, /\.json$/) );
-            state.current = importFilesCross( require.context('../../files', true, /\.json$/) );
+            state.current = state.all;
         },
         getSmall: (state, action) => {
             state.small = importFilesCross( require.context('../../files/small', false, /\.json$/) );
-            state.current = importFilesCross( require.context('../../files/small', false, /\.json$/) );
         },
         getMedium: (state, action) => {
             state.medium = importFilesCross( require.context('../../files/medium', false, /\.json$/) );
-            state.current = importFilesCross( require.context('../../files/medium', false, /\.json$/) );
         },
         getBig: (state, action) => {
             state.big = importFilesCross( require.context('../../files/big', false, /\.json$/) );
-            state.current = importFilesCross( require.context('../../files/big', false, /\.json$/) );
         },
         setCurrent: (state, action) => {
             state.current = state[action.payload];
